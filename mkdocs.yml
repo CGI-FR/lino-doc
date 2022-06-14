@@ -1,0 +1,8 @@
+site_name: Docs LINO-PIMO
+# site_url:
+nav:
+    - Home: index.md
+    - Docs: docs.md
+    - Tutoriel: tuto.md
+    - Commandes: commands.md
+theme: readthedocs
