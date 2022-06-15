@@ -1,5 +1,7 @@
 site_name: Docs LINO-PIMO
-# site_url:
+site_url: ""
+use_directory_urls: false
+plugins: []
 nav:
     - Home: index.md
     - Docs: docs.md

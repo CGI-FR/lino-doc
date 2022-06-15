@@ -1,28 +1,24 @@
-name: Documentation CI
-
+name: Publish lino docs via GitHub Pages
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-
   build:
-
+    name: Deploy docs
     runs-on: ubuntu-latest
-
     steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
 
-      - uses: actions/checkout@v3
-
-      - name: Build devcontainer
-        run: docker build . --file .devcontainer/Dockerfile
-      
-      - name: Generate docs
-        run: mkdocs serve 
-        
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        # Or use mhausenblas/mkdocs-deploy-gh-pages@nomaterial to build without the mkdocs-material theme
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: folder/mkdocs.yml
+          # GITHUB_DOMAIN: github.myenterprise.com
+          REQUIREMENTS: folder/requirements.txt
 
      
