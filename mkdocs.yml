@@ -7,4 +7,5 @@ nav:
     - Tutoriel: tuto.md
     - Docs: docs.md
     - Commandes: commands.md
+    - Exemples: example.md
 theme: readthedocs
