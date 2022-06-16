@@ -1,6 +1,6 @@
 # Exemples pratiques sur les outils LINO-PIMO
 
-## Générer le NIR avec PIMO
+## Générer le NIR avec pimo
 
 Le NIR plus communément appelé numéro de sécurité sociale est un numéro unique attribué par l'INSEE dès la naissance.
 
@@ -13,14 +13,16 @@ Il est composé de 15 chiffres :
 
 ### 1ère méthode : regex
 
+**`masking.yml`**
 ```yaml
 version: "1"
 seed: 42
 masking:
   - selector:
       jsonpath: "nir"
-    mask:
-      regex: "(1|2)[0-9]{2}(0[1-9]|1[0-2])((0[1-9]|[1-8][0-9]|9[0-5])([0-8][0-9]{2}|90[0-9]))[0-9]{3}([0-9]{2})"
+    masks:
+    - add: ""
+    - regex: "(1|2)[0-9]{2}(0[1-9]|1[0-2])((0[1-9]|[1-8][0-9]|9[0-5])([0-8][0-9]{2}|90[0-9]))[0-9]{3}([0-9]{2})"
 ```
 
 ```console 
@@ -35,8 +37,9 @@ pimo -c masking.yml --empty-input -r 5
 {"nir":"177063490176950"}
 ```
 
-### 2ème méthode : 
+### 2ème méthode : enchaînement de masking
 
+**`masking.yml`**
 ```yaml
 version: "2"
 seed: 42
@@ -132,4 +135,161 @@ pimo -c masking.yml --empty-input -r 5
 {"NIR":"100025900163453"}
 {"NIR":"186025900137971"}
 {"NIR":"172085900143917"}
+```
+
+## Générer une adresse mail avec pimo
+
+**`masking.yml`**
+```yaml
+version: "1"
+seed: 0
+masking:
+
+# ----------------------- NOM -----------------------
+  - selector :
+      jsonpath: "NOM"
+    masks:
+      - add-transient: "M"
+      - randomChoiceInUri: "pimo://surnameFR"
+      - template: "{{.NOM | NoAccent | lower}}"
+  
+# ----------------------- PRÉNOM -----------------------
+  - selector :
+      jsonpath: "PRENOM"
+    masks:
+      - add-transient: ""
+      - randomChoiceInUri: "pimo://nameFR"
+      - template: "{{.PRENOM | NoAccent | lower}}"
+
+#---------------------------- EMAIL ----------------------
+  - selector:
+      jsonpath: "MAIL"
+    masks:
+      - add: ""
+      - template: '{{- .NOM | replace " " ""}}.{{- .PRENOM | replace " " ""}}@yopmail.com'
+````
+
+```console 
+pimo -c masking.yml --empty-input -r 5
+```
+
+```json
+{"MAIL":"girard.celiane@yopmail.com"}
+{"MAIL":"henry.mickael@yopmail.com"}
+{"MAIL":"caron.dalhia@yopmail.com"}
+{"MAIL":"martin.veronique@yopmail.com"}
+{"MAIL":"gauthier.chantal@yopmail.com"}
+```
+
+## Masquer des données imbriquées avec pimo
+
+Prenons comme exemple le fichier suivant composé d'une liste de dossier. Chaque dossier ayant un identifiant et une liste de personnes concernées par ce dossier :
+
+**`input.json`**
+```json
+{
+  "dossier": [
+    {
+      "identifiant": "AZ18-45B12",
+      "personnes": [
+        {
+          "nom": "martin",
+          "prénom": "veronique",
+          "email": "martin.veronique@mail.com"
+        },
+        {
+          "nom": "robert",
+          "prénom": "joe",
+          "email": "rober.joe@mail.com"
+        }
+      ]
+    },
+    {
+      "identifiant": "JL34-28C79",
+      "personnes": [
+        {
+          "nom": "alain",
+          "prénom": "mercier",
+          "email": "alain.mercier@mail.com"
+        },
+        {
+          "nom": "florian",
+          "prénom": "roger",
+          "email": "florian.roger@mail.com"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Pour masquer les données sensibles de ce fichier nous utilisons le fichier de configuration suivant:
+
+**`masking.yml`**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "dossier.identifiant"
+    mask:
+        regex: "[A-Z]{2}[0-9]{2}-[0-9]{2}[A-Z][0-9]{2}"
+  - selector:
+      jsonpath: "dossier.personnes"
+    mask:
+      pipe:
+        masking:
+          - selector:
+              jsonpath: "nom"
+            mask: 
+              randomChoiceInUri: "pimo://surnameFR"
+          - selector:
+              jsonpath: "prénom"
+            mask: 
+              randomChoiceInUri: "pimo://nameFR"
+          - selector:
+              jsonpath: "email"
+            mask:
+              template: "{{.nom}}.{{.prénom}}@mail.com"
+```
+
+```console 
+pimo -c masking.yml < input.json | jq
+```
+
+```json
+{
+  "dossier": [
+    {
+      "identifiant": "RS03-09T37",
+      "personnes": [
+        {
+          "nom": "Fournier",
+          "prénom": "Orianne",
+          "email": "Fournier.Orianne@mail.com"
+        },
+        {
+          "nom": "Leclerc",
+          "prénom": "Remi",
+          "email": "Leclerc.Remi@mail.com"
+        }
+      ]
+    },
+    {
+      "identifiant": "FP37-33R33",
+      "personnes": [
+        {
+          "nom": "Vidal",
+          "prénom": "Michaël",
+          "email": "Vidal.Michaël@mail.com"
+        },
+        {
+          "nom": "Bertrand",
+          "prénom": "Line",
+          "email": "Bertrand.Line@mail.com"
+        }
+      ]
+    }
+  ]
+}
 ```
