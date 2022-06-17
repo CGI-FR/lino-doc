@@ -157,7 +157,7 @@ masking:
       jsonpath: "MAIL"
     masks:
       - add: '{{- .NOM | replace " " ""}}.{{- .PRENOM | replace " " ""}}@yopmail.com'
-````
+```
 
 ```console 
 pimo -c masking.yml --empty-input -r 5
