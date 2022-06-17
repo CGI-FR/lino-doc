@@ -1,6 +1,9 @@
 site_name: Docs LINO-PIMO
+
 site_url: ""
+
 use_directory_urls: false
+
 plugins: []
 
 nav:
@@ -10,7 +13,7 @@ nav:
     - Commandes: commands.md
     - Exemples: example.md
     - License: license.md
-    
+
 theme: readthedocs
 
 copyright: Copyright (C) 2022 CGI France - Licence GPL v3
