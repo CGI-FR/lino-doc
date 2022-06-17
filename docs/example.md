@@ -61,35 +61,7 @@ version: "2"
 seed: 42
 masking:
 #----------------------------------------------------------
-    # Partie n°5 du NIR
-  - selector:
-      jsonpath: "ORDRE_NAISSANCE"
-    masks:
-      - add: ""
-      - regex: "[0-9]{3}"
-#----------------------------------------------------------
-
-#----------------------------------------------------------  
-    # Partie n°4 + n°5 du NIR
-  - selector:
-      jsonpath: "ADRESSE_BRUTE_NAISSANCE"
-    masks:
-      - add-transient: ""
-      - randomChoiceInUri: "file://adresse.csv"
-  
-  - selector:
-      jsonpath: "CODE_INSEE_NAISSANCE"
-    masks:
-      - add: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
-
-  - selector:
-      jsonpath: "FIN_NIR"
-    masks:
-      - add-transient: "{{(toString .CODE_INSEE_NAISSANCE)}}{{(toString .ORDRE_NAISSANCE)}}"
-#----------------------------------------------------------
-
-#----------------------------------------------------------
-    # Partie n°1 + n°2 + n°3 + n°4 + n°5 du NIR
+    # Partie n°1 + n°2 + n°3 du NIR
   - selector :
       jsonpath: "SEXE"
     masks:
@@ -107,7 +79,35 @@ masking:
           dateMax: "2002-12-31T00:00:00Z"
       - dateParser:
           outputFormat: "02/01/2006"
+#----------------------------------------------------------
 
+#----------------------------------------------------------  
+    # Partie n°4 + n°5 du NIR
+  - selector:
+      jsonpath: "ADRESSE_BRUTE_NAISSANCE"
+    masks:
+      - add-transient: ""
+      - randomChoiceInUri: "file://adresse.csv"
+  
+  - selector:
+      jsonpath: "CODE_INSEE_NAISSANCE"
+    masks:
+      - add: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
+  
+  - selector:
+      jsonpath: "ORDRE_NAISSANCE"
+    masks:
+      - add: ""
+      - regex: "[0-9]{3}"
+
+  - selector:
+      jsonpath: "FIN_NIR"
+    masks:
+      - add-transient: "{{(toString .CODE_INSEE_NAISSANCE)}}{{(toString .ORDRE_NAISSANCE)}}"
+#----------------------------------------------------------
+
+#----------------------------------------------------------
+    # Partie Valeur du NIR
   - selector:
       jsonpath: "VALEUR_NIR"
     masks:
@@ -143,15 +143,15 @@ Ci-dessous les 5 premières lignes du fichier `adresse.csv`:
 | 59001_0260_00005   | 59001_0260 | 5      |     | Rue Verte          | 59268       | 59001      | Abancourt   |                             |                      | 715140.52 | 7015123.37 | 3.211955 | 50.23393  |       |        | ABANCOURT            | RUE VERTE          | inconnue        | inconnue        |
 
 ```console 
-pimo -c masking.yml --empty-input -r 5 | jq -c '{"SEXE": .SEXE, "DATE NAISSANCE": .DATE_NAISSANCE, "LIEU NAISSANCE": .CODE_INSEE_NAISSANCE, "ORDRE NAISSANCE": .ORDRE_NAISSANCE, "NIR": .NIR}'
+pimo -c masking.yml --empty-input -r 5
 ```
 
 ```json
-{"SEXE":"F","DATE NAISSANCE":"12/12/1990","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"384","NIR":"190125900138430"}
-{"SEXE":"M","DATE NAISSANCE":"01/02/1994","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"071","NIR":"294025900107134"}
-{"SEXE":"F","DATE NAISSANCE":"23/02/2000","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"634","NIR":"100025900163453"}
-{"SEXE":"F","DATE NAISSANCE":"11/02/1986","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"379","NIR":"186025900137971"}
-{"SEXE":"F","DATE NAISSANCE":"21/08/1972","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"439","NIR":"172085900143917"}
+{"SEXE":"F","DATE_NAISSANCE":"12/12/1990","CODE_INSEE_NAISSANCE":"59001","ORDRE_NAISSANCE":"384","NIR":"190125900138430"}
+{"SEXE":"M","DATE_NAISSANCE":"01/02/1994","CODE_INSEE_NAISSANCE":"59001","ORDRE_NAISSANCE":"071","NIR":"294025900107134"}
+{"SEXE":"F","DATE_NAISSANCE":"23/02/2000","CODE_INSEE_NAISSANCE":"59001","ORDRE_NAISSANCE":"634","NIR":"100025900163453"}
+{"SEXE":"F","DATE_NAISSANCE":"11/02/1986","CODE_INSEE_NAISSANCE":"59001","ORDRE_NAISSANCE":"379","NIR":"186025900137971"}
+{"SEXE":"F","DATE_NAISSANCE":"21/08/1972","CODE_INSEE_NAISSANCE":"59001","ORDRE_NAISSANCE":"439","NIR":"172085900143917"}
 ```
 
 ## Générer une adresse mail avec pimo
