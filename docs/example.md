@@ -13,16 +13,30 @@ Il est composé de 15 chiffres :
 
 ### 1ère méthode : regex
 
+La 1ère méthode consiste à générer le numéro de sécurité sociale sans se préoccuper de connaître les informations liées à la personne (sexe, année de naissance, ...).
+
 **`masking.yml`**
 ```yaml
 version: "1"
 seed: 42
 masking:
   - selector:
-      jsonpath: "nir"
+      jsonpath: "VALEUR_NIR"
     masks:
-    - add: ""
-    - regex: "(1|2)[0-9]{2}(0[1-9]|1[0-2])((0[1-9]|[1-8][0-9]|9[0-5])([0-8][0-9]{2}|90[0-9]))[0-9]{3}([0-9]{2})"
+    - add-transient: ""
+    - regex: "(1|2)[0-9]{2}(0[1-9]|1[0-2])((0[1-9]|[1-8][0-9]|9[0-5])([0-8][0-9]{2}|90[0-9]))[0-9]{3}"
+
+    # Partie Clé du NIR
+    # Clé NIR = 97 - ( ( Valeur numérique du NIR ) modulo 97 )
+  - selector:
+      jsonpath: "CLE_NIR"
+    mask:
+      add-transient: '{{ sub 97 (mod (int64 .VALEUR_NIR)  97)}}'
+  
+  - selector:
+      jsonpath: "NIR"
+    mask:
+      add: '{{(toString .VALEUR_NIR)}}{{if eq (len .CLE_NIR) 1}}0{{(toString .CLE_NIR)}}{{else}}{{(toString .CLE_NIR)}}{{end}}'
 ```
 
 ```console 
@@ -30,14 +44,16 @@ pimo -c masking.yml --empty-input -r 5
 ```
 
 ```json
-{"nir":"195019390697033"}
-{"nir":"177020490807345"}
-{"nir":"264080615900240"}
-{"nir":"185078983974899"}
-{"nir":"177063490176950"}
+{"NIR":"271067590908916"}
+{"NIR":"148029053117547"}
+{"NIR":"251079456401559"}
+{"NIR":"198109213274847"}
+{"NIR":"161113883742960"}
 ```
 
 ### 2ème méthode : enchaînement de masking
+
+La 2ème méthode consiste, cette fois-ci, à générer le NIR en gardant la cohérence entre les informations d'une personne et son numéro de sécurité sociale.
 
 **`masking.yml`**
 ```yaml
@@ -49,7 +65,7 @@ masking:
   - selector:
       jsonpath: "ORDRE_NAISSANCE"
     masks:
-      - add-transient: ""
+      - add: ""
       - regex: "[0-9]{3}"
 #----------------------------------------------------------
 
@@ -64,7 +80,7 @@ masking:
   - selector:
       jsonpath: "CODE_INSEE_NAISSANCE"
     masks:
-      - add-transient: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
+      - add: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
 
   - selector:
       jsonpath: "FIN_NIR"
@@ -77,7 +93,7 @@ masking:
   - selector :
       jsonpath: "SEXE"
     masks:
-      - add-transient: ""
+      - add: ""
       - randomChoice:
         - "M"
         - "F"
@@ -85,7 +101,7 @@ masking:
   - selector :
       jsonpath: "DATE_NAISSANCE"
     masks:
-      - add-transient: ""
+      - add: ""
       - randDate:
           dateMin: "1960-01-01T00:00:00Z"
           dateMax: "2002-12-31T00:00:00Z"
@@ -116,16 +132,26 @@ masking:
 #----------------------------------------------------------
 ```
 
+Ci-dessous les 5 premières lignes du fichier `adresse.csv`:
+
+| id                 | id_fantoir | numero | rep | nom_voie           | code_postal | code_insee | nom_commune | code_insee_ancienne_commune | nom_ancienne_commune | x         | y          | lon      | lat       | alias | nom_ld | libelle_acheminement | nom_afnor          | source_position | source_nom_voie |
+|:------------------:|:----------:|:------:|:---:|:------------------:|:-----------:|:----------:|:-----------:|:---------------------------:|:--------------------:|:---------:|:----------:|:--------:|:---------:|:-----:|:------:|:--------------------:|:------------------:|:---------------:|:---------------:|
+| 59001_nhsgdi_00001 |            | 1      |     | Chemin Hem Lenglet | 59268       | 59001      | Abancourt   |                             |                      | 715617.46 | 7015153.4  | 3.218633 | 50.234188 |       |        | ABANCOURT            | CHEMIN HEM LENGLET | arcep           | arcep           |
+| 59001_0260_00001   | 59001_0260 | 1      |     | Rue Verte          | 59268       | 59001      | Abancourt   |                             |                      | 715163.83 | 7015088.68 | 3.21228  | 50.233618 |       |        | ABANCOURT            | RUE VERTE          | inconnue        | inconnue        |
+| 59001_0260_00003   | 59001_0260 | 3      |     | Rue Verte          | 59268       | 59001      | Abancourt   |                             |                      | 715152.71 | 7015104.02 | 3.212125 | 50.233756 |       |        | ABANCOURT            | RUE VERTE          | inconnue        | inconnue        |
+| 59001_0260_00004   | 59001_0260 | 4      |     | Rue Verte          | 59268       | 59001      | Abancourt   |                             |                      | 715121.01 | 7015153.72 | 3.211683 | 50.234203 |       |        | ABANCOURT            | RUE VERTE          | inconnue        | inconnue        |
+| 59001_0260_00005   | 59001_0260 | 5      |     | Rue Verte          | 59268       | 59001      | Abancourt   |                             |                      | 715140.52 | 7015123.37 | 3.211955 | 50.23393  |       |        | ABANCOURT            | RUE VERTE          | inconnue        | inconnue        |
+
 ```console 
-pimo -c masking.yml --empty-input -r 5
+pimo -c masking.yml --empty-input -r 5 | jq -c '{"SEXE": .SEXE, "DATE NAISSANCE": .DATE_NAISSANCE, "LIEU NAISSANCE": .CODE_INSEE_NAISSANCE, "ORDRE NAISSANCE": .ORDRE_NAISSANCE, "NIR": .NIR}'
 ```
 
 ```json
-{"NIR":"190125900138430"}
-{"NIR":"294025900107134"}
-{"NIR":"100025900163453"}
-{"NIR":"186025900137971"}
-{"NIR":"172085900143917"}
+{"SEXE":"F","DATE NAISSANCE":"12/12/1990","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"384","NIR":"190125900138430"}
+{"SEXE":"M","DATE NAISSANCE":"01/02/1994","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"071","NIR":"294025900107134"}
+{"SEXE":"F","DATE NAISSANCE":"23/02/2000","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"634","NIR":"100025900163453"}
+{"SEXE":"F","DATE NAISSANCE":"11/02/1986","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"379","NIR":"186025900137971"}
+{"SEXE":"F","DATE NAISSANCE":"21/08/1972","LIEU NAISSANCE":"59001","ORDRE NAISSANCE":"439","NIR":"172085900143917"}
 ```
 
 ## Générer une adresse mail avec pimo
