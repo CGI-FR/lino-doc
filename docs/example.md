@@ -64,14 +64,12 @@ masking:
   - selector:
       jsonpath: "CODE_INSEE_NAISSANCE"
     masks:
-      - add-transient: ""
-      - template: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
+      - add-transient: '{{$a := split ";" (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
 
   - selector:
       jsonpath: "FIN_NIR"
     masks:
-      - add-transient: ""
-      - template: "{{(toString .CODE_INSEE_NAISSANCE)}}{{(toString .ORDRE_NAISSANCE)}}"
+      - add-transient: "{{(toString .CODE_INSEE_NAISSANCE)}}{{(toString .ORDRE_NAISSANCE)}}"
 #----------------------------------------------------------
 
 #----------------------------------------------------------
@@ -97,8 +95,7 @@ masking:
   - selector:
       jsonpath: "VALEUR_NIR"
     masks:
-      - add-transient: ""
-      - template: '{{if eq .SEXE "M" }}2{{else}}1{{end}}{{substr 8 10 (toString .DATE_NAISSANCE)}}{{substr 3 5 (toString .DATE_NAISSANCE)}}{{.FIN_NIR}}'
+      - add-transient: '{{if eq .SEXE "M" }}2{{else}}1{{end}}{{substr 8 10 (toString .DATE_NAISSANCE)}}{{substr 3 5 (toString .DATE_NAISSANCE)}}{{.FIN_NIR}}'
 #----------------------------------------------------------
 
 #----------------------------------------------------------
@@ -107,21 +104,15 @@ masking:
   - selector:
       jsonpath: "CLE_NIR"
     masks:
-      - add-transient: ""
-      - template: '{{ sub 97 (mod (int64 .VALEUR_NIR)  97)}}'
+      - add-transient: '{{ sub 97 (mod (int64 .VALEUR_NIR)  97)}}'
 #----------------------------------------------------------
 
 #----------------------------------------------------------
     # Totalité du NIR
   - selector:
       jsonpath: "NIR"
-    mask:
-      add: ""
-
-  - selector:
-      jsonpath: "NIR"
-    mask:
-      template: '{{(toString .VALEUR_NIR)}}{{if eq (len .CLE_NIR) 1}}0{{(toString .CLE_NIR)}}{{else}}{{(toString .CLE_NIR)}}{{end}}'
+    masks:
+      - add: '{{(toString .VALEUR_NIR)}}{{if eq (len .CLE_NIR) 1}}0{{(toString .CLE_NIR)}}{{else}}{{(toString .CLE_NIR)}}{{end}}'
 #----------------------------------------------------------
 ```
 
@@ -165,8 +156,7 @@ masking:
   - selector:
       jsonpath: "MAIL"
     masks:
-      - add: ""
-      - template: '{{- .NOM | replace " " ""}}.{{- .PRENOM | replace " " ""}}@yopmail.com'
+      - add: '{{- .NOM | replace " " ""}}.{{- .PRENOM | replace " " ""}}@yopmail.com'
 ````
 
 ```console 
