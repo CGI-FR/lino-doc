@@ -1252,7 +1252,7 @@ PS> sigo --version
 
 Vérifier l'installation avec la commande `sigo --help`.
 
-### Mise en pratique
+### Utilisation de SIGO avec des données mixtes
 
 Dans ce tutoriel, nous allons faire l'anonymisation d'un jeu de données générer par `pimo`.
 Supposons que nous avons dans un fichier des caractéristiques sur des individus tels que l'âge, le poids, la taille, la région, un attribut indiquant si la personne fume ou non et si elle est malade (donnée sensible).
@@ -1339,36 +1339,11 @@ masking:
 {"age":70,"poids":81.77,"taille":1.72,"departement":"Corse","fume":"oui","malade":"non"}
 ```
 
-`sigo` n'est capable d'anonymiser que des jeux de données composés essentiellement de floattant. Pour pouvoir anonymiser un jeu de donnée comportant des attributs catégorielles comme dans l'exemple ci-dessus, il faut préalablement effectuer une convertion pour transformer les attributs textuelles en floattant. Cette manipulation est très facile avec `pimo`.
+`sigo` est capable d'anonymiser des jeux de données composés essentiellement de flottants. Pour pouvoir anonymiser un jeu de données comportant des attributs catégoriels comme dans l'exemple ci-dessus, il faut préalablement effectuer une conversion pour transformer les attributs textuels en flottant. Cette manipulation est très facile avec `pimo`.
 
 #### Convertion avec PIMO 
 
-Nous allons utiliser la notion de cache dans `pimo`, ce qui va nous permettre de créer un dictionnaire *clé-valeur* ou la **clé** sera la valeur de l'attribut catégorielle et la **valeur** sera le floattant correspondant à la clé, que l'on gardera en mémoire afin de faire la convertion inverse une fois l'anonymisation faite.
-
-```console
-pimo -c reverse.yml --dump-cache cacheDepartement=departement.json <<EOF
-{"departement": "Auvergne-Rhône-Alpes"}
-{"departement": "Bourgogne-Franche-Comté"}
-{"departement": "Bretagne"}
-{"departement": "Centre-Val de Loire"}
-{"departement": "Corse"}
-{"departement": "Grand-Est"}
-{"departement": "Hauts-de-France"}
-{"departement": "Île-de-France"}
-{"departement": "Normandie"}
-{"departement": "Nouvelle-Aquitaine"}
-{"departement": "Occitanie"}
-{"departement": "Pays de Loire"}
-{"departement": "Provence-Alpes-Côte d'Azur"}
-EOF
-```
-
-```console
-pimo -c cache.yml --dump-cache cacheFume=fume.json <<EOF
-{"fume": "oui"}
-{"fume": "non"}
-EOF
-```
+Nous allons utiliser la notion de cache dans `pimo`, ce qui va nous permettre de créer un dictionnaire *clé-valeur* ou la **clé** sera la valeur de l'attribut catégoriel et la **valeur** sera le flottant correspondant à la clé, que l'on gardera en mémoire afin de faire la conversion inverse une fois l'anonymisation faite.
 
 **cache.yml**
 ```yaml
@@ -1400,7 +1375,25 @@ caches:
     reverse: false
 ```
 
-# departement.json
+```console
+pimo -c cache.yml --dump-cache cacheDepartement=departement.json <<EOF
+{"departement": "Auvergne-Rhône-Alpes"}
+{"departement": "Bourgogne-Franche-Comté"}
+{"departement": "Bretagne"}
+{"departement": "Centre-Val de Loire"}
+{"departement": "Corse"}
+{"departement": "Grand-Est"}
+{"departement": "Hauts-de-France"}
+{"departement": "Île-de-France"}
+{"departement": "Normandie"}
+{"departement": "Nouvelle-Aquitaine"}
+{"departement": "Occitanie"}
+{"departement": "Pays de Loire"}
+{"departement": "Provence-Alpes-Côte d'Azur"}
+EOF
+```
+
+**departement.json**
 ```json
 {"key":"Normandie","value":9}
 {"key":"Bourgogne-Franche-Comté","value":2}
@@ -1417,7 +1410,14 @@ caches:
 {"key":"Provence-Alpes-Côte d'Azur","value":13}
 ```
 
-# fume.json
+```console
+pimo -c cache.yml --dump-cache cacheFume=fume.json <<EOF
+{"fume": "oui"}
+{"fume": "non"}
+EOF
+```
+
+**fume.json**
 ```json
 {"key":"oui","value":1}
 {"key":"non","value":2}
@@ -1460,7 +1460,7 @@ caches:
 {"age":70,"poids":81.77,"taille":1.72,"departement":5,"fume":1,"malade":"non"}
 ```
 
-Une fois que notre jeu de donnée est entièrement en floattant (mis à part la donnée sensible, mais cela n'est pas dérangeant puisque `sigo` ne modifiera pas cette donnée). Nous pouvons passer à l'anonymisation.
+Une fois que notre jeu de donnée est entièrement en flottant (mis à part la donnée sensible, mais cela n'est pas dérangeant puisque `sigo` ne modifiera pas cette donnée). Nous pouvons passer à l'anonymisation.
 
 #### Anonymisation avec SIGO
 
@@ -1482,8 +1482,7 @@ sigo -q age,poids,taille,departement,fume -s malade -k 4 -l 2 -a meanAggregation
 
 #### Transformation inverse avec PIMO
 
-On veut pouvoir retrouver nos données avec le même format que les données originales, pour se faire nous allons utiliser le paramètre *reverse* de l'option `cache`.
-
+On veut pouvoir retrouver nos données avec le même format que les données originales, pour ce faire nous allons utiliser le paramètre *reverse* de l'option `cache`.
 
 **reverse.yml**
 ```yaml
@@ -1493,12 +1492,17 @@ masking:
   - selector:
       jsonpath: "departement"
     masks:
-      - fromjson: "departement"
+      # arrondir la valeur de l'attribut
+      - template: "{{round (toString .departement) 0 }}" # string
+      # changer le type (number en float64) 
+      - fromjson: "departement" # float64
+      # retrouver la clé correspondant à la valeur dans le fichier departement.json
       - fromCache: "cacheDepartement"
 
   - selector:
       jsonpath: "fume"
     masks:
+      - template: "{{round (toString .fume) 0 }}"
       - fromjson: "fume"
       - fromCache: "cacheFume"
 
@@ -1513,4 +1517,53 @@ caches:
 
 ```console
 pimo --load-cache cacheDepartement=departement.json --load-cache cacheFume=fume.json -c reverse.yml < data_sigo.json > data_out.json
+```
+
+**data_out.json**
+```json
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"non"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+```
+
+### Utilisation du fichier de configuration pour anonymiser
+
+Il est également possible d'utiliser **SIGO** à l'aide d'un fichier de configuration pour renseigner les paramètres de l'anonymisation.
+
+**sigo.yml**
+```yaml
+version: "1"
+
+kAnonymity: 4
+lDiversity: 2
+sensitives:
+  - malade
+aggregation: meanAggregation
+rules:
+  - name: age
+  - name: poids
+  - name: taille
+  - name: departement
+  - name: fume
+```
+
+```console
+sigo -c sigo.yml < data_transpose.json > data_sigo.json
+```
+
+**data_sigo.json**
+```json
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"non"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
 ```

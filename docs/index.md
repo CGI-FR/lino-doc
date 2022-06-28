@@ -43,9 +43,9 @@ Ces outils peuvent s'exécuter sur tous types d'environnements (*Linux*, *Window
 
 ## PIMO vs SIGO
 
-**PIMO** est un l'outil idéal pour faire de l'anonymisation lorsque l'objectif principal n'est pas de garder la "qualité" de la donnée, comme par exemple pour les jeux de tests. Lorsque l'on a besoin d'anonymiser des données dans le but de pouvoir tester une application, nous voulons que nos données restent conformes, que les règles métier qui définissent les données soient respectées (format conforme) et que la cohérence soit conservée, on souhaite qu'une même donnée présente dans plusieurs bases soit anonymisée de la même façon, et c'est ce qui est fait avec **LINO-PIMO**. <br>
+**PIMO** est l'outil idéal pour faire de l'anonymisation lorsque l'objectif principal n'est pas de garder la "qualité" de la donnée, comme par exemple pour les jeux de tests. Lorsque l'on a besoin d'anonymiser des données dans le but de tester une application, nous voulons que nos données restent conformes, que les règles métier qui définissent les données soient respectées (format conforme) et que la cohérence soit conservée, on souhaite qu'une même donnée présente dans plusieurs bases soit anonymisée de la même façon, et c'est ce qui est fait avec **LINO-PIMO**. <br>
 
-Cependant la "qualité" de la donnée (pertinance, véracité, ...) n'est plus respectée. Si des données répertoriant des caractéristiques (tels que le poids, l'âge, ...) de patients atteints par différentes pathologies doivent être anonymisées, **PIMO** ne pourra pas garder les corrélations qu'il peut y avoir entre le poids et la pathalogie par exemple. C'est dans ce contexte que l'utilisation de **SIGO** peut être utile. <br>  
+Cependant la "qualité" de la donnée (pertinence, véracité, ...) n'est plus respectée. Si des données répertoriant des caractéristiques (tels que le poids, l'âge, ...) de patients atteints par différentes pathologies doivent être anonymisées, **PIMO** ne pourra pas garder les corrélations qu'il peut y avoir entre le poids et la pathalogie par exemple. C'est dans ce contexte que l'utilisation de **SIGO** peut être utile. <br>  
 
 Les données de "bonnes qualités" garantissent l'utilisabilité de celles-ci, ce qui sous-entend pouvoir réutiliser les données pour faire de l'analyse, répondre à un objectif ou un problème à l'aide d'IA, ...
 
@@ -69,11 +69,11 @@ Il faut noter qu'il est impossible de garantir une anonymisation offrant un risq
 
 * **Publication**: Publier des données dans l'Open Data contenant des données sensibles. Pour être conforme au RGPD les données doivent être préalablement anonymisées.
 * **Utilisation d'IA**: Les Data Scientist peuvent entraîner des modèles de machine learning sur des jeux de données contenant des données sensibles. Pour limiter les risques, il est possible d'anonymiser les données.
-* **Analyse**: De même concernant les personnes qui analysent des données contenant des donées sensibles.
+* **Analyse**: De même concernant les personnes qui analysent des données contenant des données sensibles.
 
 ### Notions clés
 
-Un **enregistrement** est une ligne d'une table de base de données contenant les informations lié aux différents champ. 
+Un **enregistrement** est une ligne d'une table de base de données contenant les informations liées aux différents champ. 
 Les enregistrements permettent de stocker les éléments d’information individuels. Chaque enregistrement est constitué d’un ou plusieurs champs. Les champs correspondent aux colonnes d’une table. <br>
 
 Par exemple : 
@@ -85,8 +85,7 @@ Par exemple :
 |--------------|-------------------|----------|
 | nom + prenom |    age + taille   |   poids  |
 
-- **identifiant:** Attribut qui identifie un enregistrement de façon unique
- (par exemple, un numéro de sécurité sociale, un prénom, un nom).
+- **identifiant:** Attribut qui identifie un enregistrement de façon unique (par exemple, un numéro de sécurité sociale, un prénom + un nom).
 
 - **quasi-identifiant: (QI)** Ensemble d'attributs qui peuvent être utilisé pour identifier, de façon indirect, un enregistrement avec une forte probabilité (en liant ces attributs à des sources externes de données, par exemple {sexe, code postal, date de naissance} forme un quasi-identifiant connu dans de nombreux ensembles de données). 
 
