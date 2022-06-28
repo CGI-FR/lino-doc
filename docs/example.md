@@ -183,13 +183,13 @@ Prenons comme exemple le fichier suivant composé d'une liste de dossier. Chaque
       "identifiant": "AZ18-45B12",
       "personnes": [
         {
-          "nom": "martin",
-          "prénom": "veronique",
+          "nom": "Martin",
+          "prénom": "Veronique",
           "email": "martin.veronique@mail.com"
         },
         {
-          "nom": "robert",
-          "prénom": "joe",
+          "nom": "Robert",
+          "prénom": "Joe",
           "email": "rober.joe@mail.com"
         }
       ]
@@ -198,13 +198,13 @@ Prenons comme exemple le fichier suivant composé d'une liste de dossier. Chaque
       "identifiant": "JL34-28C79",
       "personnes": [
         {
-          "nom": "alain",
-          "prénom": "mercier",
+          "nom": "Alain",
+          "prénom": "Mercier",
           "email": "alain.mercier@mail.com"
         },
         {
-          "nom": "florian",
-          "prénom": "roger",
+          "nom": "Florian",
+          "prénom": "Roger",
           "email": "florian.roger@mail.com"
         }
       ]
@@ -240,7 +240,7 @@ masking:
           - selector:
               jsonpath: "email"
             mask:
-              template: "{{.nom}}.{{.prénom}}@mail.com"
+              template: "{{.nom | NoAccent | lower}}.{{.prénom | NoAccent | lower}}@mail.com"
 ```
 
 ```console 
@@ -256,12 +256,12 @@ pimo -c masking.yml < input.json | jq
         {
           "nom": "Fournier",
           "prénom": "Orianne",
-          "email": "Fournier.Orianne@mail.com"
+          "email": "fournier.orianne@mail.com"
         },
         {
           "nom": "Leclerc",
           "prénom": "Remi",
-          "email": "Leclerc.Remi@mail.com"
+          "email": "leclerc.remi@mail.com"
         }
       ]
     },
@@ -271,15 +271,119 @@ pimo -c masking.yml < input.json | jq
         {
           "nom": "Vidal",
           "prénom": "Michaël",
-          "email": "Vidal.Michaël@mail.com"
+          "email": "vidal.michael@mail.com"
         },
         {
           "nom": "Bertrand",
           "prénom": "Line",
-          "email": "Bertrand.Line@mail.com"
+          "email": "bertrand.line@mail.com"
         }
       ]
     }
   ]
 }
+```
+
+## Générer un identifiant avec pimo
+
+Si l'on reprend le fichier `masking.yml` de l'exemple précédent, on peut le modifier légèrement en remplaçant le masque *regex* par le masque *transcode* qui permet de produire une chaîne de caractère aléatoire (en préservant le format) et ainsi masquer l'identifiant.
+
+**`masking.yml`**
+```yaml
+version: "2"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "dossier.identifiant"
+    mask:
+        transcode: {}
+  - selector:
+      jsonpath: "dossier.personnes"
+    mask:
+      pipe:
+        masking:
+          - selector:
+              jsonpath: "nom"
+            mask: 
+              randomChoiceInUri: "pimo://surnameFR"
+          - selector:
+              jsonpath: "prénom"
+            mask: 
+              randomChoiceInUri: "pimo://nameFR"
+          - selector:
+              jsonpath: "email"
+            mask:
+              template: "{{.nom | NoAccent | lower}}.{{.prénom | NoAccent | lower}}@mail.com"
+```
+
+```console 
+pimo -c masking.yml < input.json | jq
+```
+
+```json
+{
+  "dossier": [
+    {
+      "identifiant": "PH30-37U04",
+      "personnes": [
+        {
+          "nom": "Fournier",
+          "prénom": "Orianne",
+          "email": "fournier.orianne@mail.com"
+        },
+        {
+          "nom": "Leclerc",
+          "prénom": "Remi",
+          "email": "leclerc.remi@mail.com"
+        }
+      ]
+    },
+    {
+      "identifiant": "FX70-68A25",
+      "personnes": [
+        {
+          "nom": "Vidal",
+          "prénom": "Michaël",
+          "email": "vidal.michael@mail.com"
+        },
+        {
+          "nom": "Bertrand",
+          "prénom": "Line",
+          "email": "bertrand.line@mail.com"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Un moyen de générer un identifiant est d'ajouter un nouveau champ **id** contenant la valeur d'un identifiant, et ensuite d'utiliser le masque *transcode* qui va reproduire aléatoirement des chaînes de caractères en copiant le format de l'identifiant ajouté précédemment.
+
+**`masking2.yml`**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "id"
+    masks:
+      - add: "1040-AZ-52"
+      - transcode: {}
+```
+
+```console
+pimo -c masking2.yml --empty-input -r 10
+```
+
+```json
+{"id":"3485-KV-59"}
+{"id":"6846-OT-19"}
+{"id":"5706-GF-02"}
+{"id":"5760-XR-28"}
+{"id":"6254-EY-45"}
+{"id":"5200-LL-28"}
+{"id":"7407-ZN-94"}
+{"id":"5547-PY-31"}
+{"id":"9949-TY-61"}
+{"id":"0383-IQ-93"}
 ```
