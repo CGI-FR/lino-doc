@@ -1224,4 +1224,346 @@ lino pull -f id=3 source -v5 --log-json 2> error.json
 lino pull -f id=3 source -v5 --log-json 2> >(tee error.json)
 ```
 
-.
+## SIGO
+
+### Installation
+
+Vous pouvez récupérer le binaire de `sigo` sur la page [CGI-FR/SIGO/releases](https://github.com/CGI-FR/SIGO/releases), en choisissant la version et l'environnement qui convient.
+
+* Sous Linux
+
+```console
+$ wget <url>/<file>.tar.gz --output-document sigo.tar.gz
+$ tar xzf sigo.tar.gz
+$ sigo --version
+```
+
+* Sous Windows 
+
+```powershell
+PS> Invoke-WebRequest <url>/<file>.tar.gz -OutFile sigo.tar.gz
+PS> Save-Module -Name 7Zip4Powershell -Path .
+PS> Import-Module .\7Zip4Powershell\2.1.0\7Zip4Powershell.psd1
+PS> Expand-7Zip sigo.tar.gz .
+PS> Expand-7Zip sigo.tar .
+PS> $env:Path += ";."
+PS> sigo --version
+```
+
+Vérifier l'installation avec la commande `sigo --help`.
+
+### Utilisation de SIGO avec des données mixtes
+
+Dans ce tutoriel, nous allons faire l'anonymisation d'un jeu de données générer par `pimo`.
+Supposons que nous avons dans un fichier des caractéristiques sur des individus tels que l'âge, le poids, la taille, la région, un attribut indiquant si la personne fume ou non et si elle est malade (donnée sensible).
+
+#### Génération de données avec PIMO
+
+```console
+pimo -c masking.yml --empty-input -r 100 > data.json
+```
+
+**masking.yml**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "age"
+    masks:
+      - add : ""
+      - randomInt:
+         min: 18
+         max: 95
+
+  - selector:
+      jsonpath: "poids"
+    masks:
+      - add : ""    
+      - randomDecimal:
+         min: 50
+         max: 100
+         precision: 2
+
+  - selector:
+      jsonpath: "taille"
+    masks:
+      - add : ""
+      - randomDecimal:
+         min: 1.40
+         max: 2.00
+         precision: 2
+
+  - selector:
+      jsonpath: "departement"
+    masks:
+      - add : ""
+      - randomChoice:
+        - "Auvergne-Rhône-Alpes"
+        - "Bourgogne-Franche-Comté"
+        - "Bretagne"
+        - "Centre-Val de Loire"
+        - "Corse"
+        - "Grand-Est"
+        - "Hauts-de-France"
+        - "Île-de-France"
+        - "Normandie"
+        - "Nouvelle-Aquitaine"
+        - "Occitanie"
+        - "Pays de Loire"
+        - "Provence-Alpes-Côte d'Azur"
+
+  - selector:
+      jsonpath: "fume"
+    masks:
+      - add : ""
+      - randomChoice:
+         - "oui"
+         - "non"
+
+  - selector:
+      jsonpath: "malade"
+    masks:
+      - add : ""
+      - randomChoice:
+        - "oui"
+        - "non"
+```
+
+**data.json**
+```json
+{"age":25,"poids":90.98,"taille":1.43,"departement":"Corse","fume":"non","malade":"oui"}
+{"age":70,"poids":54.56,"taille":1.96,"departement":"Occitanie","fume":"non","malade":"non"}
+{"age":58,"poids":77.71,"taille":1.64,"departement":"Provence-Alpes-Côte d'Azur","fume":"oui","malade":"oui"}
+{"age":19,"poids":75.69,"taille":1.59,"departement":"Provence-Alpes-Côte d'Azur","fume":"oui","malade":"oui"}
+{"age":70,"poids":81.77,"taille":1.72,"departement":"Corse","fume":"oui","malade":"non"}
+```
+
+`sigo` est capable d'anonymiser des jeux de données composés essentiellement de flottants. Pour pouvoir anonymiser un jeu de données comportant des attributs catégoriels comme dans l'exemple ci-dessus, il faut préalablement effectuer une conversion pour transformer les attributs textuels en flottant. Cette manipulation est très facile avec `pimo`.
+
+#### Convertion avec PIMO 
+
+Nous allons utiliser la notion de cache dans `pimo`, ce qui va nous permettre de créer un dictionnaire *clé-valeur* ou la **clé** sera la valeur de l'attribut catégoriel et la **valeur** sera le flottant correspondant à la clé, que l'on gardera en mémoire afin de faire la conversion inverse une fois l'anonymisation faite.
+
+**cache.yml**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "departement"
+    mask:
+      incremental:
+        start: 1
+        increment: 1
+    cache: "cacheDepartement"
+
+  - selector:
+      jsonpath: "fume"
+    mask:
+      incremental:
+        start: 1
+        increment: 1
+    cache: "cacheFume"
+
+caches:
+  cacheDepartement:
+    unique: true
+    reverse: false
+  cacheFume:
+    unique: true
+    reverse: false
+```
+
+```console
+pimo -c cache.yml --dump-cache cacheDepartement=departement.json <<EOF
+{"departement": "Auvergne-Rhône-Alpes"}
+{"departement": "Bourgogne-Franche-Comté"}
+{"departement": "Bretagne"}
+{"departement": "Centre-Val de Loire"}
+{"departement": "Corse"}
+{"departement": "Grand-Est"}
+{"departement": "Hauts-de-France"}
+{"departement": "Île-de-France"}
+{"departement": "Normandie"}
+{"departement": "Nouvelle-Aquitaine"}
+{"departement": "Occitanie"}
+{"departement": "Pays de Loire"}
+{"departement": "Provence-Alpes-Côte d'Azur"}
+EOF
+```
+
+**departement.json**
+```json
+{"key":"Normandie","value":9}
+{"key":"Bourgogne-Franche-Comté","value":2}
+{"key":"Bretagne","value":3}
+{"key":"Hauts-de-France","value":7}
+{"key":"Grand-Est","value":6}
+{"key":"Île-de-France","value":8}
+{"key":"Nouvelle-Aquitaine","value":10}
+{"key":"Occitanie","value":11}
+{"key":"Pays de Loire","value":12}
+{"key":"Auvergne-Rhône-Alpes","value":1}
+{"key":"Centre-Val de Loire","value":4}
+{"key":"Corse","value":5}
+{"key":"Provence-Alpes-Côte d'Azur","value":13}
+```
+
+```console
+pimo -c cache.yml --dump-cache cacheFume=fume.json <<EOF
+{"fume": "oui"}
+{"fume": "non"}
+EOF
+```
+
+**fume.json**
+```json
+{"key":"oui","value":1}
+{"key":"non","value":2}
+```
+
+```console
+pimo --load-cache cacheDepartement=departement.json --load-cache cacheFume=fume.json -c transpose.yml < data.json > data_transpose.json
+```
+
+**transpose.yml**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "departement"
+    mask:
+      fromCache: "cacheDepartement"
+
+  - selector:
+      jsonpath: "fume"
+    mask:
+      fromCache: "cacheFume"
+
+caches:
+  cacheDepartement:
+    unique: true
+    reverse: false
+  cacheFume:
+    unique: true
+    reverse: false
+```
+
+**data_transpose.json**
+```json
+{"age":25,"poids":90.98,"taille":1.43,"departement":5,"fume":2,"malade":"oui"}
+{"age":70,"poids":54.56,"taille":1.96,"departement":11,"fume":2,"malade":"non"}
+{"age":58,"poids":77.71,"taille":1.64,"departement":13,"fume":1,"malade":"oui"}
+{"age":19,"poids":75.69,"taille":1.59,"departement":13,"fume":1,"malade":"oui"}
+{"age":70,"poids":81.77,"taille":1.72,"departement":5,"fume":1,"malade":"non"}
+```
+
+Une fois que notre jeu de donnée est entièrement en flottant (mis à part la donnée sensible, mais cela n'est pas dérangeant puisque `sigo` ne modifiera pas cette donnée). Nous pouvons passer à l'anonymisation.
+
+#### Anonymisation avec SIGO
+
+```console
+sigo -q age,poids,taille,departement,fume -s malade -k 4 -l 2 -a meanAggregation < data_transpose.json > data_sigo.json
+```
+
+**data_sigo.json**
+```json
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"non"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+```
+
+#### Transformation inverse avec PIMO
+
+On veut pouvoir retrouver nos données avec le même format que les données originales, pour ce faire nous allons utiliser le paramètre *reverse* de l'option `cache`.
+
+**reverse.yml**
+```yaml
+version: "1"
+seed: 42
+masking:
+  - selector:
+      jsonpath: "departement"
+    masks:
+      # arrondir la valeur de l'attribut
+      - template: "{{round (toString .departement) 0 }}" # string
+      # changer le type (number en float64) 
+      - fromjson: "departement" # float64
+      # retrouver la clé correspondant à la valeur dans le fichier departement.json
+      - fromCache: "cacheDepartement"
+
+  - selector:
+      jsonpath: "fume"
+    masks:
+      - template: "{{round (toString .fume) 0 }}"
+      - fromjson: "fume"
+      - fromCache: "cacheFume"
+
+caches:
+  cacheDepartement:
+    unique: false
+    reverse: true
+  cacheFume:
+    unique: false
+    reverse: true
+```
+
+```console
+pimo --load-cache cacheDepartement=departement.json --load-cache cacheFume=fume.json -c reverse.yml < data_sigo.json > data_out.json
+```
+
+**data_out.json**
+```json
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"non"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":"Centre-Val de Loire","fume":"non","malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":"Hauts-de-France","fume":"non","malade":"non"}
+```
+
+### Utilisation du fichier de configuration pour anonymiser
+
+Il est également possible d'utiliser **SIGO** à l'aide d'un fichier de configuration pour renseigner les paramètres de l'anonymisation.
+
+**sigo.yml**
+```yaml
+version: "1"
+
+kAnonymity: 4
+lDiversity: 2
+sensitives:
+  - malade
+aggregation: meanAggregation
+rules:
+  - name: age
+  - name: poids
+  - name: taille
+  - name: departement
+  - name: fume
+```
+
+```console
+sigo -c sigo.yml < data_transpose.json > data_sigo.json
+```
+
+**data_sigo.json**
+```json
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"non"}
+{"age":32,"poids":58.81,"taille":1.51,"departement":4,"fume":1.5,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"oui"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+{"age":48,"poids":66.07,"taille":1.56,"departement":7.25,"fume":1.75,"malade":"non"}
+```

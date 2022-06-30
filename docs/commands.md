@@ -4,6 +4,7 @@ LINO-PIMO est un ETL (**E**xtract **T**ransform **L**oad) simple pour gérer les
 
 1. [LINO](#lino)
 2. [PIMO](#pimo)
+3. [SIGO](#pimo)
 
 ## LINO <a name = "lino"></a>
 
@@ -349,3 +350,30 @@ $ pimo jsonchema
 ### play
 
 [A venir]
+
+## SIGO <a name = "sigo"></a>
+
+`sigo` anonymise un jeu de données en repectant le k-anonymat et la l-diversité. Il est possible de configurer l'anonymisation en ligne de commande ou à l'aide d'un fichier de configuration `yml`.
+
+### help
+
+**Description :**
+    Aide pour les commandes.
+
+> ```console
+> $ sigo --help
+>```
+
+- **Utilisation :**
+    `sigo <option>`
+<br>
+    - *`<option>` disponible :*
+        - `--k-value,-k <value>`
+        - `--l-value,-l <value>`
+        - `--quasi-identifier,-q <list>`
+        - `--sensitive,-s <list>`
+        - `--anonymizer,-a <method>`
+        - `--cluster-info,-i <name_of_field>`
+        - `--entropy [true|false]`
+        - `--configuration, -c <file>`
+
