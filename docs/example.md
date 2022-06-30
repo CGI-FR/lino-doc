@@ -387,3 +387,97 @@ pimo -c masking2.yml --empty-input -r 10
 {"id":"9949-TY-61"}
 {"id":"0383-IQ-93"}
 ```
+
+## Générer un RIB avec pimo
+
+Voici le fichier de configuration à passer en paramètre de `pimo` pour générer un RIB.
+
+**`masking.yml`**
+```yaml
+version: "1"
+seed: 42
+masking:
+  # CODE BANQUE
+  - selector:
+      jsonpath: "CODE_BANQUE"
+    masks:
+      - add-transient: ""
+      - regex: "[0-9]{5}"
+      # ou il est possible récupérer la liste des codes des banques autorisés en France
+      # - randomChoiceInUri: "file://codeBanque.csv"
+
+  # CODE GUICHET 
+  - selector:
+      jsonpath: "CODE_GUICHET"
+    masks:
+      - add-transient: "{{randNumeric 5}}"
+  
+  # 10 premiers chiffres/lettres du N° compte
+  - selector:
+      jsonpath: "NUMERO_COMPTE_10"
+    masks:
+      - add-transient: ""
+      - regex: "([0-9A-Z]-){9}[0-9A-Z]"
+  
+  # Dernier caractère du N° compte
+  - selector:
+      jsonpath: "NUMERO_COMPTE_11"
+    masks:
+      - add-transient: ""
+      - regex: "[0-9A-Z]"
+
+  # Conversion N° compte en chiffres
+  # --------------------------------
+  - selector:
+      jsonpath: "NUMERO_COMPTE_10_ENC"
+    mask:
+      add-transient : '{{$a := split "-" .NUMERO_COMPTE_10}}{{range $i := $a}}{{if eq $i "A" "J"}}1{{else if eq $i "B" "K" "S"}}2{{else if eq $i "C" "L" "T"}}3{{else if eq $i "D" "M" "U"}}4{{else if eq $i "E" "N" "V"}}5{{else if eq $i "F" "O" "W"}}6{{else if eq $i "G" "P" "X"}}7{{else if eq $i "H" "Q" "Y"}}8{{else if eq $i "I" "R" "Z"}}9{{else}}{{$i}}{{end}}{{end}}'
+  
+  - selector:
+      jsonpath: "NUMERO_COMPTE_11_ENC"
+    mask:
+      add-transient : '{{if eq .NUMERO_COMPTE_11 "A" "J"}}1{{else if eq .NUMERO_COMPTE_11 "B" "K" "S"}}2{{else if eq .NUMERO_COMPTE_11 "C" "L" "T"}}3{{else if eq .NUMERO_COMPTE_11 "D" "M" "U"}}4{{else if eq .NUMERO_COMPTE_11 "E" "N" "V"}}5{{else if eq .NUMERO_COMPTE_11 "F" "O" "W"}}6{{else if eq .NUMERO_COMPTE_11 "G" "P" "X"}}7{{else if eq .NUMERO_COMPTE_11 "H" "Q" "Y"}}8{{ else if eq .NUMERO_COMPTE_11 "I" "R" "Z"}}9{{else}}{{.NUMERO_COMPTE_11}}{{end}}'
+  # --------------------------------
+
+  # N° compte sans les "-"
+  - selector:
+      jsonpath: "NUMERO_COMPTE_10_"
+    mask:
+      add-transient: '{{$a := split "-" .NUMERO_COMPTE_10}}{{range $i := $a}}{{$i}}{{end}}'
+
+  # RIB sans la clé
+  - selector:
+      jsonpath: "VALEUR_RIB"
+    mask:
+      add-transient: '{{.CODE_BANQUE}}{{.CODE_GUICHET}}{{.NUMERO_COMPTE_10_}}{{.NUMERO_COMPTE_11}}'
+
+  # RIB sans la clé (en chiffres) pour pouvoir faire le calcul de la clé
+  - selector:
+      jsonpath: "VALEUR_RIB_ENC"
+    mask:
+      add-transient: '{{.CODE_BANQUE}}{{.CODE_GUICHET}}{{.NUMERO_COMPTE_10_ENC}}{{.NUMERO_COMPTE_11_ENC}}'
+  
+  # Calcul de la clé du RIB
+  - selector:
+      jsonpath: "CLE_RIB"
+    masks:
+      - add-transient: '{{ sub 97 (mod (add (mul (int64 .CODE_BANQUE) 89) (mul (int64 .CODE_GUICHET) 15) (mul (int64 (atoi .VALEUR_RIB_ENC)) 3)) 97)}}'
+
+  # Totalité du RIB
+  - selector:
+      jsonpath: "RIB"
+    masks:
+      - add: '{{(toString .VALEUR_RIB)}}{{if eq (len .CLE_RIB) 1}}0{{(toString .CLE_RIB)}}{{else}}{{(toString .CLE_RIB)}}{{end}}'
+```
+
+```console 
+pimo -c masking.yml --empty-input -r 5
+```
+
+```json
+{"RIB":"4605166323J59GRWQIHTW168"}
+{"RIB":"1923237948OZQED7UWBSZ169"}
+{"RIB":"9975910045EVWOTLWVLYN101"}
+{"RIB":"1737388196VWXQNFFBAX0108"}
+{"RIB":"79293797113456T6XWNU1100"}
+```
