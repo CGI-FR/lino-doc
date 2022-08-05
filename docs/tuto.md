@@ -843,7 +843,7 @@ $ lino push delete cible < bob.jsonl
 
 Comme pour la commande `pull` (voir paramètre `export`), il est possible de configurer sous quel format se présentent les données dans le flux JSON. Pour cela nous pouvons utilier le paramètre `import` dans le fichier  `table.yaml` au niveau de la définition des colonnes de chaque table.
 
-Dans l'exemple suivant, la colonne `birth_date` de la table `pets` est déclarée comme ayant le format `timestamp` dans le flux JSON. Cela permet à LINO de comprendre quelle conversion doit avoir lieu si la colonne cible en base de données est de type `DATE` par exemple.
+Dans l'exemple suivant, la colonne `birth_date` de la table `pets` est déclarée comme ayant le format `timestamp` dans le flux JSON. Cela permet à LINO de comprendre quelle conversion doit avoir lieu si la colonne cible en base de données est de type `DATE` par exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :
 
 ```yaml
   - name: pets
