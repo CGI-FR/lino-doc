@@ -1477,7 +1477,7 @@ masking:
 
 `sigo` est capable d'anonymiser des jeux de données composés essentiellement de flottants. Pour pouvoir anonymiser un jeu de données comportant des attributs catégoriels comme dans l'exemple ci-dessus, il faut préalablement effectuer une conversion pour transformer les attributs textuels en flottant. Cette manipulation est très facile avec `pimo`.
 
-#### Convertion avec PIMO 
+#### Conversion avec PIMO 
 
 Nous allons utiliser la notion de cache dans `pimo`, ce qui va nous permettre de créer un dictionnaire *clé-valeur* ou la **clé** sera la valeur de l'attribut catégoriel et la **valeur** sera le flottant correspondant à la clé, que l'on gardera en mémoire afin de faire la conversion inverse une fois l'anonymisation faite.
 
