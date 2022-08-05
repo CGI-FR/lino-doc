@@ -615,7 +615,9 @@ $ lino pull --table pets --limit 1
 
 #### Extraction en spécifiant le format des données JSON
 
-Par défaut, les données extraites par la commande `lino pull` sont transformé dans le type JSON qui semble le plus adapté en fonction des informations fournies par le driver de base de données. Par exemple une colonne de type VARCHAR sera formatée dans le flux JSON avec des "guillemets" pour indiquer que c'est un type chaîne de caractère. De la même façon, une colonne de type NUMERIC sera formatée sans guillemets dans le flux JSON et avec un point pour le séparateur de décimales, une colonne de type BLOB sera quant à elle transformée en base64 puis le résultat de cette transformation sera intégré au flux JSON sous forme de chaîne de caractère (la spécification JSON ne permet pas de faire autrement pour les données binaires). Un autre cas qui peut se produire est lorsque la données fournie par la base de données contient des caractères non-imprimables, dans ce cas la données est aussi encodée en base64 puis ajoutée sous forme de chaîne de caractères.
+Par défaut, les données extraites par la commande `lino pull` sont transformé dans le type JSON qui semble le plus adapté en fonction des informations fournies par le driver de base de données. Par exemple une colonne de type VARCHAR sera formatée dans le flux JSON avec des "guillemets" pour indiquer que c'est un type chaîne de caractère. De la même façon, une colonne de type NUMERIC sera formatée sans guillemets dans le flux JSON et avec un point pour le séparateur de décimales.
+
+Une colonne de type BLOB sera quant à elle transformée en base64 puis le résultat de cette transformation sera intégré au flux JSON sous forme de chaîne de caractère (la spécification JSON ne permet pas de faire autrement pour les données binaires). Un autre cas qui peut se produire est lorsque la données fournie par la base de données contient des caractères non-imprimables, dans ce cas la données est aussi encodée en base64 puis ajoutée sous forme de chaîne de caractères.
 
 Pour modifier ce comportement par défaut, il est possible d'utiliser la propriété `export` au niveau de chaque colonne spécifiées dans le fichier `table.yaml`. Ci dessous un exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :
 
@@ -647,6 +649,19 @@ Les valeurs disponibles pour la propriété export sont :
 | datetime | La donnée sera d'abord convertie au format RFC3339 (ex: 2006-01-02T15:04:05Z) puis exportée en JSON avec des "guillemets" (chaîne de caractères représentant une date). |
 | timestamp | La donnée sera d'abord convertie en timestamp UNIX puis exportée en JSON sans "guillemets" au format numérique (format numérique sans partie décimale). |
 | no | La donnée ne sera ni exportée dans le flux JSON, ni extraite de la base de données. |
+
+Si l'on souhaite définir le format de quelques colonnes dans le fichier tables.yaml tout en exportant l'intégralité des colonne, cela est possible en ajoutant le paramètre `export: all` sur l'objet table. Ce paramètre pourra à l'avenir prendre d'autres valeurs.
+
+```yaml
+  - name: pets
+    keys:
+      - id
+    columns:
+      - name: name
+      - name: birth_date
+        export: timestamp
+    export: all
+```
 
 ### Recharger des données 
 
