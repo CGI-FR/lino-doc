@@ -530,7 +530,7 @@ $ cat leo.json
 {"birth_date":"2000-09-07T00:00:00Z","fk_visits_pet_id":[],"id":1,"name":"Leo","owner_id":1,"type_id":1}
 ```
 
-#### Extraction de plusiseurs entités
+#### Extraction de plusieurs entités
 
 `lino` peut extraire plusieurs enregistrements. Pour faciliter le traitement en *stream*, chaque ligne contient un objet *JSON* (*JSON Line*).
 
@@ -615,11 +615,11 @@ $ lino pull --table pets --limit 1
 
 #### Extraction en spécifiant le format des données JSON
 
-Par défaut, les données extraites par la commande `lino pull` sont transformé dans le type JSON qui semble le plus adapté en fonction des informations fournies par le driver de base de données. Par exemple une colonne de type VARCHAR sera formatée dans le flux JSON avec des "guillemets" pour indiquer que c'est un type chaîne de caractère. De la même façon, une colonne de type NUMERIC sera formatée sans guillemets dans le flux JSON et avec un point pour le séparateur de décimales.
+Par défaut, les données extraites par la commande `lino pull` sont transformées dans le type JSON qui semble le plus adapté en fonction des informations fournies par le driver de base de données. Par exemple une colonne de type VARCHAR sera formatée dans le flux JSON avec des "guillemets" pour indiquer que c'est un type chaîne de caractère. De la même façon, une colonne de type NUMERIC sera formatée sans guillemets dans le flux JSON et avec un point pour le séparateur de décimales.
 
 Une colonne de type BLOB sera quant à elle transformée en base64 puis le résultat de cette transformation sera intégré au flux JSON sous forme de chaîne de caractère (la spécification JSON ne permet pas de faire autrement pour les données binaires). Un autre cas qui peut se produire est lorsque la données fournie par la base de données contient des caractères non-imprimables, dans ce cas la données est aussi encodée en base64 puis ajoutée sous forme de chaîne de caractères.
 
-Pour modifier ce comportement par défaut, il est possible d'utiliser la propriété `export` au niveau de chaque colonne spécifiées dans le fichier `table.yaml`. Ci dessous un exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :
+Pour modifier ce comportement par défaut, il est possible d'utiliser la propriété `export` au niveau de chaque colonne spécifiée dans le fichier `table.yaml`. Ci dessous un exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :
 
 ```yaml
   - name: pets
@@ -631,14 +631,14 @@ Pour modifier ce comportement par défaut, il est possible d'utiliser la propri�
         export: timestamp
 ```
 
-Les données birth_date exportées dans le flux JSON seront alors converties en un timestamp unix (donc en numeric).
+Les valeur de la colonne birth_date exportées dans le flux JSON seront alors converties en un timestamp unix (donc en numeric).
 
 ```
 $ lino pull --table pets --limit 1
 {"name":"Leo","birth_date":968277600}
 ```
 
-Les valeurs disponibles pour la propriété export sont :
+Les options disponibles pour la propriété `export` sont :
 
 | Valeur | Effet |
 | -- | -- |
@@ -650,7 +650,7 @@ Les valeurs disponibles pour la propriété export sont :
 | timestamp | La donnée sera d'abord convertie en timestamp UNIX puis exportée en JSON sans "guillemets" au format numérique (format numérique sans partie décimale). |
 | no | La donnée ne sera ni exportée dans le flux JSON, ni extraite de la base de données. |
 
-Si l'on souhaite définir le format de quelques colonnes dans le fichier tables.yaml tout en exportant l'intégralité des colonne, cela est possible en ajoutant le paramètre `export: all` sur l'objet table. Ce paramètre pourra à l'avenir prendre d'autres valeurs.
+Si l'on souhaite définir le format de quelques colonnes dans le fichier `table.yaml` tout en exportant l'intégralité des colonnes, cela est possible en ajoutant le paramètre `export: all` sur l'objet table. Ce paramètre pourra à l'avenir prendre d'autres valeurs, mais c'est la seule option disponible actuellement.
 
 ```yaml
   - name: pets
@@ -839,9 +839,9 @@ Si on veut supprimer ***Bob*** de l'application (action impossible depuis l'IHM)
 $ lino push delete cible < bob.jsonl
 ```
 
-#### Insertion (ou mise à jour) avec validation/conversion du format des données
+#### Validation/conversion du format des données
 
-Comme pour la commande `pull` (voir paramètre `export`), il est possible de configurer sous quel format se présente les données dans le flux JSON. Pour cela nous pouvons utilier le paramètre `import` dans le fichier  `tables.yaml` au niveau de la définition de chaque colonne pour chaque table.
+Comme pour la commande `pull` (voir paramètre `export`), il est possible de configurer sous quel format se présentent les données dans le flux JSON. Pour cela nous pouvons utilier le paramètre `import` dans le fichier  `table.yaml` au niveau de la définition des colonnes de chaque table.
 
 Dans l'exemple suivant, la colonne `birth_date` de la table `pets` est déclarée comme ayant le format `timestamp` dans le flux JSON. Cela permet à LINO de comprendre quelle conversion doit avoir lieu si la colonne cible en base de données est de type `DATE` par exemple.
 
@@ -858,18 +858,18 @@ Les valeurs disponibles pour la propriété `import` sont :
 
 | Valeur | Effet |
 | -- | -- |
-| <vide> | Comportement par défaut, LINO tentera d'utiliser la valeur lue depuis le JSON auprès du driver de base de données. |
-| string | La donnée sera lue depuis JSON au format chaîne de caractères (un platage aura lieu si la valeur n'est pas au format chaîne de caractères). |
+| <vide> | Comportement par défaut, LINO tentera d'utiliser directement la valeur lue depuis le JSON auprès du driver de base de données. |
+| string | La donnée sera lue depuis JSON au format chaîne de caractères (un plantage aura lieu si la valeur n'est pas au format chaîne de caractères). |
 | numeric | La donnée sera lue depuis JSON au format 0.00 ou 0 (format numérique avec ou sans partie décimale). |
 | base64 ou binary | La donnée sera lue au format chaîne de caractères, puis décodée en base64, et transmise sous format binaire à la base de données. |
 | datetime | La donnée sera lue sous forme de chaîne de caractères représentant une date au format RFC3339 (ex: 2006-01-02T15:04:05Z). |
 | timestamp | La donnée sera lue en numeric représentant un timestamp UNIX. |
 
-Il est à noter que certains formats impliquent une conversion de données (le format `binary` par exemple, transforme la données d'une chaîne de caractère vers un tableau d'octets binaire).
+Il est à noter que certains formats impliquent une conversion de données (le format `binary` par exemple, transforme la données d'une chaîne de caractères vers un tableau d'octets binaire).
 
 Le paramètre `import` permet de contrôler de manière encore plus fine cette conversion implicite. Le format peut en effet être suivi du type sous-jacent à utiliser pour convertir la données. Par exemple `import: binary(int64)` ne convertira pas la donnée en tableau d'octets mais en un entier sur 64bit. Cela permet de gérer des cas particuliers qui peuvent se produire avec certaines bases de données, si le driver s'attend à voir un type différent de celui qui est produit par défaut.
 
-Il est important de bien comprendre que dans cet exemple `import: binary(int64)`, la partie gauche `binary` représente le format dans lequel la donnée est présenté sur le flux JSON, et la partie droite `int64` représente le type dans lequel la valeur est convertie avant d'être envoyé au driver base de données (pour insertion ou mise à jour).
+Il est important de bien comprendre que dans cet exemple `import: binary(int64)`, la partie gauche `binary` représente le format dans lequel la donnée est présenté sur le flux JSON, et la partie droite `int64` représente le type dans lequel la valeur est convertie avant d'être envoyée au driver base de données (pour insertion ou mise à jour).
 
 Les types pouvant être utilisés sont :
 
