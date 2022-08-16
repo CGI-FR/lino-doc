@@ -95,7 +95,7 @@ masking:
   - selector:
       jsonpath: "VALEUR_NIR"
     masks:
-      - add-transient: '{{if eq .SEXE "M" }}2{{else}}1{{end}}{{substr 8 10 (toString .DATE_NAISSANCE)}}{{substr 3 5 (toString .DATE_NAISSANCE)}}{{.FIN_NIR}}'
+      - add-transient: '{{if eq .SEXE "M" }}1{{else}}2{{end}}{{substr 8 10 (toString .DATE_NAISSANCE)}}{{substr 3 5 (toString .DATE_NAISSANCE)}}{{.FIN_NIR}}'
 #----------------------------------------------------------
 
 #----------------------------------------------------------
