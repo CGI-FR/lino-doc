@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Exemples - Docs LINO-PIMO</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Exemples";
+        var mkdocs_page_input_path = "example.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Docs LINO-PIMO
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tuto.html">Tutoriel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docs.html">Docs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="commands.html">Commandes</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="example.html">Exemples</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#generer-le-nir-avec-pimo">Générer le NIR avec pimo</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1ere-methode-regex">1ère méthode : regex</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2eme-methode-enchainement-de-masking">2ème méthode : enchaînement de masking</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generer-une-adresse-mail-avec-pimo">Générer une adresse mail avec pimo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#masquer-des-donnees-imbriquees-avec-pimo">Masquer des données imbriquées avec pimo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generer-un-identifiant-avec-pimo">Générer un identifiant avec pimo</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Docs LINO-PIMO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Exemples</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="exemples-pratiques-sur-les-outils-lino-pimo">Exemples pratiques sur les outils LINO-PIMO</h1>
+<h2 id="generer-le-nir-avec-pimo">Générer le NIR avec pimo</h2>
+<p>Le NIR plus communément appelé numéro de sécurité sociale est un numéro unique attribué par l'INSEE dès la naissance.</p>
+<p>Il est composé de 15 chiffres : </p>
+<table>
+<thead>
+<tr>
+<th align="center">n°1</th>
+<th align="center">n°2</th>
+<th align="center">n°3</th>
+<th align="center">n°4</th>
+<th align="center">n°5</th>
+<th align="center">clé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Sexe</td>
+<td align="center">Année de  naissance</td>
+<td align="center">Mois de  naissance</td>
+<td align="center">Lieu de  naissance</td>
+<td align="center">Numéro d'ordre  de naissance</td>
+<td align="center">Clé de  contrôle</td>
+</tr>
+<tr>
+<td align="center"><strong>X</strong></td>
+<td align="center"><strong>XX</strong></td>
+<td align="center"><strong>XX</strong></td>
+<td align="center"><strong>XXXXX</strong></td>
+<td align="center"><strong>XXX</strong></td>
+<td align="center"><strong>XX</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1ere-methode-regex">1ère méthode : regex</h3>
+<p>La 1ère méthode consiste à générer le numéro de sécurité sociale sans se préoccuper de connaître les informations liées à la personne (sexe, année de naissance, ...).</p>
+<p><strong><code>masking.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;VALEUR_NIR&quot;
+    masks:
+    - add-transient: &quot;&quot;
+    - regex: &quot;(1|2)[0-9]{2}(0[1-9]|1[0-2])((0[1-9]|[1-8][0-9]|9[0-5])([0-8][0-9]{2}|90[0-9]))[0-9]{3}&quot;
+
+    # Partie Clé du NIR
+    # Clé NIR = 97 - ( ( Valeur numérique du NIR ) modulo 97 )
+  - selector:
+      jsonpath: &quot;CLE_NIR&quot;
+    mask:
+      add-transient: '{{ sub 97 (mod (int64 .VALEUR_NIR)  97)}}'
+
+  - selector:
+      jsonpath: &quot;NIR&quot;
+    mask:
+      add: '{{(toString .VALEUR_NIR)}}{{if eq (len .CLE_NIR) 1}}0{{(toString .CLE_NIR)}}{{else}}{{(toString .CLE_NIR)}}{{end}}'
+</code></pre>
+<pre><code class="language-console">pimo -c masking.yml --empty-input -r 5
+</code></pre>
+<pre><code class="language-json">{&quot;NIR&quot;:&quot;271067590908916&quot;}
+{&quot;NIR&quot;:&quot;148029053117547&quot;}
+{&quot;NIR&quot;:&quot;251079456401559&quot;}
+{&quot;NIR&quot;:&quot;198109213274847&quot;}
+{&quot;NIR&quot;:&quot;161113883742960&quot;}
+</code></pre>
+<h3 id="2eme-methode-enchainement-de-masking">2ème méthode : enchaînement de masking</h3>
+<p>La 2ème méthode consiste, cette fois-ci, à générer le NIR en gardant la cohérence entre les informations d'une personne et son numéro de sécurité sociale.</p>
+<p><strong><code>masking.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;2&quot;
+seed: 42
+masking:
+#----------------------------------------------------------
+    # Partie n°1 + n°2 + n°3 du NIR
+  - selector :
+      jsonpath: &quot;SEXE&quot;
+    masks:
+      - add: &quot;&quot;
+      - randomChoice:
+        - &quot;M&quot;
+        - &quot;F&quot;
+
+  - selector :
+      jsonpath: &quot;DATE_NAISSANCE&quot;
+    masks:
+      - add: &quot;&quot;
+      - randDate:
+          dateMin: &quot;1960-01-01T00:00:00Z&quot;
+          dateMax: &quot;2002-12-31T00:00:00Z&quot;
+      - dateParser:
+          outputFormat: &quot;02/01/2006&quot;
+#----------------------------------------------------------
+
+#----------------------------------------------------------  
+    # Partie n°4 + n°5 du NIR
+  - selector:
+      jsonpath: &quot;ADRESSE_BRUTE_NAISSANCE&quot;
+    masks:
+      - add-transient: &quot;&quot;
+      - randomChoiceInUri: &quot;file://adresse.csv&quot;
+
+  - selector:
+      jsonpath: &quot;CODE_INSEE_NAISSANCE&quot;
+    masks:
+      - add: '{{$a := split &quot;;&quot; (toString .ADRESSE_BRUTE_NAISSANCE) }}{{$a._6}}'
+
+  - selector:
+      jsonpath: &quot;ORDRE_NAISSANCE&quot;
+    masks:
+      - add: &quot;&quot;
+      - regex: &quot;[0-9]{3}&quot;
+
+  - selector:
+      jsonpath: &quot;FIN_NIR&quot;
+    masks:
+      - add-transient: &quot;{{(toString .CODE_INSEE_NAISSANCE)}}{{(toString .ORDRE_NAISSANCE)}}&quot;
+#----------------------------------------------------------
+
+#----------------------------------------------------------
+    # Partie Valeur du NIR
+  - selector:
+      jsonpath: &quot;VALEUR_NIR&quot;
+    masks:
+      - add-transient: '{{if eq .SEXE &quot;M&quot; }}1{{else}}2{{end}}{{substr 8 10 (toString .DATE_NAISSANCE)}}{{substr 3 5 (toString .DATE_NAISSANCE)}}{{.FIN_NIR}}'
+#----------------------------------------------------------
+
+#----------------------------------------------------------
+    # Partie Clé du NIR
+    # Clé NIR = 97 - ( ( Valeur numérique du NIR ) modulo 97 )
+  - selector:
+      jsonpath: &quot;CLE_NIR&quot;
+    masks:
+      - add-transient: '{{ sub 97 (mod (int64 .VALEUR_NIR)  97)}}'
+#----------------------------------------------------------
+
+#----------------------------------------------------------
+    # Totalité du NIR
+  - selector:
+      jsonpath: &quot;NIR&quot;
+    masks:
+      - add: '{{(toString .VALEUR_NIR)}}{{if eq (len .CLE_NIR) 1}}0{{(toString .CLE_NIR)}}{{else}}{{(toString .CLE_NIR)}}{{end}}'
+#----------------------------------------------------------
+</code></pre>
+<p>Ci-dessous les 5 premières lignes du fichier <code>adresse.csv</code>:</p>
+<table>
+<thead>
+<tr>
+<th align="center">id</th>
+<th align="center">id_fantoir</th>
+<th align="center">numero</th>
+<th align="center">rep</th>
+<th align="center">nom_voie</th>
+<th align="center">code_postal</th>
+<th align="center">code_insee</th>
+<th align="center">nom_commune</th>
+<th align="center">code_insee_ancienne_commune</th>
+<th align="center">nom_ancienne_commune</th>
+<th align="center">x</th>
+<th align="center">y</th>
+<th align="center">lon</th>
+<th align="center">lat</th>
+<th align="center">alias</th>
+<th align="center">nom_ld</th>
+<th align="center">libelle_acheminement</th>
+<th align="center">nom_afnor</th>
+<th align="center">source_position</th>
+<th align="center">source_nom_voie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">59001_nhsgdi_00001</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">Chemin Hem Lenglet</td>
+<td align="center">59268</td>
+<td align="center">59001</td>
+<td align="center">Abancourt</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">715617.46</td>
+<td align="center">7015153.4</td>
+<td align="center">3.218633</td>
+<td align="center">50.234188</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">ABANCOURT</td>
+<td align="center">CHEMIN HEM LENGLET</td>
+<td align="center">arcep</td>
+<td align="center">arcep</td>
+</tr>
+<tr>
+<td align="center">59001_0260_00001</td>
+<td align="center">59001_0260</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">Rue Verte</td>
+<td align="center">59268</td>
+<td align="center">59001</td>
+<td align="center">Abancourt</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">715163.83</td>
+<td align="center">7015088.68</td>
+<td align="center">3.21228</td>
+<td align="center">50.233618</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">ABANCOURT</td>
+<td align="center">RUE VERTE</td>
+<td align="center">inconnue</td>
+<td align="center">inconnue</td>
+</tr>
+<tr>
+<td align="center">59001_0260_00003</td>
+<td align="center">59001_0260</td>
+<td align="center">3</td>
+<td align="center"></td>
+<td align="center">Rue Verte</td>
+<td align="center">59268</td>
+<td align="center">59001</td>
+<td align="center">Abancourt</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">715152.71</td>
+<td align="center">7015104.02</td>
+<td align="center">3.212125</td>
+<td align="center">50.233756</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">ABANCOURT</td>
+<td align="center">RUE VERTE</td>
+<td align="center">inconnue</td>
+<td align="center">inconnue</td>
+</tr>
+<tr>
+<td align="center">59001_0260_00004</td>
+<td align="center">59001_0260</td>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center">Rue Verte</td>
+<td align="center">59268</td>
+<td align="center">59001</td>
+<td align="center">Abancourt</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">715121.01</td>
+<td align="center">7015153.72</td>
+<td align="center">3.211683</td>
+<td align="center">50.234203</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">ABANCOURT</td>
+<td align="center">RUE VERTE</td>
+<td align="center">inconnue</td>
+<td align="center">inconnue</td>
+</tr>
+<tr>
+<td align="center">59001_0260_00005</td>
+<td align="center">59001_0260</td>
+<td align="center">5</td>
+<td align="center"></td>
+<td align="center">Rue Verte</td>
+<td align="center">59268</td>
+<td align="center">59001</td>
+<td align="center">Abancourt</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">715140.52</td>
+<td align="center">7015123.37</td>
+<td align="center">3.211955</td>
+<td align="center">50.23393</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">ABANCOURT</td>
+<td align="center">RUE VERTE</td>
+<td align="center">inconnue</td>
+<td align="center">inconnue</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-console">pimo -c masking.yml --empty-input -r 5
+</code></pre>
+<pre><code class="language-json">{&quot;SEXE&quot;:&quot;F&quot;,&quot;DATE_NAISSANCE&quot;:&quot;12/12/1990&quot;,&quot;CODE_INSEE_NAISSANCE&quot;:&quot;59001&quot;,&quot;ORDRE_NAISSANCE&quot;:&quot;384&quot;,&quot;NIR&quot;:&quot;190125900138430&quot;}
+{&quot;SEXE&quot;:&quot;M&quot;,&quot;DATE_NAISSANCE&quot;:&quot;01/02/1994&quot;,&quot;CODE_INSEE_NAISSANCE&quot;:&quot;59001&quot;,&quot;ORDRE_NAISSANCE&quot;:&quot;071&quot;,&quot;NIR&quot;:&quot;294025900107134&quot;}
+{&quot;SEXE&quot;:&quot;F&quot;,&quot;DATE_NAISSANCE&quot;:&quot;23/02/2000&quot;,&quot;CODE_INSEE_NAISSANCE&quot;:&quot;59001&quot;,&quot;ORDRE_NAISSANCE&quot;:&quot;634&quot;,&quot;NIR&quot;:&quot;100025900163453&quot;}
+{&quot;SEXE&quot;:&quot;F&quot;,&quot;DATE_NAISSANCE&quot;:&quot;11/02/1986&quot;,&quot;CODE_INSEE_NAISSANCE&quot;:&quot;59001&quot;,&quot;ORDRE_NAISSANCE&quot;:&quot;379&quot;,&quot;NIR&quot;:&quot;186025900137971&quot;}
+{&quot;SEXE&quot;:&quot;F&quot;,&quot;DATE_NAISSANCE&quot;:&quot;21/08/1972&quot;,&quot;CODE_INSEE_NAISSANCE&quot;:&quot;59001&quot;,&quot;ORDRE_NAISSANCE&quot;:&quot;439&quot;,&quot;NIR&quot;:&quot;172085900143917&quot;}
+</code></pre>
+<h2 id="generer-une-adresse-mail-avec-pimo">Générer une adresse mail avec pimo</h2>
+<p><strong><code>masking.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 0
+masking:
+
+# ----------------------- NOM -----------------------
+  - selector :
+      jsonpath: &quot;NOM&quot;
+    masks:
+      - add-transient: &quot;M&quot;
+      - randomChoiceInUri: &quot;pimo://surnameFR&quot;
+      - template: &quot;{{.NOM | NoAccent | lower}}&quot;
+
+# ----------------------- PRÉNOM -----------------------
+  - selector :
+      jsonpath: &quot;PRENOM&quot;
+    masks:
+      - add-transient: &quot;&quot;
+      - randomChoiceInUri: &quot;pimo://nameFR&quot;
+      - template: &quot;{{.PRENOM | NoAccent | lower}}&quot;
+
+#---------------------------- EMAIL ----------------------
+  - selector:
+      jsonpath: &quot;MAIL&quot;
+    masks:
+      - add: '{{- .NOM | replace &quot; &quot; &quot;&quot;}}.{{- .PRENOM | replace &quot; &quot; &quot;&quot;}}@yopmail.com'
+</code></pre>
+<pre><code class="language-console">pimo -c masking.yml --empty-input -r 5
+</code></pre>
+<pre><code class="language-json">{&quot;MAIL&quot;:&quot;girard.celiane@yopmail.com&quot;}
+{&quot;MAIL&quot;:&quot;henry.mickael@yopmail.com&quot;}
+{&quot;MAIL&quot;:&quot;caron.dalhia@yopmail.com&quot;}
+{&quot;MAIL&quot;:&quot;martin.veronique@yopmail.com&quot;}
+{&quot;MAIL&quot;:&quot;gauthier.chantal@yopmail.com&quot;}
+</code></pre>
+<h2 id="masquer-des-donnees-imbriquees-avec-pimo">Masquer des données imbriquées avec pimo</h2>
+<p>Prenons comme exemple le fichier suivant composé d'une liste de dossier. Chaque dossier ayant un identifiant et une liste de personnes concernées par ce dossier :</p>
+<p><strong><code>input.json</code></strong></p>
+<pre><code class="language-json">{
+  &quot;dossier&quot;: [
+    {
+      &quot;identifiant&quot;: &quot;AZ18-45B12&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Martin&quot;,
+          &quot;prénom&quot;: &quot;Veronique&quot;,
+          &quot;email&quot;: &quot;martin.veronique@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Robert&quot;,
+          &quot;prénom&quot;: &quot;Joe&quot;,
+          &quot;email&quot;: &quot;rober.joe@mail.com&quot;
+        }
+      ]
+    },
+    {
+      &quot;identifiant&quot;: &quot;JL34-28C79&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Alain&quot;,
+          &quot;prénom&quot;: &quot;Mercier&quot;,
+          &quot;email&quot;: &quot;alain.mercier@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Florian&quot;,
+          &quot;prénom&quot;: &quot;Roger&quot;,
+          &quot;email&quot;: &quot;florian.roger@mail.com&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>Pour masquer les données sensibles de ce fichier nous utilisons le fichier de configuration suivant:</p>
+<p><strong><code>masking.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;dossier.identifiant&quot;
+    mask:
+        regex: &quot;[A-Z]{2}[0-9]{2}-[0-9]{2}[A-Z][0-9]{2}&quot;
+  - selector:
+      jsonpath: &quot;dossier.personnes&quot;
+    mask:
+      pipe:
+        masking:
+          - selector:
+              jsonpath: &quot;nom&quot;
+            mask: 
+              randomChoiceInUri: &quot;pimo://surnameFR&quot;
+          - selector:
+              jsonpath: &quot;prénom&quot;
+            mask: 
+              randomChoiceInUri: &quot;pimo://nameFR&quot;
+          - selector:
+              jsonpath: &quot;email&quot;
+            mask:
+              template: &quot;{{.nom | NoAccent | lower}}.{{.prénom | NoAccent | lower}}@mail.com&quot;
+</code></pre>
+<pre><code class="language-console">pimo -c masking.yml &lt; input.json | jq
+</code></pre>
+<pre><code class="language-json">{
+  &quot;dossier&quot;: [
+    {
+      &quot;identifiant&quot;: &quot;RS03-09T37&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Fournier&quot;,
+          &quot;prénom&quot;: &quot;Orianne&quot;,
+          &quot;email&quot;: &quot;fournier.orianne@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Leclerc&quot;,
+          &quot;prénom&quot;: &quot;Remi&quot;,
+          &quot;email&quot;: &quot;leclerc.remi@mail.com&quot;
+        }
+      ]
+    },
+    {
+      &quot;identifiant&quot;: &quot;FP37-33R33&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Vidal&quot;,
+          &quot;prénom&quot;: &quot;Michaël&quot;,
+          &quot;email&quot;: &quot;vidal.michael@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Bertrand&quot;,
+          &quot;prénom&quot;: &quot;Line&quot;,
+          &quot;email&quot;: &quot;bertrand.line@mail.com&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="generer-un-identifiant-avec-pimo">Générer un identifiant avec pimo</h2>
+<p>Si l'on reprend le fichier <code>masking.yml</code> de l'exemple précédent, on peut le modifier légèrement en remplaçant le masque <em>regex</em> par le masque <em>transcode</em> qui permet de produire une chaîne de caractère aléatoire (en préservant le format) et ainsi masquer l'identifiant.</p>
+<p><strong><code>masking.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;2&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;dossier.identifiant&quot;
+    mask:
+        transcode: {}
+  - selector:
+      jsonpath: &quot;dossier.personnes&quot;
+    mask:
+      pipe:
+        masking:
+          - selector:
+              jsonpath: &quot;nom&quot;
+            mask: 
+              randomChoiceInUri: &quot;pimo://surnameFR&quot;
+          - selector:
+              jsonpath: &quot;prénom&quot;
+            mask: 
+              randomChoiceInUri: &quot;pimo://nameFR&quot;
+          - selector:
+              jsonpath: &quot;email&quot;
+            mask:
+              template: &quot;{{.nom | NoAccent | lower}}.{{.prénom | NoAccent | lower}}@mail.com&quot;
+</code></pre>
+<pre><code class="language-console">pimo -c masking.yml &lt; input.json | jq
+</code></pre>
+<pre><code class="language-json">{
+  &quot;dossier&quot;: [
+    {
+      &quot;identifiant&quot;: &quot;PH30-37U04&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Fournier&quot;,
+          &quot;prénom&quot;: &quot;Orianne&quot;,
+          &quot;email&quot;: &quot;fournier.orianne@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Leclerc&quot;,
+          &quot;prénom&quot;: &quot;Remi&quot;,
+          &quot;email&quot;: &quot;leclerc.remi@mail.com&quot;
+        }
+      ]
+    },
+    {
+      &quot;identifiant&quot;: &quot;FX70-68A25&quot;,
+      &quot;personnes&quot;: [
+        {
+          &quot;nom&quot;: &quot;Vidal&quot;,
+          &quot;prénom&quot;: &quot;Michaël&quot;,
+          &quot;email&quot;: &quot;vidal.michael@mail.com&quot;
+        },
+        {
+          &quot;nom&quot;: &quot;Bertrand&quot;,
+          &quot;prénom&quot;: &quot;Line&quot;,
+          &quot;email&quot;: &quot;bertrand.line@mail.com&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>Un moyen de générer un identifiant est d'ajouter un nouveau champ <strong>id</strong> contenant la valeur d'un identifiant, et ensuite d'utiliser le masque <em>transcode</em> qui va reproduire aléatoirement des chaînes de caractères en copiant le format de l'identifiant ajouté précédemment.</p>
+<p><strong><code>masking2.yml</code></strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;id&quot;
+    masks:
+      - add: &quot;1040-AZ-52&quot;
+      - transcode: {}
+</code></pre>
+<pre><code class="language-console">pimo -c masking2.yml --empty-input -r 10
+</code></pre>
+<pre><code class="language-json">{&quot;id&quot;:&quot;3485-KV-59&quot;}
+{&quot;id&quot;:&quot;6846-OT-19&quot;}
+{&quot;id&quot;:&quot;5706-GF-02&quot;}
+{&quot;id&quot;:&quot;5760-XR-28&quot;}
+{&quot;id&quot;:&quot;6254-EY-45&quot;}
+{&quot;id&quot;:&quot;5200-LL-28&quot;}
+{&quot;id&quot;:&quot;7407-ZN-94&quot;}
+{&quot;id&quot;:&quot;5547-PY-31&quot;}
+{&quot;id&quot;:&quot;9949-TY-61&quot;}
+{&quot;id&quot;:&quot;0383-IQ-93&quot;}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="commands.html" class="btn btn-neutral float-left" title="Commandes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="license.html" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright (C) 2022 CGI France - GNU License GPLv3</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="commands.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="license.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

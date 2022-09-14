@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Tutoriel - Docs LINO-PIMO</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tutoriel";
+        var mkdocs_page_input_path = "tuto.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Docs LINO-PIMO
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="tuto.html">Tutoriel</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#avant-de-commencer">Avant de commencer</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#objectifs">Objectifs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prerequis">Prérequis</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#competences">Compétences</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#outils">Outils</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#lino">LINO</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pimo">PIMO</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preparation-de-lenvironnement">Préparation de l'environnement</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lino_1">LINO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#connexion-a-une-base-de-donnees">Connexion à une base de données</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#extraire-les-schemas">Extraire les schémas</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-du-schema-table">Extraction du schéma table</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-du-schema-relation">Extraction du schéma relation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#extraire-des-donnees">Extraire des données</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-des-donnees-dune-table">Extraction des données d'une table</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-dune-entite-sur-plusieurs-tables">Extraction d'une entité sur plusieurs tables</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-de-plusieurs-entites">Extraction de plusieurs entités</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-filtree">Extraction filtrée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-avec-choix-des-colonnes-a-extraire">Extraction avec choix des colonnes à extraire</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extraction-en-specifiant-le-format-des-donnees-json">Extraction en spécifiant le format des données JSON</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#recharger-des-donnees">Recharger des données</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#connexion-a-la-base-cible">Connexion à la base cible</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#nettoyage">Nettoyage</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#insertion">Insertion</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mise-a-jour-update">Mise à jour (update)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#suppression">Suppression</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#validationconversion-du-format-des-donnees">Validation/conversion du format des données</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pimo_1">PIMO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#generer-des-donnees">Générer des données</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#modifier-des-donnees">Modifier des données</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilisation-de-referentiels">Utilisation de référentiels </a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#referentiels-externe">Référentiels externe</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#referentiels-inclus-dans-pimo">Référentiels inclus dans PIMO</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-erreurs-dans-lino-pimo">Gestion des erreurs dans LINO - PIMO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#redirection-des-erreurs">Redirection des erreurs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sigo">SIGO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installation_1">Installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilisation-de-sigo-avec-des-donnees-mixtes">Utilisation de SIGO avec des données mixtes</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#generation-de-donnees-avec-pimo">Génération de données avec PIMO</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#conversion-avec-pimo">Conversion avec PIMO</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#anonymisation-avec-sigo">Anonymisation avec SIGO</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transformation-inverse-avec-pimo">Transformation inverse avec PIMO</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilisation-du-fichier-de-configuration-pour-anonymiser">Utilisation du fichier de configuration pour anonymiser</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docs.html">Docs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="commands.html">Commandes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="example.html">Exemples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Docs LINO-PIMO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Tutoriel</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tutoriel">Tutoriel</h1>
+<h2 id="avant-de-commencer">Avant de commencer</h2>
+<h3 id="objectifs">Objectifs</h3>
+<p>Ce tutoriel a pour objectif de vous initier aux outils <code>lino</code> et <code>pimo</code>. A la fin de ce tutoriel vous pourrez :</p>
+<ul>
+<li>installer <code>lino</code> / <code>pimo</code> sur votre poste.</li>
+<li>configurer <code>lino</code> pour vous connecter à une base de données.</li>
+<li>extraire des données d'une base pour les recharger dans une autre.</li>
+<li>modifier certains champs pour anonymiser un flux de données.</li>
+<li>analyser les logs et les données en erreur.</li>
+</ul>
+<h3 id="prerequis">Prérequis</h3>
+<h4 id="competences">Compétences</h4>
+<p>Voici la liste des compétences indispensables :</p>
+<ul>
+<li>Connaissance et utilisation de Git.</li>
+<li>Connaissance et utilisation de la ligne de commande Linux et/ou Windows (PowerShell).</li>
+<li>Utilisation d'un éditeur de texte (Dans ce tutoriel nous utiliserons Visual Studio Code).</li>
+<li>Connaissance de YAML (Vous pouvez consulter ce <a href="https://learnxinyminutes.com/docs/yaml/">tutoriel YAML</a>).</li>
+</ul>
+<h4 id="outils">Outils</h4>
+<p>Pour ce tutoriel vous aurez besoin des outils suivants :</p>
+<ul>
+<li>un environnement "bash" (docker, linux, wsl2 ou git+bash) ou d'un "powershell". </li>
+<li>vscode</li>
+</ul>
+<h3 id="environnement">Environnement</h3>
+<p>Dans ce tutoriel nous allons utiliser l'application <code>PetClinic</code> composée de deux environnements:</p>
+<ul>
+<li>
+<p>Environnement de Production:</p>
+<ul>
+<li>SGBD : postgressql</li>
+<li>Host : bdd</li>
+<li>port : 5432</li>
+<li>user : jhpetclinic</li>
+<li>database: jhpetclinic</li>
+<li>mot de passe : jhpetclinic</li>
+<li>url : <a href="http://localhost:8080/owner">localhost:8080</a></li>
+</ul>
+</li>
+<li>
+<p>Environnement de Qualification:</p>
+<ul>
+<li>SGBD : postgressql</li>
+<li>Host : bdd</li>
+<li>port : 5432</li>
+<li>user : jhpetclinic</li>
+<li>database : jhpetclinic</li>
+<li>mot de passe : jhpetclinic</li>
+<li>url : <a href="http://localhost:8001/owner">localhost:8001</a></li>
+</ul>
+</li>
+</ul>
+<p>Le schéma des données de l'application de prod et de qualification est le suivant :</p>
+<p><img alt="schéma de la base de données" src="https://github.com/spring-petclinic/spring-petclinic-rest/raw/master/petclinic-ermodel.png" />.</p>
+<h2 id="installation">Installation</h2>
+<p><code>lino</code> et <code>pimo</code> sont 2 outils écrit en <strong>GO</strong> et compilé nativement. L'installation consiste donc seulement à copier le binaire correspondant au système d'exploitation sous-jacent dans un répertoire. Il peut être utile ensuite de rendre ce répertoire accessible depuis la variable d'environnement PATH.</p>
+<h3 id="lino">LINO</h3>
+<p>Vous pouvez récupérer le binaire de <code>lino</code> sur la page <a href="https://github.com/CGI-FR/LINO/releases">CGI-FR/LINO/releases</a>, en choisissant la version et l'environnement qui convient.</p>
+<ul>
+<li>Sous Linux</li>
+</ul>
+<pre><code class="language-console">$ wget &lt;url&gt;/&lt;file&gt;.tar.gz --output-document lino.tar.gz
+$ tar xzvf lino.tar.gz
+$ lino --version
+</code></pre>
+<ul>
+<li>Sous Windows </li>
+</ul>
+<pre><code class="language-powershell">PS&gt; Invoke-WebRequest &lt;url&gt;/&lt;file&gt;.tar.gz -OutFile lino.tar.gz
+PS&gt; Save-Module -Name 7Zip4Powershell -Path .
+PS&gt; Import-Module .\7Zip4Powershell\2.1.0\7Zip4Powershell.psd1
+PS&gt; Expand-7Zip lino.tar.gz .
+PS&gt; Expand-7Zip lino.tar .
+PS&gt; $env:Path += &quot;;.&quot;
+PS&gt; lino --version
+</code></pre>
+<p>Vérifier l'installation avec la commande <code>lino --help</code>.</p>
+<h3 id="pimo">PIMO</h3>
+<p>Vous pouvez récupérer le binaire de <code>pimo</code> sur la page <a href="https://github.com/CGI-FR/PIMO/releases">CGI-FR/PIMO/releases</a>, en choisissant la version et l'environnement qui convient.</p>
+<ul>
+<li>Sous Linux</li>
+</ul>
+<pre><code class="language-console">$ wget &lt;url&gt;/&lt;file&gt;.tar.gz --output-document pimo.tar.gz
+$ tar xzf pimo.tar.gz
+$ pimo --version
+</code></pre>
+<ul>
+<li>Sous Windows </li>
+</ul>
+<pre><code class="language-powershell">PS&gt; Invoke-WebRequest &lt;url&gt;/&lt;file&gt;.tar.gz -OutFile pimo.tar.gz
+# Ne pas refaire cette manip si déjà fait pour lino
+# PS&gt; Save-Module -Name 7Zip4Powershell -Path .
+# PS&gt; Import-Module .\7Zip4Powershell\2.1.0\7Zip4Powershell.psd1
+PS&gt; Expand-7Zip pimo.tar.gz .
+PS&gt; Expand-7Zip pimo.tar .
+PS&gt; $env:Path += &quot;;.&quot;
+PS&gt; pimo --version
+</code></pre>
+<p>Vérifier l'installation avec la commande <code>pimo --help</code>.</p>
+<h3 id="preparation-de-lenvironnement">Préparation de l'environnement</h3>
+<p>Dans ce tutoriel, nous allons utiliser une application Spring Boot REST en backend et Angular en Frontend. Les données sont pré-chargées dans une base Postgres. Pour simplifier, nous utiliserons un environnement <code>docker-compose</code>.</p>
+<p>Le fichier <code>docker-compose.yml</code> est le suivant:</p>
+<pre><code class="language-yaml">version: &quot;3.3&quot;
+
+services:
+  app:
+    image: ag04/jhpetclinic:latest
+    environment:
+      _JAVA_OPTIONS: '-Xmx512m -Xms256m'
+      SPRING_PROFILES_ACTIVE: 'prod,swagger'
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
+      SERVER_SERVLET_CONTEXT_PATH: '/'
+      JHIPSTER_SLEEP: '5' # gives time for other services to boot before the application
+      DATASOURCE_URL: 'jdbc:postgresql://bdd:5432/jhpetclinic'
+      JPA_DATABASE_PLATFORM: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect'
+      JPA_DATABASE: 'POSTGRESQL'
+      DB_USER: 'jhpetclinic'
+      DB_PWD: 'jhpetclinic'
+      DB_NAME: 'jhpetclinic'
+      DB_SCHEMA: 'public'
+      MAIL_HOST: 'localhost'
+      MAIL_PORT: 25
+      MAIL_USERNAME: ''
+      MAIL_PWD: ''
+      MAIL_APP_BASE_URL: 'localhost:8080/'
+    ports:
+      - 8080:8080
+    depends_on:
+      - bdd
+
+  bdd:
+    image: postgres:12.3
+    environment:
+      - POSTGRES_USER=jhpetclinic
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - &quot;5432:5432&quot;
+</code></pre>
+<p>Pour lancer l'environnement, </p>
+<pre><code class="language-console">$ docker-compose up -d app bdd
+</code></pre>
+<pre><code class="language-console">Creating tutoriel-lino_bdd_1    ... done
+Creating tutoriel-lino_app_1    ... done
+</code></pre>
+<hr />
+<p>Pour information : pour faire un reset total de l'environnement,</p>
+<pre><code class="language-console">$ docker-compose stop app bdd 
+$ docker-compose rm app bdd
+</code></pre>
+<hr />
+<p>L'application démarre en installant des données dans la base. L'IHM est disponible <a href="http://localhost:8080">ici</a>.</p>
+<p><img alt="image" src="img/petclinic.png" /></p>
+<p>Pour se conncecter, il suffit d'aller sur <em>Account</em> -&gt; <em>Sign in</em>, et de renseigner comme <strong>Username</strong> et comme <strong>Password</strong> <code>admin</code>.</p>
+<p><img alt="image" src="img/signin.png" /></p>
+<h2 id="lino_1">LINO</h2>
+<h3 id="connexion-a-une-base-de-donnees">Connexion à une base de données</h3>
+<p>Pour gérer la configuration des bases de données on utilise la sous-commande <code>lino dataconnector</code> ou <code>lino dc</code>.</p>
+<p>La documentation est disponible en lançant <code>lino dc --help</code>.</p>
+<p>La commande <code>lino dc add &lt;alias&gt; &lt;path_bdd&gt; -p -u &lt;user&gt;</code> permet d'associer les coordonnées d'une base de données à un alias. </p>
+<pre><code class="language-console">$ lino dc add source 'postgresql://localhost:5432/jhpetclinic?sslmode=disable' -p -u jhpetclinic
+enter password:
+successfully added dataconnector
+</code></pre>
+<p>L'attribut <code>-p</code> indique que vous allez passer le mot de passe à une invite de commande. Il est également possible de passer le mot de passe par variable d'environnement avec le paramètre <code>-P</code>.</p>
+<p><code>lino dc list</code> permet de lister les connecteurs.</p>
+<pre><code class="language-console">$ lino dc list 
+{source postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable false  { } { }}
+</code></pre>
+<p>Pour tester la connexion avec la base de données on utilise la commande <code>lino dc ping &lt;alias&gt;</code>.</p>
+<pre><code class="language-console">$ lino dc ping source
+ping success
+</code></pre>
+<p>La configuration se trouve dans le fichier <code>dataconnector.yml</code> dans le répertoire courant.</p>
+<pre><code class="language-yaml">version: v1
+dataconnectors:
+  - name: source
+    url: postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable
+    readonly: true
+</code></pre>
+<p>Vous pouvez éditer le fichier <code>dataconnector.yml</code> à la main pour modifier l'attribut readonly de la base source à true. Ceci bloque les commandes pouvant modifier le contenu de la base source.</p>
+<h3 id="extraire-les-schemas">Extraire les schémas</h3>
+<p><code>lino</code> est capable de lire les méta-données de la base pour extraire les tables du schéma et il est également capable de retrouver les relations entre les tables en explorant les contraintes de clés étrangères.</p>
+<h4 id="extraction-du-schema-table">Extraction du schéma table</h4>
+<p>Pour extraire le schéma des tables on utilise la commande <code>lino table</code>.</p>
+<p>La documentation est disponible en lançant <code>lino table --help</code>.</p>
+<p><code>lino table extract &lt;alias&gt;</code> permet d'extraire les informations des tables de la base de données <code>&lt;alias&gt;</code> dans un fichier <code>tables.yml</code> dans le répertoire courant.</p>
+<pre><code class="language-console">$ lino table extract source
+lino finds 13 table(s)
+</code></pre>
+<p>Cette commande initialise le fichier <code>tables.yml</code> contenant la liste des tables qui se trouvent dans la base de données <code>source</code>.</p>
+<pre><code class="language-yaml">version: v1
+tables:
+  - name: databasechangeloglock
+    keys:
+      - id
+  - name: jhi_authority
+    keys:
+      - name
+  - name: jhi_persistent_audit_event
+    keys:
+      - event_id
+  - name: jhi_persistent_audit_evt_data
+    keys:
+      - name
+      - event_id
+  - name: jhi_user
+    keys:
+      - id
+  - name: jhi_user_authority
+    keys:
+      - user_id
+      - authority_name
+  - name: owners
+    keys:
+      - id
+  - name: pets
+    keys:
+      - id
+  - name: specialties
+    keys:
+      - id
+  - name: types
+    keys:
+      - id
+  - name: vets
+    keys:
+      - id
+  - name: vets_specialties
+    keys:
+      - specialties_id
+      - vet_id
+  - name: visits
+    keys:
+      - id
+</code></pre>
+<h4 id="extraction-du-schema-relation">Extraction du schéma relation</h4>
+<p>Pour extraire le schéma des relations on utilise la commande <code>lino relation</code>.</p>
+<p>La documentation est également disponible en lançant <code>lino relation --help</code>.</p>
+<p><code>lino relation extract &lt;alias&gt;</code> permet d'extraire les informations des tables de la base de données <code>&lt;alias&gt;</code> dans un fichier <code>relation.yml</code> également dans le répertoire courant. Les relations sont initiées à partir de contraintes de clé étrangère.</p>
+<pre><code class="language-console">$ lino relation extract source
+lino finds 8 relations from constraints
+</code></pre>
+<p>Cette commande initialise le fichier <code>relation.yml</code> contenant la liste des relations qui se trouvent dans la base de données <code>source</code>.
+Chaque relation est décrite par un nom, une table parente avec sa clé primaire, une table enfant avec sa clé étrangère.</p>
+<pre><code class="language-yaml">version: v1
+relations:
+  - name: fk_authority_name
+    parent:
+      name: jhi_authority
+      keys:
+        - name
+    child:
+      name: jhi_user_authority
+      keys:
+        - authority_name
+  - name: fk_user_id
+    parent:
+      name: jhi_user
+      keys:
+        - id
+    child:
+      name: jhi_user_authority
+      keys:
+        - user_id
+  - name: fk_evt_pers_audit_evt_data
+    parent:
+      name: jhi_persistent_audit_event
+      keys:
+        - event_id
+    child:
+      name: jhi_persistent_audit_evt_data
+      keys:
+        - event_id
+  - name: fk_vets_specialties_vets_id
+    parent:
+      name: vets
+      keys:
+        - id
+    child:
+      name: vets_specialties
+      keys:
+        - vet_id
+  - name: fk_vets_specialties_specialties_id
+    parent:
+      name: specialties
+      keys:
+        - id
+    child:
+      name: vets_specialties
+      keys:
+        - specialties_id
+  - name: fk_pets_type_id
+    parent:
+      name: types
+      keys:
+        - id
+    child:
+      name: pets
+      keys:
+        - type_id
+  - name: fk_pets_owner_id
+    parent:
+      name: owners
+      keys:
+        - id
+    child:
+      name: pets
+      keys:
+        - owner_id
+  - name: fk_visits_pet_id
+    parent:
+      name: pets
+      keys:
+        - id
+    child:
+      name: visits
+      keys:
+        - pet_id
+</code></pre>
+<p>Si des relations fonctionnelles ne sont pas modélisées par des contraintes dans la base de données alors il est possible d'ajouter des relations à la main en éditant le fichier <code>relations.yml</code>.</p>
+<h3 id="extraire-des-donnees">Extraire des données</h3>
+<p>La commande <code>lino pull</code> est utilisé pour extraire des données de la base au format <strong>JSONline</strong> (Un objet JSON par ligne).</p>
+<p>Pour plus de détail consultez l'aide <code>lino pull --help</code>.</p>
+<h4 id="extraction-des-donnees-dune-table">Extraction des données d'une table</h4>
+<p>Le paramètre <code>--table</code> permet de spécifier le nom de la table à extraire. Par exemple, nous pouvons récupérer les données de la table <code>pets</code> avec la commande suivante :</p>
+<pre><code class="language-console">$ lino pull --table pets source -l 1
+{&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;,&quot;id&quot;:1,&quot;name&quot;:&quot;Leo&quot;,&quot;owner_id&quot;:1,&quot;type_id&quot;:1}
+</code></pre>
+<p>Le paramètre <code>-l</code> permet de limiter le nombre de résultats en sortie (par défaut il est paramétré à 1 et <code>-l 0</code> permet de retourner tous les résultats).</p>
+<h4 id="extraction-dune-entite-sur-plusieurs-tables">Extraction d'une entité sur plusieurs tables</h4>
+<p><code>lino</code> permet d'extraire un sous ensemble cohérent d'animaux de la base de données. Pour ce faire <code>lino</code> a besoin de connaître la table de départ et les relations qu'ils doit suivre pour extraire un ensemble fonctionnellement cohérent.</p>
+<p><strong>1. Création d'un ingress-descriptor</strong></p>
+<p>L'objet <code>ingress descriptor</code> ou <code>id</code> décrit le chemin que doit suivre <code>lino</code> pour extraire les données. Pour plus de détail consultez l'aide <code>lino id --help</code>.</p>
+<p>La commande <code>lino id create &lt;table&gt;</code> permet d'initialiser un <code>ingress descriptor</code>.</p>
+<pre><code class="language-console">$ lino id create pets
+successfully created ingress descriptor
+</code></pre>
+<p>Un fichier <code>ingress-decriptor.yml</code> est généré contenant le nom de la table de départ et les relations qui peuvent être atteintes depuis cette table.</p>
+<pre><code class="language-yaml">version: v1
+IngressDescriptor:
+  startTable: pets
+  relations:
+    - name: fk_pets_type_id
+      parent:
+        name: types
+        lookup: false
+      child:
+        name: pets
+        lookup: false
+    - name: fk_pets_owner_id
+      parent:
+        name: owners
+        lookup: false
+      child:
+        name: pets
+        lookup: false
+    - name: fk_visits_pet_id
+      parent:
+        name: pets
+        lookup: false
+      child:
+        name: visits
+        lookup: true
+</code></pre>
+<p>La commande <code>display-plan</code> permet de connaître le plan d'extraction de <code>lino</code> sans faire l'extraction.</p>
+<pre><code class="language-console">$ lino id display-plan
+step 1 - pull rows from pets
+step 2 - pull rows from visits following →fk_visits_pet_id relationship for rows pulled at step 1
+</code></pre>
+<ul>
+<li>Extraction des relations</li>
+</ul>
+<p>Si on veut également extraire les propriétaires d'animaux il faut sélectionner la relation dans le fichier <code>ingress-descriptor.yml</code>.</p>
+<pre><code class="language-yaml">- name: fk_pets_owner_id
+    parent:
+        name: owners
+        # sélection de la relation dans le sens pets -&gt; owners
+        lookup: true
+    child:
+        name: pets
+        lookup: false
+</code></pre>
+<p>Dans le plan, <code>lino</code> indique bien qu'il va rechercher les informations des propriétaires.</p>
+<pre><code class="language-console">$  lino id display-plan
+step 1 - pull rows from pets
+step 2 - pull rows from owners following ←fk_pets_owner_id relationship for rows pulled at step 1
+step 3 - pull rows from visits following →fk_visits_pet_id relationship for rows pulled at step 1
+</code></pre>
+<p>Il est également possible d'extraire les informations du type d'animal (chat, poisson, lapin). Mais on peut également considérer cette table comme une table de référence qui est une configuration de l'application et pas une donnée fonctionnelle.</p>
+<p><strong>2. Extraction d'un animal</strong></p>
+<p>Pour extraire une grappe d'information cohérente on utilise la commande <code>lino pull &lt;alias&gt;</code>.</p>
+<p>L'extraction va construire un objet <em>JSON</em> imbriqué contenant les informations de l'animal et de propriétaire sur un niveau inférieur.</p>
+<pre><code class="language-console">$ lino pull source --limit 1
+{&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;,&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:1,&quot;name&quot;:&quot;Leo&quot;,&quot;owner_id&quot;:1,&quot;type_id&quot;:1}
+</code></pre>
+<p>Le résultat est un enregistrement au format <em>JSON</em> écrit directement sur la sortie standard.</p>
+<p>Il est possible d'utiliser des utilitaires annexes pour le mettre en forme.</p>
+<pre><code class="language-console">$ lino pull source | jq
+</code></pre>
+<pre><code class="language-json">{
+  &quot;birth_date&quot;: &quot;2000-09-07T00:00:00Z&quot;,
+  &quot;fk_pets_owner_id&quot;: {
+    &quot;address&quot;: &quot;110 W. Liberty St.&quot;,
+    &quot;city&quot;: &quot;Madison&quot;,
+    &quot;first_name&quot;: &quot;George&quot;,
+    &quot;id&quot;: 1,
+    &quot;last_name&quot;: &quot;Franklin&quot;,
+    &quot;telephone&quot;: &quot;6085551023&quot;
+  },
+  &quot;fk_visits_pet_id&quot;: [],
+  &quot;id&quot;: 1,
+  &quot;name&quot;: &quot;Leo&quot;,
+  &quot;owner_id&quot;: 1,
+  &quot;type_id&quot;: 1
+}
+</code></pre>
+<p>On peut également mettre le résulat dans un fichier annexe.</p>
+<pre><code class="language-console">$ lino pull source &gt; leo.json
+$ cat leo.json
+{&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;,&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:1,&quot;name&quot;:&quot;Leo&quot;,&quot;owner_id&quot;:1,&quot;type_id&quot;:1}
+</code></pre>
+<h4 id="extraction-de-plusieurs-entites">Extraction de plusieurs entités</h4>
+<p><code>lino</code> peut extraire plusieurs enregistrements. Pour faciliter le traitement en <em>stream</em>, chaque ligne contient un objet <em>JSON</em> (<em>JSON Line</em>).</p>
+<pre><code class="language-console">$ lino pull source --limit 3
+{&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;110 W. Liberty St.&quot;,&quot;city&quot;:&quot;Madison&quot;,&quot;first_name&quot;:&quot;George&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;Franklin&quot;,&quot;telephone&quot;:&quot;6085551023&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:1,&quot;name&quot;:&quot;Leo&quot;,&quot;owner_id&quot;:1,&quot;type_id&quot;:1}
+{&quot;birth_date&quot;:&quot;2002-08-06T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;638 Cardinal Ave.&quot;,&quot;city&quot;:&quot;Sun Prairie&quot;,&quot;first_name&quot;:&quot;Betty&quot;,&quot;id&quot;:2,&quot;last_name&quot;:&quot;Davis&quot;,&quot;telephone&quot;:&quot;6085551749&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:2,&quot;name&quot;:&quot;Basil&quot;,&quot;owner_id&quot;:2,&quot;type_id&quot;:6}
+{&quot;birth_date&quot;:&quot;2001-04-17T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;2693 Commerce St.&quot;,&quot;city&quot;:&quot;McFarland&quot;,&quot;first_name&quot;:&quot;Eduardo&quot;,&quot;id&quot;:3,&quot;last_name&quot;:&quot;Rodriquez&quot;,&quot;telephone&quot;:&quot;6085558763&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:3,&quot;name&quot;:&quot;Rosy&quot;,&quot;owner_id&quot;:3,&quot;type_id&quot;:2}
+</code></pre>
+<h4 id="extraction-filtree">Extraction filtrée</h4>
+<p>Il est possible d'ajouter des critères pour filtrer la table de départ à l'aide du paramètre <code>--filter, -f</code> pour des critères d'égalités ou <code>--where, -w</code> pour des <em>clauses where SQL</em> avancées.</p>
+<pre><code class="language-console">$ lino pull source --filter type_id=4 --limit 1
+{&quot;birth_date&quot;:&quot;2000-01-20T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;2387 S. Fair Way&quot;,&quot;city&quot;:&quot;Madison&quot;,&quot;first_name&quot;:&quot;Peter&quot;,&quot;id&quot;:5,&quot;last_name&quot;:&quot;McTavish&quot;,&quot;telephone&quot;:&quot;6085552765&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:6,&quot;name&quot;:&quot;George&quot;,&quot;owner_id&quot;:5,&quot;type_id&quot;:4}
+</code></pre>
+<pre><code class="language-console">$ lino pull --table owners source -w &quot;id in (1,2,8)&quot; -l 3
+{&quot;address&quot;:&quot;110 W. Liberty St.&quot;,&quot;city&quot;:&quot;Madison&quot;,&quot;first_name&quot;:&quot;George&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;Franklin&quot;,&quot;telephone&quot;:&quot;6085551023&quot;}
+{&quot;address&quot;:&quot;638 Cardinal Ave.&quot;,&quot;city&quot;:&quot;Sun Prairie&quot;,&quot;first_name&quot;:&quot;Betty&quot;,&quot;id&quot;:2,&quot;last_name&quot;:&quot;Davis&quot;,&quot;telephone&quot;:&quot;6085551749&quot;}
+{&quot;address&quot;:&quot;345 Maple St.&quot;,&quot;city&quot;:&quot;Madison&quot;,&quot;first_name&quot;:&quot;Maria&quot;,&quot;id&quot;:8,&quot;last_name&quot;:&quot;Escobito&quot;,&quot;telephone&quot;:&quot;6085557683&quot;}
+</code></pre>
+<p>Si on veut extraire une série d'enregistrement basé sur une liste arbitraire de critère. Il est possible de passer cette liste sous la forme d'un fichier <em>JSON Line</em> à <code>lino</code> à l'aide du paramètre <code>--filter-from-file, -F</code>.</p>
+<ul>
+<li>Sous Linux:</li>
+</ul>
+<pre><code class="language-console">$ cat &gt; filter.jsonl &lt;&lt;EOF 
+heredoc&gt; { &quot;id&quot; : 1 }
+heredoc&gt; { &quot;id&quot; : 4 }
+heredoc&gt; { &quot;id&quot; : 5 }
+EOF
+{&quot;id&quot;: 1}
+{&quot;id&quot;: 4}
+{&quot;id&quot;: 5}
+</code></pre>
+<ul>
+<li>Sous Windows:</li>
+</ul>
+<pre><code class="language-powershell">PS&gt; echo '{ &quot;id&quot; : 1 }' &gt; filter.jsonl
+PS&gt; echo '{ &quot;id&quot; : 4 }' &gt;&gt; filter.jsonl
+PS&gt; echo '{ &quot;id&quot; : 5 }' &gt;&gt; filter.jsonl
+PS &gt; cat filter.jsonl
+{&quot;id&quot;: 1}
+{&quot;id&quot;: 4}
+{&quot;id&quot;: 5}
+</code></pre>
+<pre><code>$ lino pull -F filter.jsonl source
+{&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;110 W. Liberty St.&quot;,&quot;city&quot;:&quot;Madison&quot;,&quot;first_name&quot;:&quot;George&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;Franklin&quot;,&quot;telephone&quot;:&quot;6085551023&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:1,&quot;name&quot;:&quot;Leo&quot;,&quot;owner_id&quot;:1,&quot;type_id&quot;:1}
+{&quot;birth_date&quot;:&quot;2000-03-07T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;2693 Commerce St.&quot;,&quot;city&quot;:&quot;McFarland&quot;,&quot;first_name&quot;:&quot;Eduardo&quot;,&quot;id&quot;:3,&quot;last_name&quot;:&quot;Rodriquez&quot;,&quot;telephone&quot;:&quot;6085558763&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:4,&quot;name&quot;:&quot;Jewel&quot;,&quot;owner_id&quot;:3,&quot;type_id&quot;:2}
+{&quot;birth_date&quot;:&quot;2000-11-30T00:00:00Z&quot;,&quot;fk_pets_owner_id&quot;:{&quot;address&quot;:&quot;563 Friendly St.&quot;,&quot;city&quot;:&quot;Windsor&quot;,&quot;first_name&quot;:&quot;Harold&quot;,&quot;id&quot;:4,&quot;last_name&quot;:&quot;Davis&quot;,&quot;telephone&quot;:&quot;6085553198&quot;},&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:5,&quot;name&quot;:&quot;Iggy&quot;,&quot;owner_id&quot;:4,&quot;type_id&quot;:3}
+</code></pre>
+<h4 id="extraction-avec-choix-des-colonnes-a-extraire">Extraction avec choix des colonnes à extraire</h4>
+<p>Par défaut, la commande <code>lino pull</code> va extraire toutes les colonnes de chaque table composant la grappe (utilisation d'un <code>select *</code>).</p>
+<p>Pour modifier ce comportement par défaut, il est possible de modifier le fichier <code>table.yaml</code> comme ceci (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas).</p>
+<pre><code class="language-yaml">  - name: pets
+    keys:
+      - id
+    columns:
+      - name: name
+      - name: birth_date
+</code></pre>
+<p>Dans cet exemple, lino extraira seulement les colonnes <code>name</code> et <code>birth_date</code> (dans cet ordre). Cela permet donc aussi de spécifier l'ordre dans lequel nous souhaitons voir apparaître les champs dans le JSON.</p>
+<pre><code>$ lino pull --table pets --limit 1
+{&quot;name&quot;:&quot;Leo&quot;,&quot;birth_date&quot;:&quot;2000-09-07T00:00:00Z&quot;}
+</code></pre>
+<h4 id="extraction-en-specifiant-le-format-des-donnees-json">Extraction en spécifiant le format des données JSON</h4>
+<p>Par défaut, les données extraites par la commande <code>lino pull</code> sont transformées dans le type JSON qui semble le plus adapté en fonction des informations fournies par le driver de base de données. Par exemple une colonne de type VARCHAR sera formatée dans le flux JSON avec des "guillemets" pour indiquer que c'est un type chaîne de caractère. De la même façon, une colonne de type NUMERIC sera formatée sans guillemets dans le flux JSON et avec un point pour le séparateur de décimales.</p>
+<p>Une colonne de type BLOB sera quant à elle transformée en base64 puis le résultat de cette transformation sera intégré au flux JSON sous forme de chaîne de caractère (la spécification JSON ne permet pas de faire autrement pour les données binaires). Un autre cas qui peut se produire est lorsque la données fournie par la base de données contient des caractères non-imprimables, dans ce cas la données est aussi encodée en base64 puis ajoutée sous forme de chaîne de caractères.</p>
+<p>Pour modifier ce comportement par défaut, il est possible d'utiliser la propriété <code>export</code> au niveau de chaque colonne spécifiée dans le fichier <code>table.yaml</code>. Ci dessous un exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :</p>
+<pre><code class="language-yaml">  - name: pets
+    keys:
+      - id
+    columns:
+      - name: name
+      - name: birth_date
+        export: timestamp
+</code></pre>
+<p>Les valeur de la colonne birth_date exportées dans le flux JSON seront alors converties en un timestamp unix (donc en numeric).</p>
+<pre><code>$ lino pull --table pets --limit 1
+{&quot;name&quot;:&quot;Leo&quot;,&quot;birth_date&quot;:968277600}
+</code></pre>
+<p>Les options disponibles pour la propriété <code>export</code> sont :</p>
+<table>
+<thead>
+<tr>
+<th>Valeur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><vide></td>
+<td>Comportement par défaut, le format qui semble correspondre sera choisi pour encoder la donnée en JSON.</td>
+</tr>
+<tr>
+<td>string</td>
+<td>La donnée sera exportée en JSON avec des "guillemets" (chaîne de caractères).</td>
+</tr>
+<tr>
+<td>numeric</td>
+<td>La donnée sera exportée en JSON sans "guillemets" et au format 0.00 ou 0 si pas de décimales (format numérique avec ou sans partie décimale).</td>
+</tr>
+<tr>
+<td>base64 ou binary</td>
+<td>La donnée sera encodée en base64 puis exportée en JSON avec des "guillemets" (chaîne de caractères encodée en base64).</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>La donnée sera d'abord convertie au format RFC3339 (ex: 2006-01-02T15:04:05Z) puis exportée en JSON avec des "guillemets" (chaîne de caractères représentant une date).</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>La donnée sera d'abord convertie en timestamp UNIX puis exportée en JSON sans "guillemets" au format numérique (format numérique sans partie décimale).</td>
+</tr>
+<tr>
+<td>no</td>
+<td>La donnée ne sera ni exportée dans le flux JSON, ni extraite de la base de données.</td>
+</tr>
+</tbody>
+</table>
+<p>Si l'on souhaite définir le format de quelques colonnes dans le fichier <code>table.yaml</code> tout en exportant l'intégralité des colonnes, cela est possible en ajoutant le paramètre <code>export: all</code> sur l'objet table. Ce paramètre pourra à l'avenir prendre d'autres valeurs, mais c'est la seule option disponible actuellement.</p>
+<pre><code class="language-yaml">  - name: pets
+    keys:
+      - id
+    columns:
+      - name: name
+      - name: birth_date
+        export: timestamp
+    export: all
+</code></pre>
+<h3 id="recharger-des-donnees">Recharger des données</h3>
+<p>La commande <code>lino push</code> est utilisé pour charger des données au format <strong>JSONline</strong> dans une base cible. Pour plus de détail consultez l'aide <code>lino push --help</code>.</p>
+<p>Pour la suite de ce tutoriel, nous allons configurer une autre base de données qui sera la base de données de qualification. Pour cela nous allons ajouter à la suite du fichier <code>docker-compose.yml</code> le bout de code suivant :</p>
+<pre><code class="language-yaml">  bdd-ql:
+    image: postgres:12.3
+    environment:
+      - POSTGRES_USER=jhpetclinic
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - &quot;5439:5432&quot;
+
+  app-ql:
+    image: ag04/jhpetclinic:latest
+    environment:
+      _JAVA_OPTIONS: '-Xmx512m -Xms256m'
+      SPRING_PROFILES_ACTIVE: 'prod,swagger'
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
+      SERVER_SERVLET_CONTEXT_PATH: '/'
+      JHIPSTER_SLEEP: '5' # gives time for other services to boot before the application
+      DATASOURCE_URL: 'jdbc:postgresql://bdd-ql:5432/jhpetclinic'
+      JPA_DATABASE_PLATFORM: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect'
+      JPA_DATABASE: 'POSTGRESQL'
+      DB_USER: 'jhpetclinic'
+      DB_PWD: 'jhpetclinic'
+      DB_NAME: 'jhpetclinic'
+      DB_SCHEMA: 'public'
+      MAIL_HOST: 'localhost'
+      MAIL_PORT: 25
+      MAIL_USERNAME: ''
+      MAIL_PWD: ''
+      MAIL_APP_BASE_URL: 'localhost:8001/'
+    ports:
+      - 8001:8080
+    depends_on:
+      - bdd-ql
+</code></pre>
+<p>Pour démarrer l'environnement de qualification, </p>
+<pre><code class="language-console">$ docker-compose up -d app-ql bdd-ql
+</code></pre>
+<pre><code class="language-console">$ Creating tutoriel-lino_bdd-ql_1 ... done
+$ Creating tutoiel-lino_app-ql_1 ... done
+</code></pre>
+<p>L'application relative à la base de données de qualification (<code>cible</code>) se trouve <a href="http://localhost:8001/">ici</a>. Pour se connecter il suffit d'utiliser les mêmes identifiants que pour l'application <code>source</code>.</p>
+<p>On peut voir que la base contient déjà des données.</p>
+<p><img alt="image" src="img/cible.png" /></p>
+<h4 id="connexion-a-la-base-cible">Connexion à la base cible</h4>
+<pre><code class="language-console">$ lino dc add cible 'postgresql://localhost:5432/jhpetclinic?sslmode=disable' -p -u jhpetclinic
+enter password:
+successfully added dataconnector
+</code></pre>
+<pre><code class="language-console">$ lino dc list 
+{source postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable false  { } { }}
+{cible postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable false  { } { }}
+</code></pre>
+<pre><code class="language-console">$ lino dc ping cible
+ping success
+</code></pre>
+<p>Si on regarde le fichier <code>dataconnector.yaml</code> on peut voir que la base de données <code>cible</code> a été ajouté.</p>
+<pre><code class="language-yaml">version: v1
+dataconnectors:
+  - name: source
+    url: postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable
+    readonly: true
+  - name: cible
+    url: postgresql://jhpetclinic@localhost:5432/jhpetclinic?sslmode=disable
+    readonly: false
+</code></pre>
+<h4 id="nettoyage">Nettoyage</h4>
+<p>On peut nettoyer la base de donnée <code>cible</code> à l'aide du paramètre <code>truncate</code>.</p>
+<pre><code class="language-console">$ lino push truncate cible &lt;/dev/null
+</code></pre>
+<p><img alt="image" src="img/cible-vide.png" /></p>
+<h4 id="insertion">Insertion</h4>
+<p>On peut extraire les données qui se trouvent dans la base de données <code>source</code> puis les recharger sur la base de données <code>cible</code>.</p>
+<hr />
+<blockquote>
+<p>Attention ! Avant il faut générer le fichier <code>ingress-descriptor.yml</code> contenant le nom de la table de départ qui sera ici <code>owners</code> et de ses relations.</p>
+</blockquote>
+<pre><code class="language-console">$ lino id create owners
+</code></pre>
+<p>Et modifier le paramètre <code>lookup</code> de la relation <em>fk_pets_type_id</em>.</p>
+<pre><code class="language-yaml">version: v1
+IngressDescriptor:
+  startTable: owners
+  relations:
+    - name: fk_pets_type_id
+      parent:
+        name: types
+        # à modifier
+        lookup: true
+</code></pre>
+<hr />
+<pre><code class="language-console">$ lino pull source -l 0 | lino push cible
+</code></pre>
+<p>Maintenant, on peut voir appraraître les données dans l'application <code>cible</code>. Si on regarde la fiche de <em>Peter McTavish</em> on voit qu'il a un seul animal (<strong><em>George</em></strong> le serpent).</p>
+<p><img alt="image" src="img/insertion.png" /></p>
+<p>Si on considère le jeu de données suivant (<strong><em>Bob</em></strong> le serpent):</p>
+<ul>
+<li>Sous Linux:</li>
+</ul>
+<pre><code class="language-console">$ cat &gt; bob.jsonl &lt;&lt;EOF
+{&quot;birth_date&quot;:&quot;2000-11-10T00:00:00Z&quot;,&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:16,&quot;name&quot;:&quot;Bob&quot;,&quot;owner_id&quot;:5,&quot;type_id&quot;:4}
+EOF
+</code></pre>
+<ul>
+<li>Sous Windows:</li>
+</ul>
+<pre><code class="language-powershell">PS&gt; echo '{&quot;birth_date&quot;:&quot;2000-11-10T00:00:00Z&quot;,&quot;fk_visits_pet_id&quot;:[],&quot;id&quot;:16,&quot;name&quot;:&quot;Bob&quot;,&quot;owner_id&quot;:5,&quot;type_id&quot;:4}' &gt; bob.jsonl
+</code></pre>
+<p>Il est possible de le rajouter dans l'application avec la commande <code>push</code>.</p>
+<pre><code class="language-console">$ lino id create pets
+$ lino push cible &lt; bob.jsonl
+</code></pre>
+<p>Maintenant Bob est disponible dans l'application</p>
+<p><img alt="image" src="img/insertion-bob.png" /></p>
+<h4 id="mise-a-jour-update">Mise à jour (update)</h4>
+<p>La commande <code>push</code> permet également de mettre à jour des enregistrements déjà présents dans la base de données cible.</p>
+<pre><code>$ lino push update cible &lt; bob.jsonl
+</code></pre>
+<h4 id="suppression">Suppression</h4>
+<p>La commande <code>push</code> permet également de supprimer des données ciblées.</p>
+<p>Si on veut supprimer <strong><em>Bob</em></strong> de l'application (action impossible depuis l'IHM) on reprend le jeu de données de <strong><em>Bob</em></strong>.</p>
+<pre><code>$ lino push delete cible &lt; bob.jsonl
+</code></pre>
+<h4 id="validationconversion-du-format-des-donnees">Validation/conversion du format des données</h4>
+<p>Comme pour la commande <code>pull</code> (voir paramètre <code>export</code>), il est possible de configurer sous quel format se présentent les données dans le flux JSON. Pour cela nous pouvons utilier le paramètre <code>import</code> dans le fichier  <code>table.yaml</code> au niveau de la définition des colonnes de chaque table.</p>
+<p>Dans l'exemple suivant, la colonne <code>birth_date</code> de la table <code>pets</code> est déclarée comme ayant le format <code>timestamp</code> dans le flux JSON. Cela permet à LINO de comprendre quelle conversion doit avoir lieu si la colonne cible en base de données est de type <code>DATE</code> par exemple (on affiche ici que la section du fichier qui concerne la table pets, le reste du fichier ne bouge pas) :</p>
+<pre><code class="language-yaml">  - name: pets
+    keys:
+      - id
+    columns:
+      - name: birth_date
+        import: timestamp
+</code></pre>
+<p>Les valeurs disponibles pour la propriété <code>import</code> sont :</p>
+<table>
+<thead>
+<tr>
+<th>Valeur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><vide></td>
+<td>Comportement par défaut, LINO tentera d'utiliser directement la valeur lue depuis le JSON auprès du driver de base de données.</td>
+</tr>
+<tr>
+<td>string</td>
+<td>La donnée sera lue depuis JSON au format chaîne de caractères (un plantage aura lieu si la valeur n'est pas au format chaîne de caractères).</td>
+</tr>
+<tr>
+<td>numeric</td>
+<td>La donnée sera lue depuis JSON au format 0.00 ou 0 (format numérique avec ou sans partie décimale).</td>
+</tr>
+<tr>
+<td>base64 ou binary</td>
+<td>La donnée sera lue au format chaîne de caractères, puis décodée en base64, et transmise sous format binaire à la base de données.</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>La donnée sera lue sous forme de chaîne de caractères représentant une date au format RFC3339 (ex: 2006-01-02T15:04:05Z).</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>La donnée sera lue en numeric représentant un timestamp UNIX.</td>
+</tr>
+</tbody>
+</table>
+<p>Il est à noter que certains formats impliquent une conversion de données (le format <code>binary</code> par exemple, transforme la données d'une chaîne de caractères vers un tableau d'octets binaire).</p>
+<p>Le paramètre <code>import</code> permet de contrôler de manière encore plus fine cette conversion implicite. Le format peut en effet être suivi du type sous-jacent à utiliser pour convertir la données. Par exemple <code>import: binary(int64)</code> ne convertira pas la donnée en tableau d'octets mais en un entier sur 64bit. Cela permet de gérer des cas particuliers qui peuvent se produire avec certaines bases de données, si le driver s'attend à voir un type différent de celui qui est produit par défaut.</p>
+<p>Il est important de bien comprendre que dans cet exemple <code>import: binary(int64)</code>, la partie gauche <code>binary</code> représente le format dans lequel la donnée est présenté sur le flux JSON, et la partie droite <code>int64</code> représente le type dans lequel la valeur est convertie avant d'être envoyée au driver base de données (pour insertion ou mise à jour).</p>
+<p>Les types pouvant être utilisés sont :</p>
+<table>
+<thead>
+<tr>
+<th>Nom</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>Entier signé sur 32 ou 64 bits selon l'architecture processeur</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>Entier signé sur 64 bits</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>Entier signé sur 32 bits</td>
+</tr>
+<tr>
+<td>int16</td>
+<td>Entier signé sur 16 bits</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>Entier signé sur 8 bits</td>
+</tr>
+<tr>
+<td>uint</td>
+<td>Entier non signé sur 32 ou 64 bits selon l'architecture processeur</td>
+</tr>
+<tr>
+<td>uint64</td>
+<td>Entier non signé sur 64 bits</td>
+</tr>
+<tr>
+<td>uint32</td>
+<td>Entier non signé sur 32 bits</td>
+</tr>
+<tr>
+<td>uint16</td>
+<td>Entier non signé sur 16 bits</td>
+</tr>
+<tr>
+<td>uint8</td>
+<td>Entier non signé sur 8 bits</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>Décimal flottant sur 64 bits</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>Décimal flottant sur 32 bits</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>Booléen</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Alias pour uint8</td>
+</tr>
+<tr>
+<td>rune</td>
+<td>Alias pour uint32</td>
+</tr>
+<tr>
+<td>string</td>
+<td>Chaîne de caractères</td>
+</tr>
+<tr>
+<td>[]byte</td>
+<td>Tableau d'octets (valeur binaire)</td>
+</tr>
+<tr>
+<td>time.Time</td>
+<td>Date / heure</td>
+</tr>
+<tr>
+<td>json.Number</td>
+<td>Alias pour string</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pimo_1">PIMO</h2>
+<p>Pour la suite de ce tutoriel, nous souhaitons charger l'environnement de qualification (base de données <code>cible</code>) avec des données anonymisées.</p>
+<p>L'application de qualification a déjà des données de disponible. L'IHM est disponible <a href="http://localhost:8001">ici</a>.</p>
+<h3 id="configuration">Configuration</h3>
+<p><code>pimo</code> est un utilitaire qui va lire un flux <em>JSON Line</em> en entrée. Pour chaque ligne, une série de filtres (pipeline) est appliqué sur l'enregistrement. Chaque enregistrement modifié est écrit sur la sortie standard au format <em>JSON Line</em>.</p>
+<p>La configuration de <code>pimo</code> est réalisée dans un fichier <code>masking.yml</code>.</p>
+<pre><code class="language-yaml"># version du fichier de configuration PIMO
+version: &quot;1&quot;
+# Initialisation du générateur pseudo-aléatoire (optionel)
+seed: 42
+# Liste ordonnée des masque à appliquer
+masking:
+  # Premier masque
+  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;age&quot;
+    mask:
+      # fonction de masque à appliquer
+      # Génération d'un nombre aléatoire compris entre min et max inclus
+      randomInt:
+        min: 18
+        max: 90      
+</code></pre>
+<p>Vous pouvez retrouver les masques disponible dans <code>pimo</code> <a href="https://github.com/CGI-FR/PIMO#possible-masks">ici</a>.</p>
+<ul>
+<li>Sous Linux:</li>
+</ul>
+<pre><code class="language-console">$ cat &gt; data.jsonl &lt;&lt;EOF
+{&quot;age&quot;: 18}
+{&quot;age&quot;: 39}
+{&quot;age&quot;: 52}
+EOF
+</code></pre>
+<ul>
+<li>Sous Windows:</li>
+</ul>
+<pre><code class="language-powershell">PS&gt; echo '{&quot;age&quot;: 18}' &gt; data.jsonl
+PS&gt; echo '{&quot;age&quot;: 39}' &gt;&gt; data.jsonl
+PS&gt; echo '{&quot;age&quot;: 52}' &gt;&gt; data.jsonl
+</code></pre>
+<pre><code class="language-console">$ pimo -c masking.yml &lt; data.jsonl
+{&quot;age&quot;:79}
+{&quot;age&quot;:53}
+{&quot;age&quot;:71}
+</code></pre>
+<p>Il n'est pas obligatoire de préciser le fichier de <em>masking</em> si celui-ci porte le nom <code>masking.yml</code> et se trouve dans le répertoire courant sinon il faudra le préciser avec le paramètre <code>--config, -c</code>.</p>
+<h3 id="generer-des-donnees">Générer des données</h3>
+<p>Pour faire de la sythèse de données, il suffit de masquer tous les champs par un filtre.</p>
+<p>La première étape est de créer un fichier de masking (<code>masking.yml</code>):</p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;id&quot;
+    masks:
+      - add: &quot;&quot;
+      - incremental:
+          start: 1
+          increment: 1
+
+  - selector:
+      jsonpath: &quot;date&quot;
+    mask:
+      add: &quot;&quot;
+
+  - selector:
+      jsonpath: &quot;date&quot;
+    mask:
+      randDate:
+        dateMin: &quot;1970-01-01T00:00:00Z&quot;
+        dateMax: &quot;2020-01-01T00:00:00Z&quot;
+</code></pre>
+<p>Puis d'utiliser le paramètre <code>--empty-input</code> qui permet de générer des données sans aucune entrée, qu'il faut utiliser avec le paramètre <code>--repeat, -r</code> qui permet de générer plusieurs sorties pour une entrée.</p>
+<pre><code class="language-console">$ pimo --empty-input -r 3 
+{&quot;id&quot;:1,&quot;date&quot;:&quot;1993-05-24T23:50:53Z&quot;}
+{&quot;id&quot;:2,&quot;date&quot;:&quot;1988-10-05T06:57:23Z&quot;}
+{&quot;id&quot;:3,&quot;date&quot;:&quot;2015-08-17T06:47:42Z&quot;}
+</code></pre>
+<p>Il est possible aussi de donner une structure de base à <code>pimo</code>, nous allons utiliser un <em>JSON Line</em> vide dans le fichier <code>owners_empty.jsonl</code>.</p>
+<pre><code class="language-json">{&quot;address&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;first_name&quot;:&quot;&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;&quot;,&quot;telephone&quot;:&quot;&quot;}
+</code></pre>
+<p>L'<code>id</code> n'est pas modifié, on choisit de l'incrémenter pour chaque itération. Pour les champs <code>address</code>, <code>city</code>, <code>first_name</code> et <code>last_name</code> on utilise des référentiels (voir plus bas, section <a href="#ref">Utilisation de référentiels</a>).</p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;telephone&quot;
+    mask:
+      regex: &quot;0[1-7]( ([0-9]){2}){4}&quot;
+
+  - selector:
+      jsonpath: &quot;adresse_brute&quot;
+    masks:
+      - add-transient: &quot;&quot;
+      - randomChoiceInUri: &quot;file://adresses.csv&quot;
+
+  - selector:
+      jsonpath: &quot;address&quot;
+    mask:
+      template: '{{$a := split &quot;;&quot; (toString .adresse_brute) }}{{$a._2}}, {{$a._4}}'
+
+  - selector:
+      jsonpath: &quot;city&quot;
+    mask:
+      template: '{{$a := split &quot;;&quot; (toString .adresse_brute) }}{{$a._7}}'
+
+  - selector:
+      jsonpath: &quot;first_name&quot;
+    mask:
+      randomChoiceInUri: &quot;pimo://nameFR&quot;
+
+  - selector:
+      jsonpath: &quot;last_name&quot;
+    mask:
+      randomChoiceInUri: &quot;pimo://surnameFR&quot;
+
+  - selector:
+      jsonpath: &quot;id&quot;
+    mask:
+      incremental:
+        start: 1
+        increment: 1
+</code></pre>
+<p><code>pimo</code> remplit les champs avec les masques et permet de générer plusieurs sorties pour une entrée.</p>
+<ul>
+<li>Sous Linux:</li>
+</ul>
+<pre><code class="language-console">$ cat &gt; owners_empty.jsonl &lt;&lt;EOF
+heredoc&gt; {&quot;address&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;first_name&quot;:&quot;&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;&quot;,&quot;telephone&quot;:&quot;&quot;}
+heredoc&gt; EOF
+</code></pre>
+<ul>
+<li>Sous Windows:</li>
+</ul>
+<pre><code class="language-powershell">PS&gt; echo '{&quot;address&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;first_name&quot;:&quot;&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;&quot;,&quot;telephone&quot;:&quot;&quot;}' &gt; owners_empty.jsonl
+</code></pre>
+<pre><code class="language-console">$ pimo --repeat 10 &lt; owners_empty.jsonl 
+{&quot;address&quot;:&quot;85, Menauton&quot;,&quot;city&quot;:&quot;Betbezer-d'Armagnac&quot;,&quot;first_name&quot;:&quot;Bob&quot;,&quot;id&quot;:1,&quot;last_name&quot;:&quot;Muller&quot;,&quot;telephone&quot;:&quot;01 98 40 40 42&quot;}
+{&quot;address&quot;:&quot;43, Le Bourg&quot;,&quot;city&quot;:&quot;Betbezer-d'Armagnac&quot;,&quot;first_name&quot;:&quot;Anne-Charlotte&quot;,&quot;id&quot;:2,&quot;last_name&quot;:&quot;Renard&quot;,&quot;telephone&quot;:&quot;02 45 74 91 82&quot;}
+{&quot;address&quot;:&quot;33, Nayere&quot;,&quot;city&quot;:&quot;Castelner&quot;,&quot;first_name&quot;:&quot;Pierrette&quot;,&quot;id&quot;:3,&quot;last_name&quot;:&quot;Bernard&quot;,&quot;telephone&quot;:&quot;02 10 73 21 43&quot;}
+</code></pre>
+<p>au format tableau, </p>
+<blockquote>
+<p>Les tableaux sont générés avec la commande <code>mlr --ijson --omd  cat  owners_empty.jsonl</code>
+Pour installer <code>mlr</code> allez sur <a href="https://github.com/johnkerl/miller/">Miller</a>.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>address</th>
+<th>city</th>
+<th>first_name</th>
+<th>id</th>
+<th>last_name</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110 W. Liberty St.</td>
+<td>Madison</td>
+<td>George</td>
+<td>1</td>
+<td>Franklin</td>
+<td>6085551023</td>
+</tr>
+<tr>
+<td>638 Cardinal Ave.</td>
+<td>Sun Prairie</td>
+<td>Betty</td>
+<td>2</td>
+<td>Davis</td>
+<td>6085551749</td>
+</tr>
+<tr>
+<td>2693 Commerce St.</td>
+<td>McFarland</td>
+<td>Eduardo</td>
+<td>3</td>
+<td>Rodriquez</td>
+<td>6085558763</td>
+</tr>
+<tr>
+<td>563 Friendly St.</td>
+<td>Windsor</td>
+<td>Harold</td>
+<td>4</td>
+<td>Davis</td>
+<td>6085553198</td>
+</tr>
+<tr>
+<td>2387 S. Fair Way</td>
+<td>Madison</td>
+<td>Peter</td>
+<td>5</td>
+<td>McTavish</td>
+<td>6085552765</td>
+</tr>
+<tr>
+<td>105 N. Lake St.</td>
+<td>Monona</td>
+<td>Jean</td>
+<td>6</td>
+<td>Coleman</td>
+<td>6085552654</td>
+</tr>
+<tr>
+<td>1450 Oak Blvd.</td>
+<td>Monona</td>
+<td>Jeff</td>
+<td>7</td>
+<td>Black</td>
+<td>6085555387</td>
+</tr>
+<tr>
+<td>345 Maple St.</td>
+<td>Madison</td>
+<td>Maria</td>
+<td>8</td>
+<td>Escobito</td>
+<td>6085557683</td>
+</tr>
+<tr>
+<td>2749 Blackhawk Trail</td>
+<td>Madison</td>
+<td>David</td>
+<td>9</td>
+<td>Schroeder</td>
+<td>6085559435</td>
+</tr>
+<tr>
+<td>2335 Independence La.</td>
+<td>Waunakee</td>
+<td>Carlos</td>
+<td>10</td>
+<td>Estaban</td>
+<td>6085555487</td>
+</tr>
+</tbody>
+</table>
+<p>Comme le générateur pseudo-aléatoire est configuré avec la même graine les données générées à partir de rien sont identique aux données masquées.</p>
+<p><code>pimo</code> peut ainsi être utilisé pour faire des tests de charge de l'application :</p>
+<pre><code class="language-console">$ lino push truncate cible &lt;/dev/null
+$ lino id create owners
+$ cat owners_empty.jsonl | pimo --repeat 100 | lino push truncate cible
+</code></pre>
+<p>L'application QL est maintenant chargées avec une volumétrie plus importante.</p>
+<p><img alt="image" src="img/anonymisation.png" /></p>
+<h3 id="modifier-des-donnees">Modifier des données</h3>
+<p>Pour commencer, nous allons créer un fichier des propriétaires avec <code>lino</code>.</p>
+<pre><code class="language-console">$ lino id set-parent-lookup fk_pets_type_id true  
+successfully update relation fk_pets_type_id in ingress descriptor
+$ lino pull source -l 0 | lino push truncate cible
+$ lino pull cible --limit 0 &gt; owner.jsonl
+</code></pre>
+<p>Le fichier <code>owner.jsonl</code> contient des informations qui doivent être anonymisée.</p>
+<pre><code class="language-console">$ mlr --ijson --omd  cat  owners.jsonl
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>address</th>
+<th>city</th>
+<th>first_name</th>
+<th>id</th>
+<th>last_name</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110 W. Liberty St.</td>
+<td>Madison</td>
+<td>George</td>
+<td>1</td>
+<td>Franklin</td>
+<td>6085551023</td>
+</tr>
+<tr>
+<td>638 Cardinal Ave.</td>
+<td>Sun Prairie</td>
+<td>Betty</td>
+<td>2</td>
+<td>Davis</td>
+<td>6085551749</td>
+</tr>
+<tr>
+<td>2693 Commerce St.</td>
+<td>McFarland</td>
+<td>Eduardo</td>
+<td>3</td>
+<td>Rodriquez</td>
+<td>6085558763</td>
+</tr>
+<tr>
+<td>563 Friendly St.</td>
+<td>Windsor</td>
+<td>Harold</td>
+<td>4</td>
+<td>Davis</td>
+<td>6085553198</td>
+</tr>
+<tr>
+<td>2387 S. Fair Way</td>
+<td>Madison</td>
+<td>Peter</td>
+<td>5</td>
+<td>McTavish</td>
+<td>6085552765</td>
+</tr>
+<tr>
+<td>105 N. Lake St.</td>
+<td>Monona</td>
+<td>Jean</td>
+<td>6</td>
+<td>Coleman</td>
+<td>6085552654</td>
+</tr>
+<tr>
+<td>1450 Oak Blvd.</td>
+<td>Monona</td>
+<td>Jeff</td>
+<td>7</td>
+<td>Black</td>
+<td>6085555387</td>
+</tr>
+<tr>
+<td>345 Maple St.</td>
+<td>Madison</td>
+<td>Maria</td>
+<td>8</td>
+<td>Escobito</td>
+<td>6085557683</td>
+</tr>
+<tr>
+<td>2749 Blackhawk Trail</td>
+<td>Madison</td>
+<td>David</td>
+<td>9</td>
+<td>Schroeder</td>
+<td>6085559435</td>
+</tr>
+<tr>
+<td>2335 Independence La.</td>
+<td>Waunakee</td>
+<td>Carlos</td>
+<td>10</td>
+<td>Estaban</td>
+<td>6085555487</td>
+</tr>
+</tbody>
+</table>
+<p>Nous allons ici générer de nouveaux numéro de téléphone, le fichier <code>masking.yml</code> est le suivant:</p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;telephone&quot;
+    mask:
+      regex: &quot;0[1-7]( ([0-9]){2}){4}&quot;
+</code></pre>
+<p>Ensuite nous appliquons le masque aux données du fichier <code>owner.jsonl</code> avec la commande <code>pimo</code>:</p>
+<pre><code class="language-console">$ pimo &lt; owners.jsonl &gt; owners_masked.jsonl
+</code></pre>
+<p>On obtient le fichier <em>JSON Line</em> avec les numéro de téléphone remplacés.</p>
+<pre><code class="language-console">$ mlr --ijson --omd  cat  owners_masked.jsonl
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>address</th>
+<th>city</th>
+<th>first_name</th>
+<th>id</th>
+<th>last_name</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110 W. Liberty St.</td>
+<td>Madison</td>
+<td>George</td>
+<td>1</td>
+<td>Franklin</td>
+<td>01 98 40 40 42</td>
+</tr>
+<tr>
+<td>638 Cardinal Ave.</td>
+<td>Sun Prairie</td>
+<td>Betty</td>
+<td>2</td>
+<td>Davis</td>
+<td>02 45 74 91 82</td>
+</tr>
+<tr>
+<td>2693 Commerce St.</td>
+<td>McFarland</td>
+<td>Eduardo</td>
+<td>3</td>
+<td>Rodriquez</td>
+<td>02 10 73 21 43</td>
+</tr>
+<tr>
+<td>563 Friendly St.</td>
+<td>Windsor</td>
+<td>Harold</td>
+<td>4</td>
+<td>Davis</td>
+<td>03 52 06 73 10</td>
+</tr>
+<tr>
+<td>2387 S. Fair Way</td>
+<td>Madison</td>
+<td>Peter</td>
+<td>5</td>
+<td>McTavish</td>
+<td>06 37 18 68 68</td>
+</tr>
+<tr>
+<td>105 N. Lake St.</td>
+<td>Monona</td>
+<td>Jean</td>
+<td>6</td>
+<td>Coleman</td>
+<td>03 84 84 79 80</td>
+</tr>
+<tr>
+<td>1450 Oak Blvd.</td>
+<td>Monona</td>
+<td>Jeff</td>
+<td>7</td>
+<td>Black</td>
+<td>06 81 37 46 79</td>
+</tr>
+<tr>
+<td>345 Maple St.</td>
+<td>Madison</td>
+<td>Maria</td>
+<td>8</td>
+<td>Escobito</td>
+<td>06 55 84 83 56</td>
+</tr>
+<tr>
+<td>2749 Blackhawk Trail</td>
+<td>Madison</td>
+<td>David</td>
+<td>9</td>
+<td>Schroeder</td>
+<td>05 73 34 30 65</td>
+</tr>
+<tr>
+<td>2335 Independence La.</td>
+<td>Waunakee</td>
+<td>Carlos</td>
+<td>10</td>
+<td>Estaban</td>
+<td>02 37 45 87 29</td>
+</tr>
+</tbody>
+</table>
+<p>Il est possible de recharger l'environnement  de qualification directement en mode <em>streaming</em>.</p>
+<pre><code class="language-console">$ lino pull source --limit 0 | pimo  | lino push truncate cible
+</code></pre>
+<p>Les nouveaux numéros de téléphones sont affichés dans l'environnement de qualification.</p>
+<p><img alt="image" src="img/telephone.png" /></p>
+<h3 id="utilisation-de-referentiels">Utilisation de référentiels <a name = "ref"></a></h3>
+<h4 id="referentiels-externe">Référentiels externe</h4>
+<p><code>pimo</code> permet de réaliser un masquage réaliste en utilisant un référentiel externe.</p>
+<p>La première étape est la récupération d'un listing d'adresses françaises.</p>
+<ul>
+<li>Sous Linux:</li>
+</ul>
+<pre><code class="language-console">$ curl https://adresse.data.gouv.fr/data/ban/adresses/latest/csv/adresses-40.csv.gz -o - | gunzip &gt; adresses.csv
+</code></pre>
+<ul>
+<li>Sous Windows:</li>
+</ul>
+<pre><code class="language-powershell">PS&gt; Invoke-WebRequest https://adresse.data.gouv.fr/data/ban/adresses/latest/csv/adresses-40.csv.gz -OutFile adresses.csv
+</code></pre>
+<p>Le fichier <code>adresses.csv</code> contient des lignes <em>CSV</em>.</p>
+<pre><code class="language-csv">id;id_fantoir;numero;rep;nom_voie;code_postal;code_insee;nom_commune;code_insee_ancienne_commune;nom_ancienne_commune;x;y;lon;lat;alias;nom_ld;libelle_acheminement;nom_afnor;source_position;source_nom_voie
+40030_xdqd7o_00001;;1;;Le Bourg;40310;40030;Baudignan;;;463951.29;6336689.46;0.051661;44.089542;;;BAUDIGNAN;LE BOURG;inconnue;inconnue
+</code></pre>
+<p>Pour chaque enregistrement on rajoute un champ avec le filtre <em>add</em>.</p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;adresse_brute&quot;
+    mask:
+      # fonction de masque à appliquer
+      add: &quot;&quot;
+</code></pre>
+<p>Ce filtre modifie la structure du <em>JSON line</em> en rajoutant un nouveau champ (<code>"adresse_brute": ""</code>).
+<code>pimo</code> est capable de faire un tir aléatoire dans un fichier pour chaque enregistrement.</p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;adresse_brute&quot;
+    mask:
+      # fonction de masque à appliquer
+      randomChoiceInUri: &quot;file://adresses.csv&quot;
+</code></pre>
+<p><code>pimo</code> propose un moteur de template pour réaliser des transformations complexes.</p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;address&quot;
+    mask:
+      # fonction de masque à appliquer
+      template: '{{$a := split &quot;;&quot; (toString .adresse_brute) }}{{$a._2}}, {{$a._4}}'
+</code></pre>
+<p>Dans notre cas nous voulons découper la ligne <em>CSV</em> et concaténer la colonne 2 et 4.</p>
+<p>La colonne 7 va être utilisé pour la ville.</p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;city&quot;
+    mask:
+      # fonction de masque à appliquer
+      template: '{{$a := split &quot;;&quot; (toString .adresse_brute) }}{{$a._7}}'
+</code></pre>
+<p>Le champ <code>adresse_brute</code> n'est pas nécessaire dans le résultat, le filtrer <code>remove</code> est utilisé pour le supprimer.</p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;adresse_brute&quot;
+    mask:
+      # fonction de masque à appliquer
+      remove: true
+</code></pre>
+<p>On obtient des lignes avec des adresses existantes.</p>
+<table>
+<thead>
+<tr>
+<th>address</th>
+<th>city</th>
+<th>first_name</th>
+<th>id</th>
+<th>last_name</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>92, Rue de Francillon</td>
+<td>Biscarrosse</td>
+<td>George</td>
+<td>1</td>
+<td>Franklin</td>
+<td>05 30 85 92 14</td>
+</tr>
+<tr>
+<td>1687, Route de Saas</td>
+<td>Rivière-Saas-et-Gourby</td>
+<td>Betty</td>
+<td>2</td>
+<td>Davis</td>
+<td>06 16 08 56 96</td>
+</tr>
+<tr>
+<td>1050, Route du Hallot</td>
+<td>Perquie</td>
+<td>Eduardo</td>
+<td>3</td>
+<td>Rodriquez</td>
+<td>06 62 38 83 99</td>
+</tr>
+<tr>
+<td>42, Avenue Etienne Castaings</td>
+<td>Ondres</td>
+<td>Harold</td>
+<td>4</td>
+<td>Davis</td>
+<td>02 41 24 37 32</td>
+</tr>
+<tr>
+<td>11, Allée du Champ Ferme</td>
+<td>Saugnacq-et-Muret</td>
+<td>Peter</td>
+<td>5</td>
+<td>McTavish</td>
+<td>07 09 88 18 00</td>
+</tr>
+<tr>
+<td>30, Avenue Debussy</td>
+<td>Capbreton</td>
+<td>Jean</td>
+<td>6</td>
+<td>Coleman</td>
+<td>01 37 31 86 02</td>
+</tr>
+<tr>
+<td>16, Clos des Vignerons</td>
+<td>Saint-Martin-de-Hinx</td>
+<td>Jeff</td>
+<td>7</td>
+<td>Black</td>
+<td>01 39 86 93 80</td>
+</tr>
+<tr>
+<td>80, Impasse Georges Sabde</td>
+<td>Saint-Pierre-du-Mont</td>
+<td>Maria</td>
+<td>8</td>
+<td>Escobito</td>
+<td>01 62 46 20 07</td>
+</tr>
+<tr>
+<td>147, Rue des Roses</td>
+<td>Léon</td>
+<td>David</td>
+<td>9</td>
+<td>Schroeder</td>
+<td>01 38 01 76 12</td>
+</tr>
+<tr>
+<td>53, Rue des Mûriers</td>
+<td>Biscarrosse</td>
+<td>Carlos</td>
+<td>10</td>
+<td>Estaban</td>
+<td>06 91 52 79 43</td>
+</tr>
+</tbody>
+</table>
+<p>On peut également utiliser le masque <code>add-transient</code> qui est la combinaison du masque <code>add</code> et du masque <code>remove</code>. </p>
+<pre><code class="language-yaml">  - selector:
+      # Sélection du champ à modifier
+      jsonpath: &quot;adresse_brute&quot;
+    mask:
+      # fonction de masque à appliquer
+      add-transient: &quot;&quot;
+</code></pre>
+<p>Le champ <strong>adresse_brute</strong> est ajouter dans chaque <em>JSON Line</em> et contient la valeur "" et il sera supprimer à la fin du masking, il n'apparaitra pas dans la sortie finale.</p>
+<h4 id="referentiels-inclus-dans-pimo">Référentiels inclus dans PIMO</h4>
+<p>Pour simplifier la configuration, <code>pimo</code> embarque une collection de référentiels souvent utilisés.</p>
+<pre><code class="language-yaml">  - selector:
+      jsonpath: &quot;first_name&quot;
+    mask:
+      # Un prénom français
+      randomChoiceInUri: &quot;pimo://nameFR&quot;
+  - selector:
+      jsonpath: &quot;last_name&quot;
+    mask:
+      # Un nom français
+      randomChoiceInUri: &quot;pimo://surnameFR&quot;
+</code></pre>
+<p>Toutes les données sont masquées et on peut l'utilisé sur un environnement de test.</p>
+<table>
+<thead>
+<tr>
+<th>address</th>
+<th>city</th>
+<th>first_name</th>
+<th>id</th>
+<th>last_name</th>
+<th>telephone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>92, Rue de Francillon</td>
+<td>Biscarrosse</td>
+<td>Vincent</td>
+<td>1</td>
+<td>Richard</td>
+<td>05 30 85 92 14</td>
+</tr>
+<tr>
+<td>1687, Route de Saas</td>
+<td>Rivière-Saas-et-Gourby</td>
+<td>Aude</td>
+<td>2</td>
+<td>Giraud</td>
+<td>06 16 08 56 96</td>
+</tr>
+<tr>
+<td>1050, Route du Hallot</td>
+<td>Perquie</td>
+<td>Viviane</td>
+<td>3</td>
+<td>Perez</td>
+<td>06 62 38 83 99</td>
+</tr>
+<tr>
+<td>42, Avenue Etienne Castaings</td>
+<td>Ondres</td>
+<td>Roberte</td>
+<td>4</td>
+<td>Masson</td>
+<td>02 41 24 37 32</td>
+</tr>
+<tr>
+<td>11, Allée du Champ Ferme</td>
+<td>Saugnacq-et-Muret</td>
+<td>Ambroise</td>
+<td>5</td>
+<td>Lefevre</td>
+<td>07 09 88 18 00</td>
+</tr>
+<tr>
+<td>30, Avenue Debussy</td>
+<td>Capbreton</td>
+<td>Alphonse</td>
+<td>6</td>
+<td>Dumont</td>
+<td>01 37 31 86 02</td>
+</tr>
+<tr>
+<td>16, Clos des Vignerons</td>
+<td>Saint-Martin-de-Hinx</td>
+<td>Ursula</td>
+<td>7</td>
+<td>Duval</td>
+<td>01 39 86 93 80</td>
+</tr>
+<tr>
+<td>80, Impasse Georges Sabde</td>
+<td>Saint-Pierre-du-Mont</td>
+<td>Remi</td>
+<td>8</td>
+<td>Brunet</td>
+<td>01 62 46 20 07</td>
+</tr>
+<tr>
+<td>147, Rue des Roses</td>
+<td>Léon</td>
+<td>Melchior</td>
+<td>9</td>
+<td>Francois</td>
+<td>01 38 01 76 12</td>
+</tr>
+<tr>
+<td>53, Rue des Mûriers</td>
+<td>Biscarrosse</td>
+<td>Sophie</td>
+<td>10</td>
+<td>Clement</td>
+<td>06 91 52 79 43</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestion-des-erreurs-dans-lino-pimo">Gestion des erreurs dans LINO - PIMO</h2>
+<p>Les logs de <code>lino</code> et <code>pimo</code> sont écrit sur la sortie standard d'erreur. Même si on utilise des pipes unix <code>|</code> pour chaîner les commandes les log sont toujours disponible dans la console.</p>
+<p><img alt="image" src="img/logs.png" /></p>
+<pre><code class="language-console">$ lino id create pets 
+$ lino push truncate cible &lt;/dev/null
+$ lino pull source -l 0 | lino push cible
+multiple errors: [pq: insert or update on table &quot;pets&quot; violates foreign key constraint &quot;fk_pets_type_id&quot; (No error capture configured)], [pq: Could not complete operation in a failed transaction], [&lt;nil&gt;]
+</code></pre>
+<p>Pour gérer les erreurs on utilise</p>
+<pre><code class="language-console">lino pull source -l 0 | lino push cible -v5
+</code></pre>
+<p><img alt="image" src="img/trc.png" /></p>
+<pre><code class="language-console">$ lino id create owners
+successfully created ingress descriptor
+$ lino id set-parent-lookup fk_pets_type_id true 
+successfully update relation fk_pets_type_id in ingress descriptor
+$ lino pull source -l 0 | lino push cible -v3
+</code></pre>
+<p><img alt="image" src="img/inf.png" /></p>
+<h3 id="redirection-des-erreurs">Redirection des erreurs</h3>
+<pre><code class="language-console">lino pull -f id=3 source -v3 | jq 
+lino pull -f id=3 source -v5 --log-json 2&gt; error.json
+lino pull -f id=3 source -v5 --log-json 2&gt; &gt;(tee error.json)
+</code></pre>
+<h2 id="sigo">SIGO</h2>
+<h3 id="installation_1">Installation</h3>
+<p>Vous pouvez récupérer le binaire de <code>sigo</code> sur la page <a href="https://github.com/CGI-FR/SIGO/releases">CGI-FR/SIGO/releases</a>, en choisissant la version et l'environnement qui convient.</p>
+<ul>
+<li>Sous Linux</li>
+</ul>
+<pre><code class="language-console">$ wget &lt;url&gt;/&lt;file&gt;.tar.gz --output-document sigo.tar.gz
+$ tar xzf sigo.tar.gz
+$ sigo --version
+</code></pre>
+<ul>
+<li>Sous Windows </li>
+</ul>
+<pre><code class="language-powershell">PS&gt; Invoke-WebRequest &lt;url&gt;/&lt;file&gt;.tar.gz -OutFile sigo.tar.gz
+PS&gt; Save-Module -Name 7Zip4Powershell -Path .
+PS&gt; Import-Module .\7Zip4Powershell\2.1.0\7Zip4Powershell.psd1
+PS&gt; Expand-7Zip sigo.tar.gz .
+PS&gt; Expand-7Zip sigo.tar .
+PS&gt; $env:Path += &quot;;.&quot;
+PS&gt; sigo --version
+</code></pre>
+<p>Vérifier l'installation avec la commande <code>sigo --help</code>.</p>
+<h3 id="utilisation-de-sigo-avec-des-donnees-mixtes">Utilisation de SIGO avec des données mixtes</h3>
+<p>Dans ce tutoriel, nous allons faire l'anonymisation d'un jeu de données générer par <code>pimo</code>.
+Supposons que nous avons dans un fichier des caractéristiques sur des individus tels que l'âge, le poids, la taille, la région, un attribut indiquant si la personne fume ou non et si elle est malade (donnée sensible).</p>
+<h4 id="generation-de-donnees-avec-pimo">Génération de données avec PIMO</h4>
+<pre><code class="language-console">pimo -c masking.yml --empty-input -r 100 &gt; data.json
+</code></pre>
+<p><strong>masking.yml</strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;age&quot;
+    masks:
+      - add : &quot;&quot;
+      - randomInt:
+         min: 18
+         max: 95
+
+  - selector:
+      jsonpath: &quot;poids&quot;
+    masks:
+      - add : &quot;&quot;    
+      - randomDecimal:
+         min: 50
+         max: 100
+         precision: 2
+
+  - selector:
+      jsonpath: &quot;taille&quot;
+    masks:
+      - add : &quot;&quot;
+      - randomDecimal:
+         min: 1.40
+         max: 2.00
+         precision: 2
+
+  - selector:
+      jsonpath: &quot;departement&quot;
+    masks:
+      - add : &quot;&quot;
+      - randomChoice:
+        - &quot;Auvergne-Rhône-Alpes&quot;
+        - &quot;Bourgogne-Franche-Comté&quot;
+        - &quot;Bretagne&quot;
+        - &quot;Centre-Val de Loire&quot;
+        - &quot;Corse&quot;
+        - &quot;Grand-Est&quot;
+        - &quot;Hauts-de-France&quot;
+        - &quot;Île-de-France&quot;
+        - &quot;Normandie&quot;
+        - &quot;Nouvelle-Aquitaine&quot;
+        - &quot;Occitanie&quot;
+        - &quot;Pays de Loire&quot;
+        - &quot;Provence-Alpes-Côte d'Azur&quot;
+
+  - selector:
+      jsonpath: &quot;fume&quot;
+    masks:
+      - add : &quot;&quot;
+      - randomChoice:
+         - &quot;oui&quot;
+         - &quot;non&quot;
+
+  - selector:
+      jsonpath: &quot;malade&quot;
+    masks:
+      - add : &quot;&quot;
+      - randomChoice:
+        - &quot;oui&quot;
+        - &quot;non&quot;
+</code></pre>
+<p><strong>data.json</strong></p>
+<pre><code class="language-json">{&quot;age&quot;:25,&quot;poids&quot;:90.98,&quot;taille&quot;:1.43,&quot;departement&quot;:&quot;Corse&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:70,&quot;poids&quot;:54.56,&quot;taille&quot;:1.96,&quot;departement&quot;:&quot;Occitanie&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:58,&quot;poids&quot;:77.71,&quot;taille&quot;:1.64,&quot;departement&quot;:&quot;Provence-Alpes-Côte d'Azur&quot;,&quot;fume&quot;:&quot;oui&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:19,&quot;poids&quot;:75.69,&quot;taille&quot;:1.59,&quot;departement&quot;:&quot;Provence-Alpes-Côte d'Azur&quot;,&quot;fume&quot;:&quot;oui&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:70,&quot;poids&quot;:81.77,&quot;taille&quot;:1.72,&quot;departement&quot;:&quot;Corse&quot;,&quot;fume&quot;:&quot;oui&quot;,&quot;malade&quot;:&quot;non&quot;}
+</code></pre>
+<p><code>sigo</code> est capable d'anonymiser des jeux de données composés essentiellement de flottants. Pour pouvoir anonymiser un jeu de données comportant des attributs catégoriels comme dans l'exemple ci-dessus, il faut préalablement effectuer une conversion pour transformer les attributs textuels en flottant. Cette manipulation est très facile avec <code>pimo</code>.</p>
+<h4 id="conversion-avec-pimo">Conversion avec PIMO</h4>
+<p>Nous allons utiliser la notion de cache dans <code>pimo</code>, ce qui va nous permettre de créer un dictionnaire <em>clé-valeur</em> ou la <strong>clé</strong> sera la valeur de l'attribut catégoriel et la <strong>valeur</strong> sera le flottant correspondant à la clé, que l'on gardera en mémoire afin de faire la conversion inverse une fois l'anonymisation faite.</p>
+<p><strong>cache.yml</strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;departement&quot;
+    mask:
+      incremental:
+        start: 1
+        increment: 1
+    cache: &quot;cacheDepartement&quot;
+
+  - selector:
+      jsonpath: &quot;fume&quot;
+    mask:
+      incremental:
+        start: 1
+        increment: 1
+    cache: &quot;cacheFume&quot;
+
+caches:
+  cacheDepartement:
+    unique: true
+    reverse: false
+  cacheFume:
+    unique: true
+    reverse: false
+</code></pre>
+<pre><code class="language-console">pimo -c cache.yml --dump-cache cacheDepartement=departement.json &lt;&lt;EOF
+{&quot;departement&quot;: &quot;Auvergne-Rhône-Alpes&quot;}
+{&quot;departement&quot;: &quot;Bourgogne-Franche-Comté&quot;}
+{&quot;departement&quot;: &quot;Bretagne&quot;}
+{&quot;departement&quot;: &quot;Centre-Val de Loire&quot;}
+{&quot;departement&quot;: &quot;Corse&quot;}
+{&quot;departement&quot;: &quot;Grand-Est&quot;}
+{&quot;departement&quot;: &quot;Hauts-de-France&quot;}
+{&quot;departement&quot;: &quot;Île-de-France&quot;}
+{&quot;departement&quot;: &quot;Normandie&quot;}
+{&quot;departement&quot;: &quot;Nouvelle-Aquitaine&quot;}
+{&quot;departement&quot;: &quot;Occitanie&quot;}
+{&quot;departement&quot;: &quot;Pays de Loire&quot;}
+{&quot;departement&quot;: &quot;Provence-Alpes-Côte d'Azur&quot;}
+EOF
+</code></pre>
+<p><strong>departement.json</strong></p>
+<pre><code class="language-json">{&quot;key&quot;:&quot;Normandie&quot;,&quot;value&quot;:9}
+{&quot;key&quot;:&quot;Bourgogne-Franche-Comté&quot;,&quot;value&quot;:2}
+{&quot;key&quot;:&quot;Bretagne&quot;,&quot;value&quot;:3}
+{&quot;key&quot;:&quot;Hauts-de-France&quot;,&quot;value&quot;:7}
+{&quot;key&quot;:&quot;Grand-Est&quot;,&quot;value&quot;:6}
+{&quot;key&quot;:&quot;Île-de-France&quot;,&quot;value&quot;:8}
+{&quot;key&quot;:&quot;Nouvelle-Aquitaine&quot;,&quot;value&quot;:10}
+{&quot;key&quot;:&quot;Occitanie&quot;,&quot;value&quot;:11}
+{&quot;key&quot;:&quot;Pays de Loire&quot;,&quot;value&quot;:12}
+{&quot;key&quot;:&quot;Auvergne-Rhône-Alpes&quot;,&quot;value&quot;:1}
+{&quot;key&quot;:&quot;Centre-Val de Loire&quot;,&quot;value&quot;:4}
+{&quot;key&quot;:&quot;Corse&quot;,&quot;value&quot;:5}
+{&quot;key&quot;:&quot;Provence-Alpes-Côte d'Azur&quot;,&quot;value&quot;:13}
+</code></pre>
+<pre><code class="language-console">pimo -c cache.yml --dump-cache cacheFume=fume.json &lt;&lt;EOF
+{&quot;fume&quot;: &quot;oui&quot;}
+{&quot;fume&quot;: &quot;non&quot;}
+EOF
+</code></pre>
+<p><strong>fume.json</strong></p>
+<pre><code class="language-json">{&quot;key&quot;:&quot;oui&quot;,&quot;value&quot;:1}
+{&quot;key&quot;:&quot;non&quot;,&quot;value&quot;:2}
+</code></pre>
+<pre><code class="language-console">pimo --load-cache cacheDepartement=departement.json --load-cache cacheFume=fume.json -c transpose.yml &lt; data.json &gt; data_transpose.json
+</code></pre>
+<p><strong>transpose.yml</strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;departement&quot;
+    mask:
+      fromCache: &quot;cacheDepartement&quot;
+
+  - selector:
+      jsonpath: &quot;fume&quot;
+    mask:
+      fromCache: &quot;cacheFume&quot;
+
+caches:
+  cacheDepartement:
+    unique: true
+    reverse: false
+  cacheFume:
+    unique: true
+    reverse: false
+</code></pre>
+<p><strong>data_transpose.json</strong></p>
+<pre><code class="language-json">{&quot;age&quot;:25,&quot;poids&quot;:90.98,&quot;taille&quot;:1.43,&quot;departement&quot;:5,&quot;fume&quot;:2,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:70,&quot;poids&quot;:54.56,&quot;taille&quot;:1.96,&quot;departement&quot;:11,&quot;fume&quot;:2,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:58,&quot;poids&quot;:77.71,&quot;taille&quot;:1.64,&quot;departement&quot;:13,&quot;fume&quot;:1,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:19,&quot;poids&quot;:75.69,&quot;taille&quot;:1.59,&quot;departement&quot;:13,&quot;fume&quot;:1,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:70,&quot;poids&quot;:81.77,&quot;taille&quot;:1.72,&quot;departement&quot;:5,&quot;fume&quot;:1,&quot;malade&quot;:&quot;non&quot;}
+</code></pre>
+<p>Une fois que notre jeu de donnée est entièrement en flottant (mis à part la donnée sensible, mais cela n'est pas dérangeant puisque <code>sigo</code> ne modifiera pas cette donnée). Nous pouvons passer à l'anonymisation.</p>
+<h4 id="anonymisation-avec-sigo">Anonymisation avec SIGO</h4>
+<pre><code class="language-console">sigo -q age,poids,taille,departement,fume -s malade -k 4 -l 2 -a meanAggregation &lt; data_transpose.json &gt; data_sigo.json
+</code></pre>
+<p><strong>data_sigo.json</strong></p>
+<pre><code class="language-json">{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+</code></pre>
+<h4 id="transformation-inverse-avec-pimo">Transformation inverse avec PIMO</h4>
+<p>On veut pouvoir retrouver nos données avec le même format que les données originales, pour ce faire nous allons utiliser le paramètre <em>reverse</em> de l'option <code>cache</code>.</p>
+<p><strong>reverse.yml</strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+seed: 42
+masking:
+  - selector:
+      jsonpath: &quot;departement&quot;
+    masks:
+      # arrondir la valeur de l'attribut
+      - template: &quot;{{round (toString .departement) 0 }}&quot; # string
+      # changer le type (number en float64) 
+      - fromjson: &quot;departement&quot; # float64
+      # retrouver la clé correspondant à la valeur dans le fichier departement.json
+      - fromCache: &quot;cacheDepartement&quot;
+
+  - selector:
+      jsonpath: &quot;fume&quot;
+    masks:
+      - template: &quot;{{round (toString .fume) 0 }}&quot;
+      - fromjson: &quot;fume&quot;
+      - fromCache: &quot;cacheFume&quot;
+
+caches:
+  cacheDepartement:
+    unique: false
+    reverse: true
+  cacheFume:
+    unique: false
+    reverse: true
+</code></pre>
+<pre><code class="language-console">pimo --load-cache cacheDepartement=departement.json --load-cache cacheFume=fume.json -c reverse.yml &lt; data_sigo.json &gt; data_out.json
+</code></pre>
+<p><strong>data_out.json</strong></p>
+<pre><code class="language-json">{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:&quot;Centre-Val de Loire&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:&quot;Centre-Val de Loire&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:&quot;Centre-Val de Loire&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:&quot;Centre-Val de Loire&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:&quot;Hauts-de-France&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:&quot;Hauts-de-France&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:&quot;Hauts-de-France&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:&quot;Hauts-de-France&quot;,&quot;fume&quot;:&quot;non&quot;,&quot;malade&quot;:&quot;non&quot;}
+</code></pre>
+<h3 id="utilisation-du-fichier-de-configuration-pour-anonymiser">Utilisation du fichier de configuration pour anonymiser</h3>
+<p>Il est également possible d'utiliser <strong>SIGO</strong> à l'aide d'un fichier de configuration pour renseigner les paramètres de l'anonymisation.</p>
+<p><strong>sigo.yml</strong></p>
+<pre><code class="language-yaml">version: &quot;1&quot;
+
+kAnonymity: 4
+lDiversity: 2
+sensitives:
+  - malade
+aggregation: meanAggregation
+rules:
+  - name: age
+  - name: poids
+  - name: taille
+  - name: departement
+  - name: fume
+</code></pre>
+<pre><code class="language-console">sigo -c sigo.yml &lt; data_transpose.json &gt; data_sigo.json
+</code></pre>
+<p><strong>data_sigo.json</strong></p>
+<pre><code class="language-json">{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:32,&quot;poids&quot;:58.81,&quot;taille&quot;:1.51,&quot;departement&quot;:4,&quot;fume&quot;:1.5,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;oui&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+{&quot;age&quot;:48,&quot;poids&quot;:66.07,&quot;taille&quot;:1.56,&quot;departement&quot;:7.25,&quot;fume&quot;:1.75,&quot;malade&quot;:&quot;non&quot;}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html" class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="docs.html" class="btn btn-neutral float-right" title="Docs">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright (C) 2022 CGI France - GNU License GPLv3</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="docs.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

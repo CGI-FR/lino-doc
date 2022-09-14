@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Docs LINO-PIMO</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Docs LINO-PIMO
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="index.html">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#quest-ce-que-lino-pimo">Qu'est-ce que LINO-PIMO ?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#apercu-rapide">Aperçu Rapide</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#lino">LINO</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#pimo">PIMO</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cas-dusage">Cas d'Usage</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pimo-vs-sigo">PIMO vs SIGO</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#quest-ce-que-sigo">Qu'est-ce que SIGO ?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#apercu-rapide_1">Aperçu Rapide</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cas-dusage_1">Cas d'Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#notions-cles">Notions clés</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tuto.html">Tutoriel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docs.html">Docs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="commands.html">Commandes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="example.html">Exemples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Docs LINO-PIMO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lino-pimo-sigo">LINO-PIMO-SIGO</h1>
+<h2 id="quest-ce-que-lino-pimo">Qu'est-ce que LINO-PIMO ?</h2>
+<p>Des outils en ligne de commande :</p>
+<ul>
+<li>Conçus pour <em>créer</em>, <em>générer</em>, <em>gérer</em> et <em>anonymiser</em> les jeux de tests.</li>
+<li>Compatible avec une démarche <em>DevOps</em>.</li>
+<li>En adéquation avec la <em>philosophie Unix</em>.</li>
+</ul>
+<p><strong>LINO</strong> est un ETL spécialisé dans la gestion de jeux de données de tests. <br>
+LINO extrait d'une base de données relationnelle un ensemble de données, liées par des contraintes de clés étrangères, sous la forme d'un flux <em>JSON</em>. <br>
+LINO permet également le chargement d'un flux <em>JSON</em> dans une base de données existante.</p>
+<p><strong>PIMO</strong> est un outil d'anonymisation de données. <br>
+Un flux de données au format <em>JSON</em> passé en entrée, peut être transformé en un autre flux dans lequel les données sensibles ont étés masquées par des valeurs aléatoires. <br>
+Son puissant moteur de masquage permet de paramétrer finement quoi anonymiser dans le flux, et surtout comment grâce au fichier <code>masking.yml</code>. <br>
+L'outil est également capable de générer de la volumétrie à partir d'une seule ligne d'exemple.</p>
+<p>Ces outils peuvent s'exécuter sur tous types d'environnements (<em>Linux</em>, <em>Windows</em>, <em>MacOs</em>) et peuvent être manipulées facilement par un opérateur, un script ou un outil de CI/CD.</p>
+<h3 id="apercu-rapide">Aperçu Rapide</h3>
+<h4 id="lino">LINO</h4>
+<p><img alt="PULL" src="img/PULL.gif" /></p>
+<p><img alt="PUSH" src="img/PUSH.gif" /></p>
+<h4 id="pimo">PIMO</h4>
+<p><img alt="PIMO" src="img/PIMO.gif" /></p>
+<h3 id="cas-dusage">Cas d'Usage</h3>
+<ul>
+<li><strong>Echantillonnage</strong> : Fabriquer un jeu de données réduit avec des données cohérentes entre elles.</li>
+<li><strong>Pseudo-Anonymisation</strong> : Remplacer les données personnelles en préservant le format.</li>
+<li><strong>Comparaison</strong> : Aligner les données pour identifier les différences, trouver les suppressions.</li>
+<li><strong>Automatisation des tests</strong> : Données calibrées, suppression des données à la fin du test.</li>
+<li><strong>Reproduction d'un BUG</strong> : Rechercher une donnée, extraire toutes les entités nécessaires et recharger dans une base de test.</li>
+<li><strong>Synthèse</strong> : Générer des données.</li>
+</ul>
+<h2 id="pimo-vs-sigo">PIMO vs SIGO</h2>
+<p><strong>PIMO</strong> est l'outil idéal pour faire de l'anonymisation lorsque l'objectif principal n'est pas de garder la "qualité" de la donnée, comme par exemple pour les jeux de tests. Lorsque l'on a besoin d'anonymiser des données dans le but de tester une application, nous voulons que nos données restent conformes, que les règles métier qui définissent les données soient respectées (format conforme) et que la cohérence soit conservée, on souhaite qu'une même donnée présente dans plusieurs bases soit anonymisée de la même façon, et c'est ce qui est fait avec <strong>LINO-PIMO</strong>. <br></p>
+<p>Cependant la "qualité" de la donnée (pertinence, véracité, ...) n'est plus respectée. Si des données répertoriant des caractéristiques (tels que le poids, l'âge, ...) de patients atteints par différentes pathologies doivent être anonymisées, <strong>PIMO</strong> ne pourra pas garder les corrélations qu'il peut y avoir entre le poids et la pathalogie par exemple. C'est dans ce contexte que l'utilisation de <strong>SIGO</strong> peut être utile. <br>  </p>
+<p>Les données de "bonnes qualités" garantissent l'utilisabilité de celles-ci, ce qui sous-entend pouvoir réutiliser les données pour faire de l'analyse, répondre à un objectif ou un problème à l'aide d'IA, ...</p>
+<h2 id="quest-ce-que-sigo">Qu'est-ce que SIGO ?</h2>
+<ul>
+<li>Conçus pour <em>anonymiser</em> des jeux de données où l'information contenue dans les données est importante.</li>
+<li>Compatible avec une démarche <em>DevOps</em>.</li>
+<li>En adéquation avec la <em>philosophie Unix</em>.</li>
+</ul>
+<p><strong>SIGO</strong> est un outil d'anonymisation de données respectant les principes du k-anonymat et de la l-diversité. <br>
+Un jeu de données au format <em>JSON</em> passé en entrée, peut-être transformé en un autre jeu de données également au format <em>JSON</em> dans lequel les données auront été anonymisées en utilisant différentes méthode comme par exemple l'aggrégation ou l'ajout de bruit. <br>
+L'objectif de cet outil est d'empêcher la réidentification des individus tout en préservant l'utilité des données. </p>
+<p>Il faut noter qu'il est impossible de garantir une anonymisation offrant un risque nul de réidentification, encore plus si l'on veut assurer l'utilisabilité des données. <strong>SIGO</strong> est un compromis entre ces 2 enjeux majeurs: l'anonymisation (diminuation des risques liés à la réidentificaition) et l'utilisabilité des données.</p>
+<h3 id="apercu-rapide_1">Aperçu Rapide</h3>
+<p><img alt="PIMO" src="img/SIGO.gif" /></p>
+<h3 id="cas-dusage_1">Cas d'Usage</h3>
+<ul>
+<li><strong>Publication</strong>: Publier des données dans l'Open Data contenant des données sensibles. Pour être conforme au RGPD les données doivent être préalablement anonymisées.</li>
+<li><strong>Utilisation d'IA</strong>: Les Data Scientist peuvent entraîner des modèles de machine learning sur des jeux de données contenant des données sensibles. Pour limiter les risques, il est possible d'anonymiser les données.</li>
+<li><strong>Analyse</strong>: De même concernant les personnes qui analysent des données contenant des données sensibles.</li>
+</ul>
+<h3 id="notions-cles">Notions clés</h3>
+<p>Un <strong>enregistrement</strong> est une ligne d'une table de base de données contenant les informations liées aux différents champ. 
+Les enregistrements permettent de stocker les éléments d’information individuels. Chaque enregistrement est constitué d’un ou plusieurs champs. Les champs correspondent aux colonnes d’une table. <br></p>
+<p>Par exemple : </p>
+<pre><code class="language-json">{&quot;nom&quot;: &quot;Dupont&quot;, &quot;prenom&quot;: &quot;Jean&quot;, &quot;age&quot;: 71, &quot;taille&quot;: 1.72, &quot;poids&quot;: 86} 
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>identifiant</th>
+<th>quasi-identifiant</th>
+<th>sensible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nom + prenom</td>
+<td>age + taille</td>
+<td>poids</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>identifiant:</strong> Attribut qui identifie un enregistrement de façon unique (par exemple, un numéro de sécurité sociale, un prénom + un nom).</p>
+</li>
+<li>
+<p><strong>quasi-identifiant: (QI)</strong> Ensemble d'attributs qui peuvent être utilisé pour identifier, de façon indirect, un enregistrement avec une forte probabilité (en liant ces attributs à des sources externes de données, par exemple {sexe, code postal, date de naissance} forme un quasi-identifiant connu dans de nombreux ensembles de données). </p>
+</li>
+<li>
+<p><strong>sensible</strong>: Attribut que l'on veut conserver secret (par exemple données médicales, salaires). </p>
+</li>
+<li>
+<p><strong>non sensible:</strong> Attribut qui n'entre dans aucune des catégories ci-dessus. <br>
+<br></p>
+</li>
+<li>
+<p><strong>k-anonymat:</strong> Ce modèle offre l’assurance que chaque n-uplet de valeurs de quasi-identifiants apparaît au moins k fois dans la table à publier.</p>
+</li>
+</ul>
+<p>Ci-dessous une table respectant le 2-anonymat, {Age, Education} étant les quasi-identifiants et {Maladie} la donnée sensible :</p>
+<table>
+<thead>
+<tr>
+<th align="center">Age</th>
+<th align="center">Education</th>
+<th align="center">Maladie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">[19,23]</td>
+<td align="center">secondaire</td>
+<td align="center">cardiaque</td>
+</tr>
+<tr>
+<td align="center">[19,23]</td>
+<td align="center">secondaire</td>
+<td align="center">cancer</td>
+</tr>
+<tr>
+<td align="center">[27,30]</td>
+<td align="center">secondaire</td>
+<td align="center">grippe</td>
+</tr>
+<tr>
+<td align="center">[27,30]</td>
+<td align="center">secondaire</td>
+<td align="center">grippe</td>
+</tr>
+<tr>
+<td align="center">[19,23]</td>
+<td align="center">supérieur</td>
+<td align="center">cancer</td>
+</tr>
+<tr>
+<td align="center">[19,23]</td>
+<td align="center">supérieur</td>
+<td align="center">cancer</td>
+</tr>
+<tr>
+<td align="center">[19,23]</td>
+<td align="center">supérieur</td>
+<td align="center">cancer</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>l-diversité:</strong>  Le principe de la l-diversité est le suivant : <code>Une classe d’équivalence respecte la l-diversité s’il existe au moins l valeurs «bien représentées » pour l’attribut sensible. Une table respecte la l-diversité si chacune de ses classes d’équivalence respectent la l-diversité.</code></li>
+</ul>
+<p>Ci-dessous une table respectant la 3-diversité:</p>
+<table>
+<thead>
+<tr>
+<th>Age</th>
+<th>Education</th>
+<th>Maladie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[19,23]</td>
+<td>secondaire</td>
+<td>cardiaque</td>
+</tr>
+<tr>
+<td>[19,23]</td>
+<td>secondaire</td>
+<td>cancer</td>
+</tr>
+<tr>
+<td>[19,23]</td>
+<td>secondaire</td>
+<td>grippe</td>
+</tr>
+<tr>
+<td>[19,23]</td>
+<td>secondaire</td>
+<td>grippe</td>
+</tr>
+<tr>
+<td>[27,30]</td>
+<td>supérieur</td>
+<td>cancer</td>
+</tr>
+<tr>
+<td>[27,30]</td>
+<td>supérieur</td>
+<td>cancer</td>
+</tr>
+<tr>
+<td>[27,30]</td>
+<td>supérieur</td>
+<td>cardiaque</td>
+</tr>
+<tr>
+<td>[27,30]</td>
+<td>supérieur</td>
+<td>grippe</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SIGO</strong> est un outils d'anonymisation respectant la <code>k-anonymisation</code> et la <code>l-diversité</code>.</p>
+<ul>
+<li>
+<p><strong>SIGO</strong> va construire des clusters en divisant l'ensemble des enregistrements en groupes contenant au moins k individus.
+Il va prendre chaque dimension correspondant à un attribut du QI ordonner cette dimension et la découper en 2 "parts égales", jusqu'à ce que le découpage ne puisse plus se faire et que la condition sur la l-diversité est respectée.</p>
+</li>
+<li>
+<p>Puis <strong>SIGO</strong> anonymise chaque clusters en fonction d'une méthode d'anonymisation choisit par l'utilisateur. Comme par exemple <code>meanAggregation</code> où chaque attribut du cluster est remplacer par la moyenne des attributs du cluster.</p>
+</li>
+</ul>
+<p><img alt="image" src="img/principe_sigo.gif" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="tuto.html" class="btn btn-neutral float-right" title="Tutoriel">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright (C) 2022 CGI France - GNU License GPLv3</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="tuto.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.3.0
+Build Date UTC : 2022-09-14 14:20:36.520071+00:00
+-->

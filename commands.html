@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Commandes - Docs LINO-PIMO</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Commandes";
+        var mkdocs_page_input_path = "commands.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Docs LINO-PIMO
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tuto.html">Tutoriel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docs.html">Docs</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="commands.html">Commandes</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#lino">LINO </a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#help">help</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#completion">completion</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dataconnector">dataconnector</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#http">http</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#id">id</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pull">pull</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#push">push</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#relation">relation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequence">sequence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#table">table</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pimo">PIMO </a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#help_1">help</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#completion_1">completion</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flow">flow</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonchema">jsonchema</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#play">play</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sigo">SIGO </a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#help_2">help</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="example.html">Exemples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Docs LINO-PIMO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Commandes</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="commandes">Commandes</h1>
+<p>LINO-PIMO est un ETL (<strong>E</strong>xtract <strong>T</strong>ransform <strong>L</strong>oad) simple pour gérer les données de test. Cette page liste les commandes qui peuvent être utilisées avec <code>lino</code> et <code>pimo</code>. </p>
+<ol>
+<li><a href="#lino">LINO</a></li>
+<li><a href="#pimo">PIMO</a></li>
+<li><a href="#pimo">SIGO</a></li>
+</ol>
+<h2 id="lino">LINO <a name = "lino"></a></h2>
+<p><code>lino</code> extrait des données d'une base de données relationnelles pour en créer un échantillon et permet également de recharger des données.</p>
+<h3 id="help">help</h3>
+<p><strong>Description :</strong>
+    Aide pour les commandes.</p>
+<blockquote>
+<p><code>console
+$ lino --help</code></p>
+</blockquote>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>completion</code></li>
+<li><code>dataconnector</code></li>
+<li><code>http</code></li>
+<li><code>id</code></li>
+<li><code>pull</code></li>
+<li><code>push</code></li>
+<li><code>relation</code></li>
+<li><code>table</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Utilisez <code>lino [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="completion">completion</h3>
+<p><strong>Description :</strong>
+    Génère le script d'autocomplétion pour le shell spécifié.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino completion [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>bash &lt;option&gt;</code>: génère le script d'autocompletion pour bash.</li>
+<li><code>fish &lt;option&gt;</code>: génère le script d'autocompletion pour fish.</li>
+<li><code>powershell &lt;option&gt;</code>: génère le script d'autocompletion pour powershell.</li>
+<li><code>zsh &lt;option&gt;</code>: génère le script d'autocompletion pour zsh.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Générer le script d'autocompletion pour bash :</p>
+<pre><code class="language-console">$ lino completion bash &gt; /etc/bash_completion.d/lino
+</code></pre>
+<p>Génèrer le script d'autocompletion pour powershell en désactivant les descriptions de complétion :</p>
+<pre><code class="language-console">$ lino completion powershell --no-descriptions
+</code></pre>
+<p>Utilisez <code>lino completion [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="dataconnector">dataconnector</h3>
+<p><strong>Description :</strong>
+    Gère les alias de la base de données.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino dataconnector [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>add &lt;alias_bdd&gt; &lt;url_bdd&gt; &lt;option&gt;</code>: ajoute un alias à une base de données.</li>
+<li><code>list</code>: liste les alias de base de données.</li>
+<li><code>ping &lt;alias_bdd&gt;</code>: connexion à la base de données <code>&lt;alias_bdd&gt;</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alias :</strong> <code>dataconnector</code>, <code>dc</code></p>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Ajouter un alias à une base de données en indiquant que la base de donnée est en lecture seule.</p>
+<pre><code class="language-console">$ lino dataconnector add mydatabase 'postgresql://postgres:sakila@localhost:5432/postgres?sslmode=disable' -r
+</code></pre>
+<p>Lister les alias.</p>
+<pre><code class="language-console">$ lino dc list
+</code></pre>
+<p>Utilisez <code>lino dataconnector [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="http">http</h3>
+<p><strong>Description :</strong>
+    Démarre le serveur HTTP.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino http &lt;option&gt;</code>   </li>
+</ul>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Associer un port http (par défaut le port est 8000).</p>
+<pre><code class="language-console">$ lino http --port 8080
+</code></pre>
+<p>Préciser le nom du fichier contenant l'ingress-descriptor.</p>
+<pre><code class="language-console">$ lino http -i IngressDescriptor.yaml
+</code></pre>
+<h3 id="id">id</h3>
+<p><strong>Description :</strong>
+    Gère l'ingress-descriptor (descripteur d'entrée, ie. le chemin par lequel passe <code>lino</code> pour récupérer les données).</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino id [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>create &lt;start_table&gt;</code>: créé l'ingress-descriptor à partir de la table <code>&lt;start_table&gt;</code>.</li>
+<li><code>display-plan</code>: montre les étapes par lesquelles la récupération des données se fait.</li>
+<li><code>export</code>: exporte le contenu de l'ingress-descriptor au format <em>JSON</em> vers la sortie stdout.</li>
+<li><code>set-child-lookup &lt;relation&gt; [true|false]</code>: définit le paramètre <code>lookup</code>* de la table enfant de la <code>&lt;relation&gt;</code> à true ou false dans l'ingress-descriptor.</li>
+<li><code>set-parent-lookup &lt;relation&gt; [true|false]</code>: définit le paramètre <code>lookup</code>* de la table parent de la <code>&lt;relation&gt;</code> à true ou false dans l'ingress-descriptor.</li>
+<li><code>set-start-table &lt;start_table&gt;</code>: définit la table de départ <code>&lt;start_table&gt;</code> dans l'ingress-descriptor</li>
+<li><code>show-graph</code>: montre le graphe de l'ingress-descriptor.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>*<code>lookup</code>: indique si l'on veut ou non récupérer la donnée de la table concernée par cette <code>&lt;relation&gt;</code>.</p>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Afficher le chemin que parcourt <code>lino</code> pour récupérer les données.</p>
+<pre><code class="language-console">$ lino id display-plan
+</code></pre>
+<p>Changer le paramètre <code>lookup</code> de la table enfant de la relation <code>fk_pets_owner_id</code>.</p>
+<pre><code class="language-console">$ lino id set-child-lookup fk_pets_owner_id true
+</code></pre>
+<p>Utilisez <code>lino id [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="pull">pull</h3>
+<p><strong>Description :</strong>
+    Extrait des données d'une base de données.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino pull &lt;alias_bdd&gt; &lt;option&gt;</code>
+<br></li>
+</ul>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Extraire les données uniques de la table <code>owners</code>.</p>
+<pre><code class="language-console">$ lino pull mydatabase --distinct --table owners
+</code></pre>
+<p>Extraire les grappes de données correspondant à la clause <code>where SQL</code>. </p>
+<pre><code class="language-console">$ lino pull mydatabase -w &quot;id in (12,24,36)&quot;
+</code></pre>
+<h3 id="push">push</h3>
+<p><strong>Description :</strong>
+    Charge des données dans une base de données (mode par défault: <em>insertion</em>)</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino push [mode] &lt;alias_bdd&gt; &lt;option&gt;</code>
+<br><ul>
+<li><em><code>[mode]</code> disponible :</em><ul>
+<li><code>truncate</code>: permet de supprimer toutes les données d’une base sans supprimer la base de données.</li>
+<li><code>insert</code>: permet d'inserer une ou plusieurs lignes dans la base existante.</li>
+<li><code>update</code>: permet d’effectuer des modifications sur des lignes existantes.</li>
+<li><code>delete</code>: permet de supprimer des lignes dans une base.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Inserer dans la table <code>owners</code> un fichier contenant les lignes à inserer.</p>
+<pre><code class="language-console">$ lino push mydatabase --table owners &lt; data.jsonl
+</code></pre>
+<p>Mettre à jour des données dans la base en supprimant les contraintes durant le chargement.</p>
+<pre><code class="language-console">$ &lt; data.jsonl | lino push update mydatabase --disable-constraints
+</code></pre>
+<h3 id="relation">relation</h3>
+<p><strong>Description :</strong>
+    Gère les relations de la base de données.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino relation [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>extract &lt;alias_bdd&gt;</code>: extrait les relations de la base de données.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alias :</strong> <code>relation</code>, <code>rel</code></p>
+<blockquote>
+<p><strong>Exemple :</strong> <br></p>
+</blockquote>
+<p>Extraire les relations de la base de données <code>mydatabase</code>.</p>
+<pre><code class="language-console">$ lino relation extract mydatabase
+</code></pre>
+<p>Utilisez <code>lino relation [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="sequence">sequence</h3>
+<p><strong>Description :</strong>
+    Gère les séquences.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino sequence [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>extract &lt;alias_bdd&gt;</code>: extrait le nom de la séquence de la base de données.</li>
+<li><code>status &lt;alias_bdd&gt;</code>: retourne le statut de la séquence de la base de données.</li>
+<li><code>update &lt;alias_bdd&gt;</code>: mets à jour le statut de la séquence.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alias :</strong> <code>sequence</code>, <code>seq</code></p>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Extraire le nom de la séquence de <code>mydatabase</code>.</p>
+<pre><code class="language-console">$ lino sequence extract mydatabase
+</code></pre>
+<p>Connaître le status de la séquence de <code>mydatabase</code>.</p>
+<pre><code class="language-console">$ lino sequence status mydatabase
+</code></pre>
+<p>Utilisez <code>lino sequence [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="table">table</h3>
+<p><strong>Description :</strong>
+    Gère les tables de la base de données.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>lino table [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>add-column &lt;alias_table&gt; &lt;alias_colonne&gt; &lt;option&gt;</code>: ajoute une définition de colonne dans le fichier <code>table.yml</code>.</li>
+<li><code>count &lt;alias_bdd&gt;</code>: compte le nombre de lignes présent dans les tables de la base de données.</li>
+<li><code>extract &lt;alias_bdd&gt;</code>: extrait les métadonnées des tables de la base de données.</li>
+<li><code>remove-column &lt;alias_table&gt; &lt;alias_colonne&gt;</code>: supprime une définition de colonne dans le fichier <code>table.yml</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alias :</strong> <code>table</code>, <code>tab</code></p>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Ajouter une colonne au fichier <code>table.yml</code> en précisant le type de la colonnes.</p>
+<pre><code class="language-console">$ lino table add-column owners first_name -i string
+</code></pre>
+<p>Retourner le nombre de lignes présent dans la base de données <code>mydatabase</code>.</p>
+<pre><code class="language-console">$ lino table count mydatabase
+</code></pre>
+<p>Utilisez <code>lino table [command] --help</code> pour plus d'informations sur une commande.</p>
+<h2 id="pimo">PIMO <a name = "pimo"></a></h2>
+<p><code>pimo</code> masque des données sensibles contenues dans un flux de jsonlines en utilisant un fichier de configuration contenant les masques à appliquer.</p>
+<h3 id="help_1">help</h3>
+<p><strong>Description :</strong>
+    Aide pour les commandes.</p>
+<blockquote>
+<p><code>console
+$ pimo --help</code></p>
+</blockquote>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>pimo [commande]</code>
+    <code>pimo &lt;option&gt;</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>completion</code></li>
+<li><code>flow</code></li>
+<li><code>jsonschema</code></li>
+<li><code>play</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Utilisez <code>pimo [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="completion_1">completion</h3>
+<p><strong>Description :</strong>
+    Génère le script d'autocomplétion pour <code>pimo</code> pour le shell spécifié.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>pimo completion [commande]</code>
+<br><ul>
+<li><em><code>[commande]</code> disponible :</em><ul>
+<li><code>bash &lt;option&gt;</code>: génère le script d'autocompletion pour bash.</li>
+<li><code>fish &lt;option&gt;</code>: génère le script d'autocompletion pour fish.</li>
+<li><code>powershell &lt;option&gt;</code>: génère le script d'autocompletion pour powershell.</li>
+<li><code>zsh &lt;option&gt;</code>: génère le script d'autocompletion pour zsh.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Exemples :</strong> <br></p>
+</blockquote>
+<p>Générer le script d'autocompletion pour bash :</p>
+<pre><code class="language-console">$ pimo completion bash &gt; /etc/bash_completion.d/pimo
+</code></pre>
+<p>Génèrer le script d'autocompletion pour bash (sur macOS) en désactivant les descriptions de complétion :</p>
+<pre><code class="language-console">$ pimo completion bash --no-descriptions &gt; /usr/local/etc/bash_completion.d/pimo
+</code></pre>
+<p>Utilisez <code>pimo completion [command] --help</code> pour plus d'informations sur une commande.</p>
+<h3 id="flow">flow</h3>
+<p><strong>Description :</strong>
+    Génère un diagramme Mermaid permettant de visualiser le processus de transformation de la donnée.</p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>pimo flow &lt;option&gt;</code></li>
+</ul>
+<blockquote>
+<p><strong>Exemple :</strong> <br></p>
+</blockquote>
+<p>Générer le diagramme du fichier de configuration <code>masking.yml</code></p>
+<pre><code class="language-console">$ pimo flow masking.yml &gt; masking.mmd
+</code></pre>
+<h3 id="jsonchema">jsonchema</h3>
+<p><strong>Description :</strong>
+    Génère le schéma json du fichier de configuration de <code>pimo</code>.  </p>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>pimo jsonchema &lt;option&gt;</code></li>
+</ul>
+<blockquote>
+<p><strong>Exemple :</strong> <br></p>
+</blockquote>
+<p>Générer le schéma json.</p>
+<pre><code class="language-console">$ pimo jsonchema
+</code></pre>
+<h3 id="play">play</h3>
+<p>[A venir]</p>
+<h2 id="sigo">SIGO <a name = "sigo"></a></h2>
+<p><code>sigo</code> anonymise un jeu de données en repectant le k-anonymat et la l-diversité. Il est possible de configurer l'anonymisation en ligne de commande ou à l'aide d'un fichier de configuration <code>yml</code>.</p>
+<h3 id="help_2">help</h3>
+<p><strong>Description :</strong>
+    Aide pour les commandes.</p>
+<blockquote>
+<p><code>console
+$ sigo --help</code></p>
+</blockquote>
+<ul>
+<li><strong>Utilisation :</strong>
+    <code>sigo &lt;option&gt;</code>
+<br><ul>
+<li><em><code>&lt;option&gt;</code> disponible :</em><ul>
+<li><code>--k-value,-k &lt;value&gt;</code></li>
+<li><code>--l-value,-l &lt;value&gt;</code></li>
+<li><code>--quasi-identifier,-q &lt;list&gt;</code></li>
+<li><code>--sensitive,-s &lt;list&gt;</code></li>
+<li><code>--anonymizer,-a &lt;method&gt;</code></li>
+<li><code>--cluster-info,-i &lt;name_of_field&gt;</code></li>
+<li><code>--entropy [true|false]</code></li>
+<li><code>--configuration, -c &lt;file&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="docs.html" class="btn btn-neutral float-left" title="Docs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="example.html" class="btn btn-neutral float-right" title="Exemples">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright (C) 2022 CGI France - GNU License GPLv3</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="docs.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="example.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
