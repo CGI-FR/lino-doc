@@ -1321,7 +1321,7 @@ Toutes les données sont masquées et on peut l'utilisé sur un environnement de
 | 147, Rue des Roses | Léon | Melchior | 9 | Francois | 01 38 01 76 12 |
 | 53, Rue des Mûriers | Biscarrosse | Sophie | 10 | Clement | 06 91 52 79 43 |
 
-## Parsing XML dans PIMO
+## PIMO - XML
 
 Depuis la version `1.20.0` de PIMO, il est possible de traiter des fichiers XML.
 
