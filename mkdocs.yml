@@ -9,7 +9,6 @@ plugins: []
 nav:
     - Home: index.md
     - Tutoriel: tuto.md
-    - Pimo - Xml: xml.md
     - Docs: docs.md
     - Commandes: commands.md
     - Exemples: example.md
