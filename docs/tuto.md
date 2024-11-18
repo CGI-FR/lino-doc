@@ -649,6 +649,7 @@ Les options disponibles pour la propriété `export` sont :
 | datetime | La donnée sera d'abord convertie au format RFC3339 (ex: 2006-01-02T15:04:05Z) puis exportée en JSON avec des "guillemets" (chaîne de caractères représentant une date). |
 | timestamp | La donnée sera d'abord convertie en timestamp UNIX puis exportée en JSON sans "guillemets" au format numérique (format numérique sans partie décimale). |
 | no | La donnée ne sera ni exportée dans le flux JSON, ni extraite de la base de données. |
+| presence | Si la donnée est null, la commande exportera un "null" dans le JSON, si la valeur n'est pas nulle peu importe son contenu, la commande exportera un "true" dans le flux JSON. |
 
 Si l'on souhaite définir le format de quelques colonnes dans le fichier `table.yaml` tout en exportant l'intégralité des colonnes, cela est possible en ajoutant le paramètre `export: all` sur l'objet table. Ce paramètre pourra à l'avenir prendre d'autres valeurs, mais c'est la seule option disponible actuellement.
 
@@ -864,6 +865,7 @@ Les valeurs disponibles pour la propriété `import` sont :
 | base64 ou binary | La donnée sera lue au format chaîne de caractères, puis décodée en base64, et transmise sous format binaire à la base de données. |
 | datetime | La donnée sera lue sous forme de chaîne de caractères représentant une date au format RFC3339 (ex: 2006-01-02T15:04:05Z). |
 | timestamp | La donnée sera lue en numeric représentant un timestamp UNIX. |
+| no | La donnée ne sera jamais écrite en base de données, seulement utilisée dans les clauses WHERE si c'est une primary key. |
 
 Il est à noter que certains formats impliquent une conversion de données (le format `binary` par exemple, transforme la données d'une chaîne de caractères vers un tableau d'octets binaire).
 
